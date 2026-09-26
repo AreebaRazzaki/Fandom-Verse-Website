@@ -197,9 +197,23 @@ describe('both auth screens', () => {
     expect(container.querySelector('.au-page-strip')).toBeInTheDocument();
     expect(container.querySelector('.au-strip .au-panel')).toBeInTheDocument();
     expect(CSS).toMatch(/\.au-strip \{[^}]*place-items: center/);
-    expect(CSS).toMatch(/\.theme-light \.au-page-strip::after \{[^}]*repeating-linear-gradient/);
+    expect(CSS).toMatch(/\.au-page-strip\.theme-light::after \{[^}]*repeating-linear-gradient/);
     expect(CSS).toMatch(/\.au-page\.theme-light \{[^}]*--ink: #140a1c/);
     expect(CSS).toMatch(/\.au-page\.theme-light \{[^}]*--muted: #5f5470/);
+  });
+
+  it('lift the panel above the glitch scrim in both themes', () => {
+    // .au-panel is a grandchild of .au-page, so the `.au-page > *` rule never
+    // reaches it. Without position/z-index of its own it paints underneath the
+    // z-index:0 .au-glitch layer and the form disappears entirely.
+    const panelRule = CSS.match(/\.au-strip \.au-panel \{[^}]*\}/)[0];
+    expect(panelRule).toMatch(/position: relative/);
+    expect(panelRule).toMatch(/z-index: 2/);
+
+    // Each theme needs its own opaque surface, otherwise the scrim shows
+    // straight through the card and the fields become unreadable.
+    expect(CSS).toMatch(/\.au-strip \.au-panel \{[^}]*background: rgba\(/);
+    expect(CSS).toMatch(/\.theme-light \.au-strip \.au-panel \{[^}]*background: rgba\(255, 255, 255/);
   });
 
   it('recolor for the light theme and remember the choice', () => {

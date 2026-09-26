@@ -23,7 +23,7 @@ const cardNamed = (container, name) => cards(container).find((card) => card.text
 const tabs = (container) => [...container.querySelectorAll('.fv-tab')];
 const tabNamed = (container, label) => tabs(container).find((tab) => tab.textContent.startsWith(label));
 const bagButton = (container) => container.querySelector('.fv-vault-button');
-const drawer = (container) => container.querySelector('.fv-bag');
+const cart = (container) => container.querySelector('.fv-cart');
 const openModal = async (container, name) => {
   fireEvent.click(within(cardNamed(container, name)).getByRole('button', { name: /^details$/i }));
   await waitFor(() => expect(container.querySelector('.fv-modal')).not.toBeNull());
@@ -34,8 +34,8 @@ const addFromCard = async (container, name) => {
 };
 const openVault = async (container) => {
   fireEvent.click(bagButton(container));
-  await waitFor(() => expect(drawer(container)).not.toBeNull());
-  return drawer(container);
+  await waitFor(() => expect(cart(container)).not.toBeNull());
+  return cart(container);
 };
 
 beforeEach(() => {
@@ -116,7 +116,7 @@ describe('the fan vault shelf', () => {
 });
 
 describe('the vault hero', () => {
-  it('names the vault and centres the featured collectible with its details', async () => {
+  it('names the vault and goes straight from the hero to the shelf', async () => {
     const { container } = await mount();
 
     expect(container.querySelector('.universal-nav')).toBeInTheDocument();
@@ -124,12 +124,16 @@ describe('the vault hero', () => {
     expect(container.querySelector('.fv-hero h1 em').textContent).toBe('VAULT');
     expect(container.querySelector('.fv-hero-tagline').textContent).toBe(BOOK.page.tagline);
 
-    const feature = container.querySelector('.fv-feature');
-    expect(feature.querySelector('img').getAttribute('src')).toBe(PRODUCTS[0].image);
-    expect(feature.textContent).toContain(PRODUCTS[0].name);
-    expect(feature.textContent).toMatch(/\$|price/i);
-    expect(within(feature).getByRole('button', { name: /view item/i })).toBeInTheDocument();
-    expect(within(feature).getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
+    // The featured-collectible stage is gone: the product grid follows the hero
+    // and the filters directly, with no showcase card wedged in between.
+    expect(container.querySelector('.fv-feature')).toBeNull();
+    const flow = [...container.querySelector('.fv-page').children].map((node) => node.className);
+    const heroAt = flow.findIndex((name) => name.includes('fv-hero'));
+    const vaultAt = flow.findIndex((name) => name.includes('fv-vault'));
+    expect(heroAt).toBeGreaterThan(-1);
+    expect(vaultAt).toBeGreaterThan(heroAt);
+    // Nothing but the filters sits between the hero and the first card.
+    expect(flow.slice(heroAt + 1, vaultAt).join(' ')).not.toContain('fv-feature');
 
     // Copy on one side, the vault trigger on the other.
     expect(CSS).toMatch(/\.fv-hero \{[^}]*grid-template-columns: minmax\(0, 1fr\) auto/);
@@ -350,16 +354,22 @@ describe('item details', () => {
     expect(within(modal).getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
   });
 
-  it('opens item details as a bottom sheet so it rises from the lower edge', () => {
-    // The sheet is pinned to the bottom and slides up, instead of floating in
-    // the middle of the screen, and it still scrolls so nothing is cut off.
-    expect(CSS).toMatch(/\.fv-overlay-sheet \{[^}]*align-items: flex-end/);
-    expect(CSS).toMatch(/\.fv-modal \{[^}]*max-height: min\(86vh, 720px\)/);
-    expect(CSS).toMatch(/\.fv-modal \{[^}]*border-radius: 30px 30px 0 0/);
+  it('opens item details as a centred popup, readable on both stages', async () => {
+    const { container } = await mount();
+    const modal = await openModal(container, PRODUCTS[0].name);
+
+    // A real dialog in the middle of the stage, not a sheet pinned to the
+    // bottom edge, and it still scrolls so nothing is cut off.
+    expect(modal.getAttribute('role')).toBe('dialog');
+    expect(modal.getAttribute('aria-modal')).toBe('true');
+    expect(CSS).not.toContain('.fv-overlay-sheet');
+    expect(CSS).toMatch(/\.fv-overlay \{[^}]*align-items: center; justify-content: center/);
+    expect(CSS).toMatch(/\.fv-modal \{[^}]*max-height: min\(84vh, 720px\)/);
     expect(CSS).toMatch(/\.fv-modal \{[^}]*overflow-y: auto/);
-    expect(CSS).toMatch(/@keyframes fv-sheet-up \{[^}]*translateY\(100%\)/);
-    // The cart keeps its own right-hand drawer, so the sheet class is scoped.
-    expect(CSS).toMatch(/\.fv-bag \{[^}]*margin-left: auto/);
+    expect(CSS).toMatch(/@keyframes fv-rise \{[^}]*translateY\(24px\)/);
+    // The shell paints its own surface per stage, so the type reads either way.
+    expect(CSS).toMatch(/\.fv-modal \{[^}]*background: #100a18/);
+    expect(CSS).toMatch(/\.theme-light \.fv-modal \{[^}]*background: #fff/);
   });
 });
 
@@ -383,13 +393,13 @@ describe('the vault bag', () => {
 
     await waitFor(() => expect(bagButton(container).textContent).toContain('1'));
     expect(bagButton(container).getAttribute('aria-label')).toMatch(/1 item/);
-    // The modal steps aside, but the panel waits for the shopper to ask for it.
+    // The modal steps aside, but the vault waits for the shopper to ask for it.
     expect(container.querySelector('.fv-modal')).toBeNull();
-    expect(drawer(container)).toBeNull();
+    expect(cart(container)).toBeNull();
 
-    const bag = await openVault(container);
-    expect(bag.textContent).toContain(target.name);
-    expect(within(bag).getByRole('heading', { name: /your vault/i })).toBeInTheDocument();
+    const panel = await openVault(container);
+    expect(panel.textContent).toContain(target.name);
+    expect(within(panel).getByRole('heading', { name: /your vault/i })).toBeInTheDocument();
   });
 
   it('adds straight from a card hover overlay', async () => {
@@ -398,17 +408,36 @@ describe('the vault bag', () => {
     await addFromCard(container, target.name);
 
     expect(bagButton(container).textContent).toContain('1');
-    const bag = await openVault(container);
-    expect(bag.textContent).toContain(target.name);
+    const panel = await openVault(container);
+    expect(panel.textContent).toContain(target.name);
   });
 
-  it('adds straight from the featured collectible', async () => {
+  it('opens the vault as a centred modal popup holding everything that was added', async () => {
     const { container } = await mount();
-    fireEvent.click(within(container.querySelector('.fv-feature')).getByRole('button', { name: /add to cart/i }));
-    await waitFor(() => expect(bagButton(container).textContent).toContain('1'));
+    const added = [PRODUCTS[0], PRODUCTS[9], PRODUCTS[40]];
+    for (const target of added) await addFromCard(container, target.name);
+    expect(bagButton(container).textContent).toContain('3');
 
-    const bag = await openVault(container);
-    expect(bag.textContent).toContain(PRODUCTS[0].name);
+    const panel = await openVault(container);
+    expect(panel.getAttribute('role')).toBe('dialog');
+    expect(panel.getAttribute('aria-modal')).toBe('true');
+    expect(panel.querySelector('.fv-cart-count').textContent).toContain('3');
+
+    // Every piece the shopper added is in the popup, with its own artwork and
+    // line total, not just the one that was added last.
+    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(added.length);
+    added.forEach((target) => {
+      const line = [...panel.querySelectorAll('.fv-cart-line')].find((node) => node.textContent.includes(target.name));
+      expect(line).toBeTruthy();
+      expect(line.querySelector('img').getAttribute('src')).toBe(target.image);
+      expect(line.textContent).toContain(target.category);
+    });
+
+    // Centred in the stage, not pinned to a side, and the pieces sit two-up.
+    expect(CSS).toMatch(/\.fv-overlay \{[^}]*align-items: center; justify-content: center/);
+    expect(CSS).toMatch(/\.fv-cart \{[^}]*width: min\(760px, 100%\)/);
+    expect(CSS).toMatch(/\.fv-cart-list \{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+    expect(CSS).not.toMatch(/\.fv-bag/);
   });
 
   it('flies the cover into the View Vault button when a piece is added', async () => {
@@ -446,19 +475,19 @@ describe('the vault bag', () => {
     const target = PRODUCTS[0];
     const modal = await openModal(container, target.name);
     fireEvent.click(within(modal).getByRole('button', { name: /add to cart/i }));
-    const bag = await openVault(container);
+    const panel = await openVault(container);
 
-    fireEvent.click(within(bag).getByRole('button', { name: `Add one more ${target.name}` }));
-    fireEvent.click(within(bag).getByRole('button', { name: `Add one more ${target.name}` }));
+    fireEvent.click(within(panel).getByRole('button', { name: `Add one more ${target.name}` }));
+    fireEvent.click(within(panel).getByRole('button', { name: `Add one more ${target.name}` }));
     expect(bagButton(container).textContent).toContain('3');
-    expect(within(bag).getByLabelText(`Quantity of ${target.name}`).textContent).toBe('3');
+    expect(within(panel).getByLabelText(`Quantity of ${target.name}`).textContent).toBe('3');
 
-    fireEvent.click(within(bag).getByRole('button', { name: `Remove one ${target.name}` }));
-    expect(within(bag).getByLabelText(`Quantity of ${target.name}`).textContent).toBe('2');
+    fireEvent.click(within(panel).getByRole('button', { name: `Remove one ${target.name}` }));
+    expect(within(panel).getByLabelText(`Quantity of ${target.name}`).textContent).toBe('2');
 
-    fireEvent.click(within(bag).getByRole('button', { name: `Remove ${target.name} from the vault` }));
-    expect(bag.querySelectorAll('.fv-bag-line')).toHaveLength(0);
-    expect(bag.textContent).toMatch(/the vault is empty/i);
+    fireEvent.click(within(panel).getByRole('button', { name: `Remove ${target.name} from the vault` }));
+    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(0);
+    expect(panel.textContent).toMatch(/the vault is empty/i);
   });
 
   it('totals the shelf and clears it on request', async () => {
@@ -472,14 +501,14 @@ describe('the vault bag', () => {
       fireEvent.click(within(modal).getByRole('button', { name: /add to cart/i }));
     }
 
-    const bag = await openVault(container);
-    expect(bag.querySelectorAll('.fv-bag-line')).toHaveLength(2);
+    const panel = await openVault(container);
+    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(2);
     const expected = (mid(first) + mid(second)).toFixed(2);
-    expect(bag.querySelector('.fv-bag-total b').textContent).toBe(`$${expected}`);
-    expect(bag.textContent).toMatch(/no payment here/i);
+    expect(panel.querySelector('.fv-cart-total b').textContent).toBe(`$${expected}`);
+    expect(panel.textContent).toMatch(/no payment here/i);
 
-    fireEvent.click(within(bag).getByRole('button', { name: /clear cart/i }));
-    expect(bag.querySelectorAll('.fv-bag-line')).toHaveLength(0);
+    fireEvent.click(within(panel).getByRole('button', { name: /clear cart/i }));
+    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(0);
     expect(bagButton(container).getAttribute('aria-label')).toMatch(/empty/i);
   });
 
@@ -494,26 +523,26 @@ describe('the vault bag', () => {
 
   it('closes from the button, the veil and escape', async () => {
     const { container } = await mount();
-    let bag = await openVault(container);
+    let panel = await openVault(container);
 
-    fireEvent.click(within(bag).getByRole('button', { name: /close your vault/i }));
-    await waitFor(() => expect(drawer(container)).toBeNull());
+    fireEvent.click(within(panel).getByRole('button', { name: /close your vault/i }));
+    await waitFor(() => expect(cart(container)).toBeNull());
 
-    bag = await openVault(container);
+    panel = await openVault(container);
     fireEvent.click(container.querySelector('[data-testid="cart-veil"]'));
-    await waitFor(() => expect(drawer(container)).toBeNull());
+    await waitFor(() => expect(cart(container)).toBeNull());
 
     await openVault(container);
     fireEvent.keyDown(document, { key: 'Escape' });
-    await waitFor(() => expect(drawer(container)).toBeNull());
+    await waitFor(() => expect(cart(container)).toBeNull());
   });
 
   it('stops the page behind the vault from scrolling', async () => {
     const { container } = await mount();
-    const bag = await openVault(container);
+    const panel = await openVault(container);
     expect(document.body.style.overflow).toBe('hidden');
 
-    fireEvent.click(within(bag).getByRole('button', { name: /close your vault/i }));
+    fireEvent.click(within(panel).getByRole('button', { name: /close your vault/i }));
     await waitFor(() => expect(document.body.style.overflow).toBe(''));
   });
 });
@@ -524,5 +553,38 @@ describe('the stage theme', () => {
     expect(CSS).toMatch(/\.fv-page\.theme-light \{[^}]*--magenta:/);
     expect(CSS).toMatch(/\.theme-light \.fv-toolbar \{[^}]*background:/);
     expect(CSS).toMatch(/\.theme-light \.fv-card:hover/);
+  });
+
+  it('keeps the Save control readable on a card in both stages', () => {
+    // The shared control used to fall back to near-black ink on a near-black
+    // face, which made the chip vanish wherever a page did not override its
+    // --mark-* tokens. The fallback is light ink now, and the shop hands the
+    // control the stage palette on top of that.
+    const BOOKMARK_CSS = fs.readFileSync(path.join(__dirname, 'components/BookmarkButton.css'), 'utf8');
+    expect(BOOKMARK_CSS).toMatch(/\.bookmark \{[^}]*--mark-ink: #f4f1fb/);
+
+    const dark = CSS.match(/\.fv-page \.bookmark \{[^}]*\}/)[0];
+    const light = CSS.match(/\.fv-page\.theme-light \.bookmark \{[^}]*\}/)[0];
+    // Light ink on a dark face, dark ink on a light face: always the inverse.
+    expect(dark).toMatch(/--mark-ink: #f4f1fb/);
+    expect(light).toMatch(/--mark-ink: #140a1c/);
+    expect(light).toMatch(/--mark-face: #fff/);
+  });
+
+  it('seats the shared footer clear of the last row of cards', async () => {
+    const { container } = await mount();
+    const footer = container.querySelector('.fv-page > .site-footer');
+
+    expect(footer).toBeInTheDocument();
+    // The vault grid has no bottom padding, so without this the footer sat flush
+    // against the last row. A negative margin would be worse: it would drag the
+    // footer up on top of the cards.
+    expect(CSS).not.toMatch(/\.fv-page > \.site-footer \{[^}]*margin-top: -/);
+    expect(CSS).toMatch(/\.fv-vault \{[^}]*padding-bottom: 52px/);
+    expect(CSS).toMatch(/\.fv-page > \.site-footer \{[^}]*margin-top: 28px/);
+    expect(CSS).toMatch(/\.fv-page > \.site-footer \{[^}]*border-top: 1px solid/);
+    expect(CSS).toMatch(/\.theme-light \.fv-page > \.site-footer \{[^}]*border-top-color/);
+    // The scroll-to-top control travels with the shared footer.
+    expect(within(footer).getByRole('button', { name: /back to the beginning/i })).toBeInTheDocument();
   });
 });

@@ -270,7 +270,7 @@ function SiteNav({ theme, setTheme, active = 'home', variant = 'home' }) {
   const linkId = (label) => `#${label.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
-    <nav className={`universal-nav universal-nav-${variant}`} style={palette} aria-label="Main navigation">
+    <nav className={`universal-nav universal-nav-${variant}${savedOpen ? ' is-overlay-open' : ''}`} style={palette} aria-label="Main navigation">
       <a className="universal-brand" href="#home" aria-label="Fandomverse home"><img src="/assets/images/logo.png" alt="" /><span>FANDOMVERSE</span></a>
       <div className="universal-nav-links">
         <a className={`universal-nav-link ${active === 'home' ? 'is-active' : ''}`} href="#home">Home</a>

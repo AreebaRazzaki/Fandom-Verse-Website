@@ -48,21 +48,30 @@ function About() {
 
       <header className="ab-hero">
         {/* Decorative geometry fills what used to read as dead space above and
-            beside the wordmark, in both themes. */}
+            beside the wordmark, in both themes. It all sits behind the copy. */}
         <div className="ab-hero-shapes" aria-hidden="true">
+          <span className="ab-shape is-halo" />
           <span className="ab-shape is-ring" />
+          <span className="ab-shape is-ring is-ring-outer" />
           <span className="ab-shape is-disc" />
+          <span className="ab-shape is-blob" />
           <span className="ab-shape is-shard" />
           <span className="ab-shape is-bar" />
+          <span className="ab-shape is-bar is-bar-two" />
           <span className="ab-shape is-dash" />
           <span className="ab-shape is-dot" />
+          <span className="ab-shape is-grid" />
         </div>
-        <p className="ab-kicker">About the site</p>
-        <h1>THE STORY BEHIND <em>FANDOMVERSE</em></h1>
-        <p className="ab-lede">
-          Fandomverse is a fan-run shelf for the seven worlds we keep coming back to. Every corner of the
-          site was built around one idea: the stuff you love deserves a proper place to live.
-        </p>
+
+        <div className="ab-hero-inner">
+          <p className="ab-kicker">About the site</p>
+          <h1>THE STORY BEHIND <em>FANDOMVERSE</em></h1>
+          <p className="ab-lede">
+            Fandomverse is a fan-run shelf for the seven worlds we keep coming back to. Every corner of the
+            site was built around one idea: the stuff you love deserves a proper place to live.
+          </p>
+        </div>
+
         <div className="ab-hero-stats">
           <div><b>7</b><i>Fandoms</i></div>
           <div><b>23</b><i>Releases tracked</i></div>
@@ -71,10 +80,12 @@ function About() {
       </header>
 
       <section className="ab-why" aria-label="Why FandomVerse">
+        <p className="ab-eyebrow"><b>01</b> Why we built it</p>
         <h2>WHY FANDOMVERSE</h2>
         <div className="ab-why-grid">
-          {REASONS.map((reason) => (
+          {REASONS.map((reason, index) => (
             <article key={reason.head} className="ab-why-card">
+              <span className="ab-why-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <h3>{reason.head}</h3>
               <p>{reason.line}</p>
             </article>
@@ -85,6 +96,7 @@ function About() {
       {/* The map is one shared panel: pick a fandom, the hub redraws around it. */}
       <section className="ab-map" aria-label="Fandom universe map">
         <div className="ab-map-copy">
+          <p className="ab-eyebrow"><b>02</b> The map</p>
           <h2>FANDOM UNIVERSE MAP</h2>
           <p>Seven fandoms orbit one hub. Choose a world to see what lives there.</p>
 
@@ -134,6 +146,7 @@ function About() {
       </section>
 
       <section className="ab-team" aria-label="The team">
+        <p className="ab-eyebrow"><b>03</b> The people</p>
         <h2>THE PEOPLE BEHIND IT</h2>
         <div className="ab-team-grid">
           {TEAM.map((member) => (
@@ -148,6 +161,7 @@ function About() {
       </section>
 
       <section className="ab-mission" aria-label="Our mission">
+        <p className="ab-eyebrow"><b>04</b> The promise</p>
         <h2>OUR MISSION</h2>
         <p>
           To keep every fandom on the site current, correctly spelled and honestly presented — and to make

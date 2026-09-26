@@ -61,6 +61,8 @@ const useOverlay = (onClose) => {
 const BagIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7.5h13l-1 12.5h-11z" /><path d="M9 7.5V6a3 3 0 0 1 6 0v1.5" /></svg>;
 const CloseIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>;
 
+// View Details opens a centred popup: the shopper clicked a card, so the piece
+// they picked comes forward in the middle of the stage with its full details.
 function ProductModal({ product, onClose, onAdd }) {
   const closeRef = useRef(null);
   const artRef = useRef(null);
@@ -69,7 +71,7 @@ function ProductModal({ product, onClose, onAdd }) {
   useOverlay(onClose);
 
   return (
-    <div className="fv-overlay fv-overlay-sheet" role="presentation">
+    <div className="fv-overlay" role="presentation">
       <div className="fv-veil" onClick={onClose} data-testid="product-veil" />
 
       <div className="fv-modal" role="dialog" aria-modal="true" aria-label={product.name}>
@@ -103,7 +105,13 @@ function ProductModal({ product, onClose, onAdd }) {
   );
 }
 
-function CartDrawer({ lines, onClose, onChange, onRemove, onClear }) {
+// Pressing View Vault opens this centred popup, not a side drawer: the shopper
+// asked to see the vault, so the whole of it lands in one dialog with every
+// piece they added laid out in front of them.
+function CartModal({ lines, onClose, onChange, onRemove, onClear }) {
+  const closeRef = useRef(null);
+
+  useEffect(() => { closeRef.current?.focus(); }, []);
   useOverlay(onClose);
 
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
@@ -113,47 +121,52 @@ function CartDrawer({ lines, onClose, onChange, onRemove, onClear }) {
     <div className="fv-overlay" role="presentation">
       <div className="fv-veil" onClick={onClose} data-testid="cart-veil" />
 
-      <aside className="fv-bag" role="dialog" aria-modal="true" aria-label="Your vault">
-        <header className="fv-bag-head">
+      <div className="fv-cart" role="dialog" aria-modal="true" aria-label="Your vault">
+        <header className="fv-cart-head">
           <div>
+            <p className="fv-cart-kicker">The fan vault</p>
             <h2>Your Vault</h2>
-            <span>{count} {count === 1 ? 'item' : 'items'}</span>
+            <p className="fv-cart-count" aria-live="polite">
+              {count} {count === 1 ? 'piece' : 'pieces'} waiting
+            </p>
           </div>
-          <button type="button" className="fv-bag-close" onClick={onClose} aria-label="Close your vault"><CloseIcon /></button>
+          <button type="button" className="fv-cart-close" ref={closeRef} onClick={onClose} aria-label="Close your vault"><CloseIcon /></button>
         </header>
 
-        {lines.length === 0 && (
-          <p className="fv-bag-empty">
-            The vault is empty. Hover a cover and press <b>Add to cart</b>, or open any item to add it from there.
-          </p>
-        )}
-
-        <ul className="fv-bag-list">
-          {lines.map((line) => (
-            <li key={line.id} className="fv-bag-line">
-              <img src={line.image} alt="" />
-              <div className="fv-bag-info">
-                <b>{line.name}</b>
-                <span>{priceText(line)}</span>
-                <div className="fv-qty">
-                  <button type="button" onClick={() => onChange(line.id, line.qty - 1)} aria-label={`Remove one ${line.name}`}>&minus;</button>
-                  <span aria-label={`Quantity of ${line.name}`}>{line.qty}</span>
-                  <button type="button" onClick={() => onChange(line.id, line.qty + 1)} aria-label={`Add one more ${line.name}`}>+</button>
-                </div>
-              </div>
-              <button type="button" className="fv-bag-remove" onClick={() => onRemove(line.id)} aria-label={`Remove ${line.name} from the vault`}>&times;</button>
-            </li>
-          ))}
-        </ul>
+        <div className="fv-cart-body">
+          {lines.length === 0 ? (
+            <p className="fv-cart-empty">
+              The vault is empty. Hover a cover and press <b>Add to cart</b>, or open any item to add it from there.
+            </p>
+          ) : (
+            <ul className="fv-cart-list">
+              {lines.map((line) => (
+                <li key={line.id} className="fv-cart-line">
+                  <img src={line.image} alt={`Artwork for ${line.name}`} />
+                  <div className="fv-cart-info">
+                    <b>{line.name}</b>
+                    <span>{line.category} &middot; {priceText(line)}</span>
+                    <div className="fv-qty">
+                      <button type="button" onClick={() => onChange(line.id, line.qty - 1)} aria-label={`Remove one ${line.name}`}>&minus;</button>
+                      <span aria-label={`Quantity of ${line.name}`}>{line.qty}</span>
+                      <button type="button" onClick={() => onChange(line.id, line.qty + 1)} aria-label={`Add one more ${line.name}`}>+</button>
+                    </div>
+                  </div>
+                  <button type="button" className="fv-cart-remove" onClick={() => onRemove(line.id)} aria-label={`Remove ${line.name} from the vault`}>&times;</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {lines.length > 0 && (
-          <footer className="fv-bag-foot">
-            <p className="fv-bag-total"><span>Total</span><b>{money(total)}</b></p>
-            <p className="fv-bag-hint">No payment here. The vault is a preview of the full checkout flow.</p>
-            <button type="button" className="fv-bag-clear" onClick={onClear}>Clear cart</button>
+          <footer className="fv-cart-foot">
+            <p className="fv-cart-total"><span>Total</span><b>{money(total)}</b></p>
+            <p className="fv-cart-hint">No payment here. The vault is a preview of the full checkout flow.</p>
+            <button type="button" className="fv-cart-clear" onClick={onClear}>Clear cart</button>
           </footer>
         )}
-      </aside>
+      </div>
     </div>
   );
 }
@@ -209,7 +222,6 @@ function Shop() {
   const [fly, setFly] = useState(null);
   const [pulse, setPulse] = useState(false);
   const vaultRef = useRef(null);
-  const featureArtRef = useRef(null);
   const flyTimer = useRef(null);
   const pulseTimer = useRef(null);
 
@@ -293,7 +305,6 @@ function Shop() {
     return out;
   }, [products]);
 
-  const featured = products[0] || null;
   const bagCount = lines.reduce((sum, line) => sum + line.qty, 0);
 
   const changeQty = (id, qty) => {
@@ -329,7 +340,7 @@ function Shop() {
         </div>
       )}
 
-      {status === 'ready' && featured && (
+      {status === 'ready' && products.length > 0 && (
         <>
           <header className="fv-hero">
             <div className="fv-hero-copy">
@@ -343,41 +354,27 @@ function Shop() {
             </div>
 
             <div className="fv-hero-vault">
-              <button
-                type="button"
-                ref={vaultRef}
-                className={`fv-vault-button${bagOpen ? ' is-open' : ''}${bagCount ? ' has-items' : ''}${pulse ? ' is-pulse' : ''}`}
-                onClick={() => setBagOpen(true)}
-                aria-label={`View vault${bagCount ? `, ${bagCount} item${bagCount === 1 ? '' : 's'}` : ', empty'}`}
-              >
-                <BagIcon />
-                <span>View Vault</span>
-                <b aria-hidden="true">{bagCount}</b>
-              </button>
-              <p className="fv-hero-vault-note">
-                {bagCount
-                  ? <>{bagCount} {bagCount === 1 ? 'piece' : 'pieces'} waiting in your vault.</>
-                  : 'Hover a cover for the details, or add a piece and it will fly up here.'}
-              </p>
-            </div>
-          </header>
-
-          <section className="fv-feature" aria-label="Featured collectible">
-            <div className="fv-feature-art" ref={featureArtRef}>
-              <span className="fv-feature-halo" aria-hidden="true" />
-              <img src={featured.image} alt={`Artwork for ${featured.name}`} />
-            </div>
-            <div className="fv-feature-card">
-              <p className="fv-feature-flags"><b>{featured.category}</b><i>Vault pick</i></p>
-              <h2>{featured.name}</h2>
-              <p className="fv-feature-price">{priceText(featured)}</p>
-              <p className="fv-feature-desc">{featured.description}</p>
-              <div className="fv-feature-tools">
-                <button type="button" className="fv-add" onClick={() => setOpenProduct(featured)}>View item</button>
-                <button type="button" className="fv-add fv-add-ghost" onClick={() => addToCart(featured, featureArtRef.current)}>Add to cart</button>
+              <div className="fv-vault-panel">
+                <p className="fv-vault-panel-head"><BagIcon /><span>Your vault</span></p>
+                <button
+                  type="button"
+                  ref={vaultRef}
+                  className={`fv-vault-button${bagOpen ? ' is-open' : ''}${bagCount ? ' has-items' : ''}${pulse ? ' is-pulse' : ''}`}
+                  onClick={() => setBagOpen(true)}
+                  aria-label={`View vault${bagCount ? `, ${bagCount} item${bagCount === 1 ? '' : 's'}` : ', empty'}`}
+                >
+                  <BagIcon />
+                  <span>View Vault</span>
+                  <b aria-hidden="true">{bagCount}</b>
+                </button>
+                <p className="fv-vault-panel-note" aria-live="polite">
+                  {bagCount
+                    ? <>{bagCount} {bagCount === 1 ? 'piece' : 'pieces'} waiting in your vault.</>
+                    : 'Hover a cover for the details, or add a piece and it will fly up here.'}
+                </p>
               </div>
             </div>
-          </section>
+          </header>
 
           <section className="fv-match" aria-label="Fandom match">
             <div className="fv-match-copy">
@@ -455,7 +452,7 @@ function Shop() {
       )}
 
       {bagOpen && (
-        <CartDrawer
+        <CartModal
           lines={lines}
           onClose={() => setBagOpen(false)}
           onChange={changeQty}

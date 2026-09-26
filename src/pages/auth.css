@@ -115,17 +115,34 @@
   padding: 64px 24px;
 }
 
+/* The panel is a grandchild of .au-page, so the .au-page > * rule above never
+   reaches it. Without an explicit position and z-index it stays in flow, which
+   paints it *under* the z-index:0 .au-glitch scrim and hides the form. */
 .au-strip .au-panel {
+  position: relative;
+  z-index: 2;
   width: min(480px, 100%);
   padding: 40px 36px;
   border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, #0d0817, transparent 8%);
+  background: rgba(13, 8, 23, .94);
+  background: color-mix(in srgb, #0d0817, transparent 6%);
   box-shadow: 0 40px 90px rgba(0, 0, 0, .6);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
-.theme-light .au-strip .au-panel { background: rgba(255, 255, 255, .9); box-shadow: 0 30px 70px rgba(60, 20, 90, .22); }
 
-/* Lavender geometric pattern behind the light stage. */
-.theme-light .au-page-strip::after {
+/* Light stage: a solid white card so it separates from the lavender wash
+   instead of dissolving into it. */
+.theme-light .au-strip .au-panel {
+  background: rgba(255, 255, 255, .97);
+  border-color: rgba(20, 10, 28, .16);
+  box-shadow: 0 30px 70px rgba(60, 20, 90, .2), 0 2px 0 rgba(255, 255, 255, .9) inset;
+}
+
+/* Lavender geometric pattern behind the light stage. The theme class sits on the
+   same element as .au-page-strip, so this has to be a compound selector — as a
+   descendant it could never match and the pattern never rendered. */
+.au-page-strip.theme-light::after {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -192,6 +209,69 @@
 .au-theme-toggle button:hover { color: var(--cyan); border-color: var(--cyan); }
 .theme-light .au-theme-toggle button { background: rgba(255, 255, 255, .9); }
 
+/* ---------- signup ---------- */
+
+.au-strip .au-signup-panel { width: min(560px, 100%); overflow: hidden; }
+.au-signup-panel { position: relative; }
+.au-signup-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta) 55%, var(--gold));
+}
+
+.au-signup-perks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.au-signup-perks li {
+  display: grid;
+  gap: 4px;
+  padding: 12px 12px 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px 4px 12px 4px;
+  background: rgba(255, 45, 149, .07);
+  background: color-mix(in srgb, var(--magenta), transparent 93%);
+}
+.au-signup-perks b {
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.au-signup-perks span { color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+
+.au-strength { display: flex; align-items: center; gap: 12px; margin-top: -6px; }
+.au-strength-bars { display: flex; flex: 1; gap: 4px; }
+.au-strength-bars i { flex: 1; height: 4px; border-radius: 2px; background: var(--line-strong); }
+.au-strength-bars i.is-on { background: var(--cyan); }
+.au-strength[data-level='1'] .au-strength-bars i.is-on { background: var(--danger); }
+.au-strength[data-level='2'] .au-strength-bars i.is-on { background: var(--gold); }
+.au-strength-label {
+  flex: none;
+  color: var(--ink-soft);
+  font-family: Arial, sans-serif;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.au-signup-trust {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
@@ -202,6 +282,14 @@
   .au-strip { padding: 84px 20px 40px; }
   .au-strip .au-panel { padding: 30px 24px; }
   .au-glitch-strip img { width: 200px; height: 200px; }
+}
+
+@media (max-width: 560px) {
+  .au-signup-perks { grid-template-columns: minmax(0, 1fr); }
+  .au-strip .au-signup-panel { padding: 30px 20px; }
+  .au-theme-toggle { top: 18px; right: 18px; }
+  .au-strength { gap: 9px; }
+  .au-strength-label { font-size: 9.5px; letter-spacing: .04em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

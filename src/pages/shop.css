@@ -10,12 +10,20 @@
   position: relative;
   min-height: 100vh;
   padding-bottom: 40px;
-  overflow: hidden;
+  /* The glow orbs hang off both edges, so the page clips sideways. `clip` is
+     used in preference to `hidden` on purpose: `hidden` turns this element into
+     a scroll container, and sticky measures against the nearest scrollport, so
+     the nav and the filter bar would silently stop sticking. `overflow: clip`
+     clips without ever becoming scrollable. */
+  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   background: #08060d;
   font-family: Georgia, 'Times New Roman', serif;
 }
 
+/* The light-stage cyan is darkened a step: at #0d7f95 the small uppercase cyan
+   labels (hero kicker, prices) only just cleared the background on #f6f2f9. */
 .fv-page.theme-light {
   --ink: #140a1c;
   --ink-soft: #3b2c4c;
@@ -23,7 +31,7 @@
   --line: rgba(20, 10, 28, .14);
   --line-strong: rgba(20, 10, 28, .26);
   --magenta: #c9106f;
-  --cyan: #0d7f95;
+  --cyan: #0a6b7e;
   --panel: rgba(255, 255, 255, .72);
   background: #f6f2f9;
 }
@@ -46,7 +54,16 @@
   pointer-events: none;
 }
 
-.fv-page > *:not(.fv-glow):not(.fv-grid-lines) { position: relative; z-index: 1; }
+/* Everything on the stage is lifted just above the backdrop, so the hero and
+   the filter bar cannot be painted over by the glows. The elements that manage
+   their own positioning are excluded on purpose, because this selector carries
+   more weight than their own rules and would otherwise win:
+
+   .universal-nav  sticky, and its Fandoms/Discover dropdowns must stay clickable
+   .fv-toolbar     sticky, and has to paint above the product cards
+   .fv-overlay     the centred popups, position: fixed
+   .fv-fly         the cover that flies into the vault, position: fixed */
+.fv-page > *:not(.fv-glow):not(.fv-grid-lines):not(.universal-nav):not(.fv-toolbar):not(.fv-overlay):not(.fv-fly) { position: relative; z-index: 1; }
 
 /* ---------- hero ---------- */
 
@@ -55,15 +72,25 @@
 .fv-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; max-width: 1180px; margin: 0 auto; padding: 132px 24px 40px; text-align: left; }
 
 .fv-hero-kicker { margin: 0 0 18px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 900; letter-spacing: .34em; text-transform: uppercase; }
-.fv-hero h1 { margin: 0; font-size: clamp(34px, 7.6vw, 104px); font-weight: 700; line-height: .96; letter-spacing: .02em; text-shadow: 0 0 62px rgba(255, 45, 149, .34); }
+/* The heading states its own colour, measure and tracking. Another page ships a
+   bare `h1` rule (and a global --paper token), which otherwise bleeds in here and
+   paints this cream-white on both stages — invisible on the light one. */
+.fv-hero h1 { max-width: none; margin: 0; color: var(--ink); font-size: clamp(34px, 7.6vw, 104px); font-weight: 700; line-height: .96; letter-spacing: .02em; text-shadow: 0 0 62px rgba(255, 45, 149, .34); }
+.theme-light .fv-hero h1 { color: #140a1c; text-shadow: 0 0 48px rgba(201, 16, 111, .28); }
 .fv-hero h1 em { color: transparent; -webkit-text-stroke: 2px var(--magenta); font-style: normal; text-shadow: 0 0 48px rgba(255, 45, 149, .5); }
 .fv-hero-tagline { margin: 22px 0 0; max-width: 44ch; color: var(--ink-soft); font-size: clamp(16px, 1.6vw, 22px); font-style: italic; }
 .fv-hero-blurb { margin: 16px 0 0; max-width: 60ch; color: var(--muted); font-family: Arial, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.7; }
 
 .fv-hero-vault { display: grid; gap: 14px; justify-items: end; text-align: right; }
-.fv-hero-vault-note { max-width: 30ch; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; line-height: 1.6; text-transform: uppercase; }
 
-.fv-vault-button { position: relative; display: grid; place-items: center; gap: 10px; width: 208px; padding: 30px 22px 26px; border: 1px solid var(--line-strong); border-radius: 26px 8px 26px 8px; color: var(--ink); background: linear-gradient(150deg, rgba(255, 45, 149, .18), rgba(53, 226, 242, .1)), var(--panel); font-family: Arial, sans-serif; cursor: pointer; box-shadow: 0 22px 50px rgba(0, 0, 0, .42); transition: transform 240ms cubic-bezier(.16, .82, .25, 1), border-color 240ms ease, box-shadow 240ms ease; }
+/* The right-hand column is the vault itself: a titled panel with the View Vault
+   trigger inside it, so the shelf and the bag always read as one unit. */
+.fv-vault-panel { display: grid; gap: 14px; width: min(290px, 100%); padding: 20px; border: 1px solid var(--line); border-radius: 26px 8px 26px 8px; background: var(--panel); backdrop-filter: blur(10px); }
+.fv-vault-panel-head { display: flex; align-items: center; justify-content: flex-end; gap: 9px; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .26em; text-transform: uppercase; }
+.fv-vault-panel-head svg { width: 15px; height: 15px; fill: none; stroke: var(--cyan); stroke-width: 1.6; }
+.fv-vault-panel-note { max-width: 30ch; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; line-height: 1.6; text-transform: uppercase; }
+
+.fv-vault-button { position: relative; display: grid; place-items: center; gap: 10px; width: 100%; padding: 26px 22px 24px; border: 1px solid var(--line-strong); border-radius: 22px 6px 22px 6px; color: var(--ink); background: linear-gradient(150deg, rgba(255, 45, 149, .18), rgba(53, 226, 242, .1)), var(--panel); font-family: Arial, sans-serif; cursor: pointer; box-shadow: 0 22px 50px rgba(0, 0, 0, .42); transition: transform 240ms cubic-bezier(.16, .82, .25, 1), border-color 240ms ease, box-shadow 240ms ease; }
 .theme-light .fv-vault-button { background: linear-gradient(150deg, rgba(255, 45, 149, .12), rgba(53, 226, 242, .12)), #fff; box-shadow: 0 22px 50px rgba(60, 20, 90, .16); }
 .fv-vault-button:hover { transform: translateY(-3px); border-color: var(--magenta); box-shadow: 0 26px 60px rgba(255, 45, 149, .3); }
 .fv-vault-button svg { width: 30px; height: 30px; fill: none; stroke: var(--magenta); stroke-width: 1.6; }
@@ -79,36 +106,6 @@
   35% { transform: scale(1.09); box-shadow: 0 0 0 10px rgba(255, 45, 149, .18), 0 26px 60px rgba(255, 45, 149, .4); }
   100% { transform: scale(1); }
 }
-
-/* ---------- featured collectible ---------- */
-
-.fv-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-  gap: 30px;
-  align-items: center;
-  max-width: 1180px;
-  margin: 26px auto 0;
-  padding: 34px;
-  border: 1px solid var(--line);
-  border-radius: 34px 8px 34px 8px;
-  background: linear-gradient(135deg, rgba(255, 45, 149, .12), rgba(53, 226, 242, .06) 52%, transparent);
-  box-shadow: 0 40px 110px rgba(0, 0, 0, .55);
-}
-.theme-light .fv-feature { box-shadow: 0 30px 70px rgba(60, 20, 90, .16); }
-
-.fv-feature-art { position: relative; display: grid; place-items: center; min-height: 300px; }
-.fv-feature-halo { position: absolute; width: 74%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 45, 149, .4), transparent 66%); filter: blur(28px); }
-.fv-feature-art img { position: relative; max-width: 100%; max-height: 380px; object-fit: contain; border-radius: 18px 6px 18px 6px; filter: drop-shadow(0 26px 40px rgba(0, 0, 0, .6)); transform: rotate(-2deg); }
-
-.fv-feature-card { padding: 8px 6px; }
-.fv-feature-flags { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; }
-.fv-feature-flags b { color: var(--magenta); }
-.fv-feature-flags i { color: var(--muted); font-style: normal; }
-.fv-feature-card h2 { margin: 0; font-size: clamp(24px, 3.2vw, 44px); line-height: 1.04; }
-.fv-feature-price { margin: 16px 0 0; color: var(--cyan); font-family: Arial, sans-serif; font-size: 22px; font-weight: 900; letter-spacing: .04em; }
-.fv-feature-desc { max-width: 48ch; margin: 14px 0 0; color: var(--ink-soft); font-size: 15px; line-height: 1.7; }
-.fv-feature-tools { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 
 /* ---------- buttons ---------- */
 
@@ -172,8 +169,11 @@
 
 /* ---------- toolbar ---------- */
 
-.fv-toolbar { position: sticky; top: 96px; z-index: 6; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 34px auto 0; padding: 14px 18px; border: 1px solid var(--line); border-radius: 18px 6px 18px 6px; background: rgba(8, 6, 13, .86); backdrop-filter: blur(14px); }
-.theme-light .fv-toolbar { background: rgba(255, 255, 255, .9); }
+/* The filter bar sticks under the nav, so its surface is opaque: a translucent
+   panel let the product cards read through it as they scrolled past, which
+   looked like a second, broken filter badge sitting on top of the shelf. */
+.fv-toolbar { position: sticky; top: 96px; z-index: 6; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 34px auto 0; padding: 14px 18px; border: 1px solid var(--line); border-radius: 18px 6px 18px 6px; background: #120d1c; box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }
+.theme-light .fv-toolbar { background: #fff; box-shadow: 0 14px 32px rgba(60, 20, 90, .16); }
 
 .fv-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
 .fv-tab {
@@ -282,6 +282,14 @@
 .fv-card-price { color: var(--cyan); font-family: Arial, sans-serif; font-size: 15px; font-weight: 900; }
 .fv-card-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 
+/* The shared Save control paints on its own --mark-* tokens. The shop hands it
+   the stage palette so the chip keeps its contrast on both stages instead of
+   relying on the component fallback. */
+.fv-page .bookmark { --mark-accent: var(--magenta); --mark-ink: #f4f1fb; --mark-face: #150c22; --mark-panel: #150c22; --mark-panel-ink: #f4f1fb; --mark-line: rgba(255, 255, 255, .34); --mark-muted: #a99cc4; --mark-on-ink: #fff; }
+.fv-page.theme-light .bookmark { --mark-ink: #140a1c; --mark-face: #fff; --mark-panel: #fff; --mark-panel-ink: #140a1c; --mark-line: rgba(20, 10, 28, .3); --mark-muted: #5f5470; }
+.fv-page .bookmark-toggle { box-shadow: 0 4px 14px rgba(0, 0, 0, .28); }
+.fv-page.theme-light .bookmark-toggle { box-shadow: 0 3px 10px rgba(60, 20, 90, .18); }
+
 .fv-card-view { padding: 10px 15px; border: 1px solid var(--line-strong); color: var(--ink); background: none; font-family: Arial, sans-serif; font-size: 9px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); transition: color 200ms ease, background 200ms ease, border-color 200ms ease; }
 .fv-card-view:hover { color: #fff; border-color: var(--cyan); background: var(--cyan); }
 
@@ -302,9 +310,6 @@
 
 /* ---------- vault bag ---------- */
 
-/* ---------- vault bag ---------- */
-
-
 /* ---------- overlays ---------- */
 
 .fv-overlay { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: 24px; }
@@ -312,13 +317,10 @@
 
 @keyframes fv-fade { from { opacity: 0; } }
 @keyframes fv-rise { from { opacity: 0; transform: translateY(24px) scale(.98); } }
-@keyframes fv-sheet-up { from { opacity: 0; transform: translateY(100%); } }
 
-/* Item details open as a bottom sheet, the way a product drawer should: the
-   sheet is pinned to the bottom edge and slides up, instead of floating in the
-   middle of the screen. The cart keeps its own right-hand drawer. */
-.fv-overlay-sheet { align-items: flex-end; padding: 0; }
-
+/* Item details open as a centred popup, the same shape as the vault: the
+   shopper clicked a card, so the piece comes forward in the middle of the stage
+   and the page behind it is veiled and locked. */
 .fv-modal {
   position: relative;
   display: grid;
@@ -326,16 +328,15 @@
   gap: 30px;
   align-items: center;
   width: 100%;
-  max-width: 1080px;
-  max-height: min(86vh, 720px);
+  max-width: 920px;
+  max-height: min(84vh, 720px);
   margin: 0 auto;
-  padding: 30px 30px 34px;
+  padding: 34px;
   border: 1px solid var(--line-strong);
-  border-bottom: 0;
-  border-radius: 30px 30px 0 0;
+  border-radius: 30px 8px 30px 8px;
   background: #100a18;
-  box-shadow: 0 -30px 90px rgba(0, 0, 0, .7);
-  animation: fv-sheet-up 300ms cubic-bezier(.16, .82, .25, 1);
+  box-shadow: 0 50px 120px rgba(0, 0, 0, .7);
+  animation: fv-rise 300ms cubic-bezier(.16, .82, .25, 1);
 }
 .theme-light .fv-modal { background: #fff; box-shadow: 0 40px 90px rgba(60, 20, 90, .24); }
 .fv-modal { overflow-y: auto; scrollbar-width: none; }
@@ -358,57 +359,63 @@
 .fv-modal-note { margin: 18px 0 0; padding: 12px 14px; border-left: 2px solid var(--magenta); color: var(--muted); font-family: Arial, sans-serif; font-size: 11.5px; font-weight: 600; line-height: 1.6; }
 .fv-modal-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 24px; }
 
-/* ---------- cart drawer ---------- */
+/* ---------- vault cart popup ----------
+   View Vault opens the vault as a dialog in the middle of the stage, not a
+   panel bolted to the side of it. The list scrolls inside a fixed-height shell
+   so the header and the total stay put while a long shelf scrolls underneath,
+   and the pieces sit two-up on a wide screen so everything the shopper added is
+   visible at once. */
 
-.fv-bag {
+.fv-cart {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(430px, 100%);
-  max-height: calc(100vh - 48px);
-  margin-left: auto;
-  padding: 26px;
+  width: min(760px, 100%);
+  max-height: min(84vh, 760px);
   border: 1px solid var(--line-strong);
-  border-radius: 26px 8px 26px 8px;
+  border-radius: 30px 8px 30px 8px;
   background: #100a18;
   box-shadow: 0 50px 120px rgba(0, 0, 0, .7);
   animation: fv-rise 280ms cubic-bezier(.16, .82, .25, 1);
 }
-.theme-light .fv-bag { background: #fff; box-shadow: 0 40px 90px rgba(60, 20, 90, .24); }
-.fv-bag { overflow-y: auto; scrollbar-width: none; }
-.fv-bag::-webkit-scrollbar { display: none; }
+.theme-light .fv-cart { background: #fff; box-shadow: 0 40px 90px rgba(60, 20, 90, .24); }
 
-.fv-bag-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
-.fv-bag-head h2 { margin: 0; font-size: 22px; }
-.fv-bag-head span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
-.fv-bag-close { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink); background: none; cursor: pointer; }
-.fv-bag-close svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; }
-.fv-bag-close:hover { color: #fff; border-color: var(--magenta); background: var(--magenta); }
+.fv-cart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 26px 26px 20px; border-bottom: 1px solid var(--line); }
+.fv-cart-kicker { margin: 0 0 8px; color: var(--magenta); font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .26em; text-transform: uppercase; }
+.fv-cart-head h2 { margin: 0; font-size: clamp(20px, 2.6vw, 28px); line-height: 1.1; }
+.fv-cart-count { margin: 10px 0 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+.fv-cart-close { flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink); background: none; cursor: pointer; }
+.fv-cart-close svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+.fv-cart-close:hover { color: #fff; border-color: var(--magenta); background: var(--magenta); }
 
-.fv-bag-empty { margin: 26px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
-.fv-bag-empty b { color: var(--ink); }
+.fv-cart-body { flex: 1 1 auto; overflow-y: auto; padding: 20px 26px; scrollbar-width: none; }
+.fv-cart-body::-webkit-scrollbar { display: none; }
 
-.fv-bag-list { display: grid; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
-.fv-bag-line { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 16px 5px 16px 5px; background: var(--panel); }
-.fv-bag-line img { width: 62px; height: 62px; object-fit: contain; border-radius: 10px 3px 10px 3px; background: rgba(0, 0, 0, .3); }
-.fv-bag-info b { display: block; font-size: 14px; line-height: 1.25; }
-.fv-bag-info > span { display: block; margin-top: 4px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 12px; font-weight: 900; }
+.fv-cart-empty { margin: 0; padding: 30px 0 34px; color: var(--muted); font-size: 14px; line-height: 1.7; text-align: center; }
+.fv-cart-empty b { color: var(--ink); }
 
-.fv-qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; }
+.fv-cart-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.fv-cart-line { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px; border: 1px solid var(--line); border-radius: 16px 5px 16px 5px; background: var(--panel); }
+.fv-cart-line img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px 3px 10px 3px; background: rgba(0, 0, 0, .3); }
+.theme-light .fv-cart-line img { background: rgba(20, 10, 28, .06); }
+.fv-cart-info b { display: block; font-size: 14px; line-height: 1.25; }
+.fv-cart-info > span { display: block; margin-top: 5px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: .04em; }
+
+.fv-qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; }
 .fv-qty button { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--line-strong); border-radius: 8px 2px 8px 2px; color: var(--ink); background: none; font-size: 14px; font-weight: 900; line-height: 1; cursor: pointer; }
 .fv-qty button:hover { color: #fff; border-color: var(--cyan); background: var(--cyan); }
 .fv-qty span { min-width: 22px; color: var(--ink); font-family: Arial, sans-serif; font-size: 13px; font-weight: 900; text-align: center; }
 
-.fv-bag-remove { align-self: flex-start; border: 0; color: var(--muted); background: none; font-size: 20px; line-height: 1; cursor: pointer; }
-.fv-bag-remove:hover { color: var(--magenta); }
+.fv-cart-remove { align-self: flex-start; border: 0; color: var(--muted); background: none; font-size: 20px; line-height: 1; cursor: pointer; }
+.fv-cart-remove:hover { color: var(--magenta); }
 
-.fv-bag-foot { margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--line); }
-.fv-bag-total { display: flex; align-items: baseline; justify-content: space-between; margin: 0; }
-.fv-bag-total span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
-.fv-bag-total b { color: var(--cyan); font-size: 26px; }
-.fv-bag-hint { margin: 10px 0 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 11px; font-weight: 600; line-height: 1.6; }
-.fv-bag-clear { margin-top: 16px; padding: 12px 20px; border: 1px solid var(--magenta); color: var(--magenta); background: none; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
-.fv-bag-clear:hover { color: #fff; background: var(--magenta); }
+.fv-cart-foot { display: grid; gap: 10px; padding: 18px 26px 24px; border-top: 1px solid var(--line); }
+.fv-cart-total { display: flex; align-items: baseline; justify-content: space-between; margin: 0; }
+.fv-cart-total span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+.fv-cart-total b { color: var(--cyan); font-size: 26px; }
+.fv-cart-hint { margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 11px; font-weight: 600; line-height: 1.6; }
+.fv-cart-clear { justify-self: start; padding: 12px 20px; border: 1px solid var(--magenta); color: var(--magenta); background: none; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: color 200ms ease, background 200ms ease; }
+.fv-cart-clear:hover { color: #fff; background: var(--magenta); }
 
 /* ---------- notes ---------- */
 
@@ -416,10 +423,27 @@
 .fv-note-error b { color: var(--ink); }
 .fv-note button { margin-left: 6px; border: 0; color: var(--cyan); background: none; font: inherit; text-decoration: underline; cursor: pointer; }
 
+/* ---------- footer join ----------
+   The product grid is the last block on the page and carries no bottom padding,
+   so the footer butts straight against the last row of cards. The breathing room
+   belongs to the grid; the seam is a hairline in the shop's own magenta plus a
+   soft shadow. A negative margin here would drag the footer up over the cards. */
+
+.fv-vault { padding-bottom: 52px; }
+
+.fv-page > .site-footer {
+  margin-top: 28px;
+  border-top: 1px solid rgba(255, 45, 149, .3);
+  box-shadow: 0 -30px 64px rgba(8, 6, 13, .5);
+}
+.theme-light .fv-page > .site-footer {
+  border-top-color: rgba(201, 16, 111, .3);
+  box-shadow: 0 -30px 64px rgba(60, 20, 90, .12);
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 1080px) {
-  .fv-feature { grid-template-columns: minmax(0, 1fr); }
   .fv-vault { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .fv-card-art { height: 250px; }
 }
@@ -429,11 +453,17 @@
   .fv-hero-tagline,
   .fv-hero-blurb { margin-left: auto; margin-right: auto; }
   .fv-hero-vault { justify-items: center; text-align: center; }
-  .fv-vault-button { width: 100%; max-width: 300px; padding: 24px 20px 22px; }
+  .fv-vault-panel { width: 100%; max-width: 320px; }
+  .fv-vault-panel-head { justify-content: center; }
   .fv-toolbar { position: static; }
   .fv-vault { grid-template-columns: minmax(0, 1fr); }
   .fv-card-art { height: 300px; }
-  .fv-modal { grid-template-columns: minmax(0, 1fr); padding: 22px 22px 26px; max-height: 90vh; }
+  .fv-modal { grid-template-columns: minmax(0, 1fr); padding: 24px 22px 28px; max-height: 90vh; }
+  .fv-cart { max-height: 90vh; border-radius: 24px 6px 24px 6px; }
+  .fv-cart-head,
+  .fv-cart-body,
+  .fv-cart-foot { padding-left: 20px; padding-right: 20px; }
+  .fv-cart-list { grid-template-columns: minmax(0, 1fr); }
   .fv-match { padding: 24px 20px; }
 }
 
@@ -442,7 +472,9 @@
   .fv-card-art img,
   .fv-card-overlay,
   .fv-vault-button,
+  .fv-vault-panel,
+  .fv-qty button,
   .fv-modal,
-  .fv-bag { animation: none; transition: none; }
+  .fv-cart { animation: none; transition: none; }
   .fv-fly { display: none; }
 }

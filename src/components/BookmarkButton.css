@@ -4,7 +4,15 @@
 
 .bookmark {
   --mark-accent: #ffc247;
-  --mark-ink: #0a0710;
+  /* The toggle paints light ink on a dark face, so the fallback has to be
+     light. It used to be near-black here, which left the default (dark-ink on
+     dark-face) rendering an invisible button on any page that did not override
+     these tokens. */
+  --mark-ink: #f4f1fb;
+  /* The toggle paints on --mark-face, but the note paints on --mark-panel, which
+     can be the opposite colour. The panel carries its own ink so a light panel
+     never ends up with light text on it. */
+  --mark-panel-ink: var(--mark-ink, #f4f1fb);
   position: relative;
   z-index: 6;
   display: inline-flex;
@@ -78,7 +86,7 @@
   width: 244px;
   padding: 14px;
   border: 1px solid var(--mark-accent);
-  color: var(--mark-ink, #f4f1fb);
+  color: var(--mark-panel-ink);
   background: var(--mark-panel, #0a0710);
   box-shadow: 0 20px 44px rgba(0, 0, 0, .55), 0 0 26px color-mix(in srgb, var(--mark-accent), transparent 72%);
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
@@ -92,7 +100,7 @@
   width: 100%;
   padding: 10px 11px;
   border: 1px solid var(--mark-line, rgba(255, 255, 255, .22));
-  color: var(--mark-ink, #f4f1fb);
+  color: var(--mark-panel-ink);
   background: transparent;
   font-family: Arial, sans-serif;
   font-size: 13px;
@@ -105,7 +113,7 @@
 .bookmark-note-foot button {
   padding: 8px 13px;
   border: 1px solid var(--mark-line, rgba(255, 255, 255, .22));
-  color: var(--mark-ink, #f4f1fb);
+  color: var(--mark-panel-ink);
   background: transparent;
   font-family: Arial, sans-serif;
   font-size: 10px;

@@ -517,7 +517,7 @@
   --mark-accent: var(--card-accent);
 }
 
-.theme-light .card-save { --mark-ink: #ffffff; --mark-face: #101018; --mark-panel: #ffffff; --mark-line: #101018; --mark-muted: #4a4e57; --mark-on-ink: #101018; }
+.theme-light .card-save { --mark-ink: #ffffff; --mark-face: #101018; --mark-panel: #ffffff; --mark-panel-ink: #16181f; --mark-line: #101018; --mark-muted: #4a4e57; --mark-on-ink: #101018; }
 .theme-dark .card-save { --mark-ink: #fbf7ef; --mark-face: #0a0810; --mark-panel: #0c0a14; --mark-line: rgba(255, 255, 255, .5); --mark-muted: #a79dbe; --mark-on-ink: #100c1a; }
 
 .card-foot {

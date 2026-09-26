@@ -153,4 +153,76 @@ describe('the contact page', () => {
     expect(CSS).toMatch(/\.ct-page \{[^}]*padding-bottom: 80px/);
     expect(CSS).toContain('@media (prefers-reduced-motion: reduce)');
   });
+
+  it('joins the page to the shared footer without covering the map', () => {
+    const { container } = mount();
+
+    expect(container.querySelector('.ct-page > .site-footer')).toBeInTheDocument();
+    // A negative margin here dragged the footer up over the map section and hid
+    // the directions button, so the seam is a hairline and a shadow instead and
+    // the space belongs to .ct-map.
+    expect(CSS).not.toMatch(/\.ct-page > \.site-footer \{[^}]*margin-top: -/);
+    expect(CSS).toMatch(/\.ct-map \{[^}]*padding: 84px 24px 40px/);
+    expect(CSS).toMatch(/\.ct-page > \.site-footer \{[^}]*border-top: 1px solid/);
+    expect(CSS).toMatch(/\.theme-light \.ct-page > \.site-footer \{[^}]*border-top-color/);
+  });
+
+  it('gives the directions link the full treatment of a control', () => {
+    const { container } = mount();
+    const link = container.querySelector('.ct-directions');
+
+    // It opens a new tab, so it is marked as such for screen readers too.
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toContain('noreferrer');
+    expect(link.querySelector('.ct-directions-arrow')).toBeInTheDocument();
+    expect(CSS).toMatch(/\.ct-directions \{[^}]*display: inline-flex/);
+    expect(CSS).toMatch(/\.ct-directions \{[^}]*border-radius: 999px/);
+    expect(CSS).toMatch(/\.ct-directions \{[^}]*transition:/);
+    expect(CSS).toMatch(/\.ct-directions:focus-visible \{[^}]*outline:/);
+  });
+
+  it('keeps the hero copy readable on a veil above the geometry', () => {
+    const { container } = mount();
+
+    // The shapes sit behind the words, and the words sit on their own veil.
+    const shapes = container.querySelector('.ct-hero-shapes');
+    const inner = container.querySelector('.ct-hero-inner');
+    expect(shapes).toBeInTheDocument();
+    expect(inner).toBeInTheDocument();
+    expect(shapes.compareDocumentPosition(inner) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(CSS).toMatch(/\.ct-hero-shapes \{[^}]*position: absolute/);
+    expect(CSS).toMatch(/\.ct-hero-inner \{[^}]*z-index: 1/);
+    expect(CSS).toMatch(/\.ct-hero-inner \{[^}]*background: radial-gradient\([^}]*var\(--veil\)/);
+    // Each theme needs its own veil, or the heading loses contrast in one of them.
+    expect(CSS).toMatch(/\.ct-page \{[^}]*--veil: rgba\(10, 7, 16/);
+    expect(CSS).toMatch(/\.ct-page\.theme-light \{[^}]*--veil: rgba\(255, 255, 255/);
+  });
+
+  it('sets the studio name as one horizontal line instead of a wrapped stack', () => {
+    const { container } = mount();
+    const h1 = container.querySelector('.ct-hero h1');
+
+    expect(h1.textContent.replace(/\s+/g, ' ').trim()).toBe('TALK TO THE FANDOMVERSE');
+    // nowrap plus a viewport-scaled size: the name stays on one line at any width
+    // instead of breaking into a three-word column.
+    expect(CSS).toMatch(/\.ct-hero h1 \{[^}]*white-space: nowrap/);
+    expect(CSS).toMatch(/\.ct-hero h1 \{[^}]*font-size: clamp\(/);
+    // The stroke on the outlined half has to scale down with the text, or a 2px
+    // outline swallows the letters at phone sizes.
+    expect(CSS).toMatch(/\.ct-hero h1 em \{[^}]*-webkit-text-stroke: clamp\(/);
+  });
+
+  it('sends "Back to the beginning" to the top of this page, not to home', () => {
+    const scrollTo = jest.fn();
+    window.scrollTo = scrollTo;
+    const { container } = mount();
+
+    const button = within(container.querySelector('.footer-bottom')).getByRole('button', { name: /back to the beginning/i });
+    fireEvent.click(button);
+
+    // It is an action, not a link, so it must not navigate away to #home.
+    expect(button.tagName).toBe('BUTTON');
+    expect(container.querySelector('.footer-bottom a')).toBeNull();
+    expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }));
+  });
 });

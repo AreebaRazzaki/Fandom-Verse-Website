@@ -5,13 +5,20 @@
   --line: rgba(255, 255, 255, .12);
   --line-strong: rgba(255, 255, 255, .24);
   --gold: #ffc247;
+  --gold-fill: #ffc247;
   --magenta: #ff2d95;
   --cyan: #35e2f2;
   --panel: rgba(255, 255, 255, .05);
+  --veil: rgba(10, 7, 16, .88);
+  --veil-fade: rgba(10, 7, 16, .5);
   position: relative;
   min-height: 100vh;
   padding-bottom: 80px;
-  overflow: hidden;
+  /* clip, not hidden: the decorative glows hang off both edges, but `hidden`
+     would make this box a scrollport of its own and the sticky nav would stop
+     sticking to the viewport. `clip` contains the glows and keeps the viewport
+     as the scrolling box. */
+  overflow-x: clip;
   color: var(--ink);
   background: #0a0710;
   font-family: Georgia, 'Times New Roman', serif;
@@ -23,12 +30,19 @@
   --muted: #6a5d84;
   --line: rgba(54, 30, 88, .16);
   --line-strong: rgba(54, 30, 88, .28);
-  --gold: #a9760a;
+  /* The light canvas is a pale lavender, so the dark-stage golds and cyans are
+     stepped down: as text at 9-10px they were only clearing 4:1. The separate
+     --gold-fill stays light, because it is painted behind dark ink. */
+  --gold: #7a5104;
+  --gold-fill: #e0a52a;
   --magenta: #c9106f;
-  --cyan: #0d7f95;
+  --cyan: #0a6b7e;
   --panel: rgba(255, 255, 255, .78);
+  --veil: rgba(255, 255, 255, .9);
+  --veil-fade: rgba(255, 255, 255, .58);
   background: radial-gradient(circle at 14% 12%, #f2ecff 0%, #e7dcff 40%, #f4f0ff 70%, #fbf8ff 100%);
 }
+
 
 /* Lavender-toned canvas and soft geometric shapes behind the story, to lift the
    plain white space and keep the theme legible without overdoing pink. */
@@ -61,42 +75,150 @@
 .theme-light .ab-glow-one { background: rgba(169, 118, 10, .14); }
 .theme-light .ab-glow-two { background: rgba(201, 16, 111, .14); }
 
-.ab-page > *:not(.ab-glow) { position: relative; z-index: 1; }
+/* The nav and the footer are excluded on purpose: both are sticky/layered and
+   carry their own z-index, and this blanket rule would otherwise pin them to
+   z-index 1 so the hero paints over the nav (killing the dropdowns) and the
+   footer loses its lift above the page glows. */
+.ab-page > *:not(.ab-glow):not(.universal-nav):not(.site-footer) { position: relative; z-index: 1; }
+
 
 /* ---------- hero ---------- */
 
-.ab-hero { position: relative; max-width: 980px; margin: 0 auto; padding: 132px 24px 20px; text-align: center; }
+.ab-hero { position: relative; max-width: 900px; margin: 0 auto; padding: 132px 24px 20px; text-align: center; }
 
 /* Soft geometry around the wordmark so the opening is not an empty band. */
 .ab-hero-shapes { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .ab-shape { position: absolute; display: block; }
+
+/* The copy rides on its own veil so the geometry never cuts through the words. */
+.ab-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 28px 24px 34px;
+  border-radius: 40px 14px 40px 14px;
+  background: radial-gradient(ellipse 80% 58% at 50% 48%, var(--veil) 0%, var(--veil-fade) 64%, transparent 100%);
+}
+
+.ab-shape.is-halo {
+  top: 50%; left: 50%;
+  width: min(620px, 96%);
+  aspect-ratio: 1.5;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 194, 71, .22), transparent 68%);
+  filter: blur(28px);
+}
+.theme-light .ab-shape.is-halo { background: radial-gradient(ellipse at center, rgba(169, 118, 10, .2), transparent 68%); }
+
 .ab-shape.is-ring { top: 8%; left: 50%; width: min(760px, 118%); aspect-ratio: 1; transform: translateX(-50%); border: 1px solid var(--line-strong); border-radius: 50%; }
-.ab-shape.is-disc { top: 20%; left: 4%; width: 128px; height: 128px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--gold), transparent 62%), transparent 70%); }
+.ab-shape.is-ring-outer {
+  top: -18%; left: 50%;
+  width: min(960px, 152%);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 1px dashed var(--line);
+  border-radius: 50%;
+}
+.ab-shape.is-disc { top: 20%; left: 4%; width: 128px; height: 128px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 194, 71, .38), transparent 70%); background: radial-gradient(circle, color-mix(in srgb, var(--gold), transparent 62%), transparent 70%); }
+.ab-shape.is-blob {
+  top: 30%; right: 3%;
+  width: 172px; height: 172px;
+  border-radius: 58% 42% 38% 62% / 46% 54% 46% 54%;
+  background: linear-gradient(140deg, rgba(255, 194, 71, .28), rgba(53, 226, 242, .16));
+  filter: blur(2px);
+  transform: rotate(-12deg);
+}
+.theme-light .ab-shape.is-blob { background: linear-gradient(140deg, rgba(169, 118, 10, .2), rgba(13, 127, 149, .14)); }
 .ab-shape.is-shard { right: 6%; bottom: 16%; width: 96px; height: 96px; transform: rotate(22deg); border: 1px solid var(--line-strong); border-radius: 24px 5px 24px 5px; }
-.ab-shape.is-bar { top: 6%; right: 16%; width: 74px; height: 8px; transform: rotate(-16deg); background: var(--gold); opacity: .5; }
+.ab-shape.is-bar { top: 6%; right: 16%; width: 74px; height: 8px; border-radius: 4px; transform: rotate(-16deg); background: var(--gold); opacity: .5; }
+.ab-shape.is-bar-two { bottom: 26%; left: 9%; width: 32px; height: 32px; border-radius: 8px 2px 8px 2px; transform: rotate(45deg); background: var(--cyan); opacity: .34; }
 .ab-shape.is-dash { bottom: 22%; left: 14%; width: 56px; height: 1px; background: currentColor; opacity: .35; }
 .ab-shape.is-dot { top: 34%; right: 26%; width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); opacity: .6; }
+.ab-shape.is-grid {
+  top: 14%; left: 8%;
+  width: 104px; height: 104px;
+  border-radius: 10px;
+  opacity: .5;
+  background-image: radial-gradient(circle, var(--gold) 1.4px, transparent 1.5px);
+  background-size: 15px 15px;
+}
 .theme-light .ab-shape.is-disc { background: radial-gradient(circle, rgba(255, 255, 255, .95), transparent 68%); }
 
-.ab-hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 620px; margin: 38px auto 0; }
+.ab-hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 620px; margin: 34px auto 0; }
 .ab-hero-stats div { display: grid; gap: 5px; padding: 16px 14px; border: 1px solid var(--line); border-radius: 18px 6px 18px 6px; background: var(--panel); }
 .ab-hero-stats b { color: var(--gold); font-size: 26px; line-height: 1; }
 .ab-hero-stats i { color: var(--muted); font-family: Arial, sans-serif; font-size: 9px; font-style: normal; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
 .ab-kicker { margin: 0 0 16px; color: var(--gold); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 900; letter-spacing: .34em; text-transform: uppercase; }
-.ab-hero h1 { margin: 0; font-size: clamp(30px, 6.2vw, 82px); font-weight: 700; line-height: 1.02; letter-spacing: .01em; }
-.ab-hero h1 em { color: transparent; -webkit-text-stroke: 2px var(--gold); font-style: normal; }
-.ab-lede { margin: 24px auto 0; max-width: 62ch; color: var(--ink-soft); font-size: clamp(15px, 1.7vw, 19px); line-height: 1.75; }
+
+/* "THE STORY BEHIND FANDOMVERSE" is one long name, so it is set as a single
+   unbroken line and scaled to the viewport rather than left to wrap into a
+   three-word stack. It also states its own colour and measure: another page ships
+   a bare `h1` rule plus a global --paper token, which otherwise bleeds in here
+   and paints this cream-white over the light canvas, where it disappears. */
+.ab-hero h1 {
+  max-width: none;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(14px, 4.2vw, 46px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.005em;
+  white-space: nowrap;
+  text-shadow: 0 2px 24px var(--veil);
+}
+.theme-light .ab-hero h1 { color: #150c28; text-shadow: 0 2px 24px rgba(255, 255, 255, .95); }
+.ab-hero h1 em { color: transparent; -webkit-text-stroke: clamp(1px, .18vw, 2px) var(--gold); font-style: normal; }
+.ab-lede { margin: 22px auto 0; max-width: 62ch; color: var(--ink-soft); font-size: clamp(14.5px, 1.7vw, 19px); line-height: 1.75; }
 
 .ab-page h2 { margin: 0; font-size: clamp(22px, 3vw, 38px); letter-spacing: .04em; }
+
+/* Numbered eyebrow that labels every band on the page. */
+.ab-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+}
+.ab-eyebrow b {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  padding: 3px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+}
 
 /* ---------- why ---------- */
 
 .ab-why { max-width: 1180px; margin: 0 auto; padding: 76px 24px 0; text-align: center; }
 .ab-why h2 { color: var(--gold); }
 .ab-why-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 34px; }
-.ab-why-card { padding: 28px 24px; border: 1px solid var(--line); border-radius: 22px 7px 22px 7px; background: var(--panel); text-align: left; }
-.ab-why-card h3 { margin: 0; font-size: 19px; }
-.ab-why-card p { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+.ab-why-card { position: relative; padding: 28px 24px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px 7px 22px 7px; background: var(--panel); text-align: left; transition: transform 220ms ease, border-color 220ms ease; }
+.ab-why-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+/* Oversized index sitting behind the heading, clipped by the card. */
+.ab-why-index {
+  position: absolute;
+  top: -14px; right: 10px;
+  color: var(--gold);
+  font-family: Arial, sans-serif;
+  font-size: 76px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: .13;
+  pointer-events: none;
+}
+.ab-why-card h3 { position: relative; margin: 0; font-size: 19px; }
+.ab-why-card p { position: relative; margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
 
 /* ---------- universe map ---------- */
 
@@ -106,13 +228,26 @@
 .ab-map-nodes { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
 .ab-node { padding: 10px 16px; border: 1px solid var(--line-strong); border-radius: 12px 4px 12px 4px; color: var(--ink-soft); background: none; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; transition: color 200ms ease, border-color 200ms ease, background 200ms ease; }
 .ab-node:hover { color: var(--ink); border-color: var(--cyan); }
-.ab-node.is-active { color: #fff; border-color: var(--cyan); background: var(--cyan); }
+/* The active node inverts to a solid cyan, so its label has to be dark ink on the
+   dark stage: white on that cyan only reached 1.6:1. The light-stage cyan is a
+   deep teal, so there the label flips back to white. */
+.ab-node.is-active { color: #1a0b16; border-color: var(--cyan); background: var(--cyan); }
 .theme-light .ab-node.is-active { color: #fff; }
 
 .ab-hub { position: relative; display: grid; place-items: center; width: 320px; height: 320px; }
+.ab-hub::before {
+  content: '';
+  position: absolute;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 194, 71, .3), transparent 66%);
+  filter: blur(22px);
+  pointer-events: none;
+}
 .ab-hub-ring { position: absolute; width: 74%; aspect-ratio: 1; border: 1px dashed var(--line-strong); border-radius: 50%; }
 .ab-hub-ring-two { width: 48%; border-style: solid; border-color: var(--line); animation: ab-spin 26s linear infinite; }
-.ab-hub-core { display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%; color: #1a0b16; background: radial-gradient(circle at 34% 30%, #fff, var(--gold) 62%); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-align: center; box-shadow: 0 0 44px rgba(255, 194, 71, .4); }
+.ab-hub-core { position: relative; display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%; color: #1a0b16; background: radial-gradient(circle at 34% 30%, #fff, var(--gold-fill) 62%); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-align: center; box-shadow: 0 0 44px rgba(255, 194, 71, .4); }
 .ab-satellite { position: absolute; display: grid; place-items: center; width: 74px; height: 74px; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); background: var(--panel); font-family: Arial, sans-serif; font-size: 8.5px; font-style: normal; font-weight: 900; letter-spacing: .1em; text-align: center; text-transform: uppercase; transition: color 240ms ease, border-color 240ms ease, transform 240ms ease; }
 .ab-satellite.is-active { color: var(--ink); border-color: var(--gold); transform: scale(1.14); }
 .ab-satellite.is-at-1 { top: 4px; left: 50%; margin-left: -37px; }
@@ -130,7 +265,7 @@
 .ab-map-detail h3 { margin: 0; font-size: 22px; }
 .ab-map-detail p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
 .ab-map-link { padding: 11px 18px; border: 1px solid var(--gold); border-radius: 12px 4px 12px 4px; color: var(--gold); font-family: Arial, sans-serif; font-size: 9px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
-.ab-map-link:hover { color: #1a0b16; background: var(--gold); }
+.ab-map-link:hover { color: #1a0b16; background: var(--gold-fill); }
 
 @keyframes ab-pop { from { opacity: 0; transform: translateY(12px); } }
 
@@ -139,23 +274,53 @@
 .ab-team { max-width: 1180px; margin: 0 auto; padding: 96px 24px 0; text-align: center; }
 .ab-team h2 { color: var(--magenta); }
 .ab-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 34px; }
-.ab-member { padding: 24px 20px; border: 1px solid var(--line); border-radius: 22px 7px 22px 7px; background: var(--panel); text-align: left; }
-.ab-member-art { display: grid; place-items: center; height: 132px; margin-bottom: 16px; overflow: hidden; border-radius: 16px 5px 16px 5px; background: rgba(0, 0, 0, .3); }
-.ab-member-art img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.ab-member { padding: 24px 20px; border: 1px solid var(--line); border-radius: 22px 7px 22px 7px; background: var(--panel); text-align: left; transition: transform 220ms ease, border-color 220ms ease; }
+.ab-member:hover { transform: translateY(-4px); border-color: var(--magenta); }
+.ab-member-art { display: grid; place-items: center; height: 132px; margin-bottom: 16px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px 5px 16px 5px; background: rgba(0, 0, 0, .3); }
+.ab-member-art img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 260ms ease; }
+.ab-member:hover .ab-member-art img { transform: scale(1.07); }
 .ab-member b { display: block; font-size: 18px; }
 .ab-member i { display: block; margin-top: 4px; color: var(--magenta); font-family: Arial, sans-serif; font-size: 9px; font-style: normal; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
 .ab-member p { margin: 12px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
 
 /* ---------- mission ---------- */
 
-.ab-mission { max-width: 860px; margin: 0 auto; padding: 96px 24px 0; text-align: center; }
+.ab-mission { position: relative; max-width: 860px; margin: 0 auto; padding: 96px 24px 0; text-align: center; }
 .ab-mission h2 { color: var(--gold); }
-.ab-mission > p { margin: 22px auto 0; max-width: 58ch; color: var(--ink-soft); font-size: 17px; line-height: 1.75; }
+.ab-mission > p:not(.ab-eyebrow) { margin: 22px auto 0; max-width: 58ch; color: var(--ink-soft); font-size: 17px; line-height: 1.75; }
+/* The closing band gets its own surface so the page ends on a deliberate note
+   instead of trailing off into the footer. */
+.ab-mission::before {
+  content: '';
+  position: absolute;
+  inset: 74px 0 0;
+  z-index: -1;
+  border: 1px solid var(--line);
+  border-radius: 30px 10px 30px 10px;
+  background: linear-gradient(150deg, rgba(255, 194, 71, .1), rgba(53, 226, 242, .06) 58%, transparent);
+}
 .ab-mission-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 32px; }
-.ab-cta { display: inline-block; padding: 15px 26px; border-radius: 14px 4px 14px 4px; color: #1a0b16; background: var(--gold); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-decoration: none; text-transform: uppercase; transition: transform 200ms ease; }
+.ab-cta { display: inline-block; padding: 15px 26px; border-radius: 14px 4px 14px 4px; color: #1a0b16; background: var(--gold-fill); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-decoration: none; text-transform: uppercase; transition: transform 200ms ease; }
 .ab-cta:hover { transform: translateY(-2px); }
 .ab-cta-ghost { color: var(--gold); border: 1px solid var(--gold); background: none; }
-.ab-cta-ghost:hover { color: #1a0b16; background: var(--gold); }
+.ab-cta-ghost:hover { color: #1a0b16; background: var(--gold-fill); }
+
+/* ---------- footer join ----------
+   The mission band is the last block before the footer, so the seam gets a
+   hairline and a soft shadow in the footer's own accent rather than a negative
+   margin, which would drag the footer up over the closing buttons. */
+
+.ab-page > .site-footer {
+  margin-top: 28px;
+  border-top: 1px solid color-mix(in srgb, var(--foot-accent), transparent 72%);
+  box-shadow: 0 -30px 64px rgba(10, 7, 16, .45);
+}
+/* The theme class sits on .ab-page itself, so it has to be written
+   `.ab-page.theme-light` and not `.theme-light .ab-page` — the latter asks for a
+   themed ancestor of the page root, which never exists, and silently did nothing. */
+.ab-page.theme-light > .site-footer {
+  box-shadow: 0 -30px 64px rgba(60, 20, 90, .12);
+}
 
 /* ---------- responsive ---------- */
 
@@ -168,12 +333,18 @@
 
 @media (max-width: 720px) {
   .ab-hero { padding: 116px 20px 16px; }
+  .ab-hero-inner { padding: 24px 14px 28px; }
   .ab-why-grid { grid-template-columns: minmax(0, 1fr); }
   .ab-team-grid { grid-template-columns: minmax(0, 1fr); }
   .ab-hub { width: 260px; height: 260px; }
   .ab-hub-core { width: 92px; height: 92px; font-size: 9px; }
   .ab-satellite { width: 64px; height: 64px; font-size: 7.5px; }
   .ab-satellite.is-at-7 { margin: -32px 0 0 -32px; }
+  .ab-why-index { font-size: 60px; }
+  /* The wide rings and the dot grid only add noise at phone widths. */
+  .ab-shape.is-ring-outer,
+  .ab-shape.is-grid,
+  .ab-shape.is-blob { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

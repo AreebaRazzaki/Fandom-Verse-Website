@@ -4,6 +4,9 @@ import path from 'path';
 import About from './pages/about';
 
 const CSS = fs.readFileSync(path.join(__dirname, 'pages/about.css'), 'utf8');
+// The shared footer is styled by its own stylesheet, and the About page is one
+// of the pages that renders it, so its tokens are asserted from here.
+const FOOTER_CSS = fs.readFileSync(path.join(__dirname, 'components/SiteFooter.css'), 'utf8');
 const FANDOMS = ['Anime', 'Gaming', 'Movies', 'TV Shows', 'K-Pop', 'Comics', 'Manga'];
 
 const mount = () => render(<About />);
@@ -105,6 +108,127 @@ describe('the about page', () => {
     // The footer no longer floats above an empty band at the bottom.
     expect(CSS).toMatch(/\.ab-page \{[^}]*padding-bottom: 80px/);
     expect(CSS).toContain('@media (prefers-reduced-motion: reduce)');
+  });
+
+  it('sets the story heading as one horizontal line on a readable veil', () => {
+    const { container } = mount();
+    const h1 = container.querySelector('.ab-hero h1');
+
+    expect(h1.textContent.replace(/\s+/g, ' ').trim()).toBe('THE STORY BEHIND FANDOMVERSE');
+    // A long name set in a viewport-scaled size stays on one line instead of
+    // breaking into a three-word column.
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*white-space: nowrap/);
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*font-size: clamp\(/);
+    // The outline has to scale with the text or a 2px stroke swallows it.
+    expect(CSS).toMatch(/\.ab-hero h1 em \{[^}]*-webkit-text-stroke: clamp\(/);
+    // The copy sits on its own veil, above the geometry, in both themes.
+    expect(container.querySelector('.ab-hero-inner')).toBeInTheDocument();
+    expect(CSS).toMatch(/\.ab-hero-inner \{[^}]*z-index: 1/);
+    expect(CSS).toMatch(/\.ab-page \{[^}]*--veil: rgba\(10, 7, 16/);
+    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--veil: rgba\(255, 255, 255/);
+  });
+
+  it('states its own ink and measure, so no other page can repaint the heading', () => {
+    mount();
+    // Another page ships a bare `h1` rule and puts --paper on :root, so an
+    // unwritten `color` here resolves to a cream that vanishes on the pale
+    // light canvas. The heading also has to drop the inherited max-width, or
+    // `nowrap` overflows the measure it was given.
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*color: var\(--ink\)/);
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*max-width: none/);
+    expect(CSS).toMatch(/\.theme-light \.ab-hero h1 \{[^}]*color:/);
+  });
+
+  it('keeps the light stage readable rather than reusing the dark inks', () => {
+    mount();
+    // The pale lavender canvas cannot carry the bright dark-stage accents, so
+    // the light theme steps gold and cyan down for text-sized use.
+    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--gold: #7a5104/);
+    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--cyan: #0a6b7e/);
+    // Surfaces that paint dark ink on top of gold keep the light fill, so the
+    // gold text token can stay dark.
+    expect(CSS).toMatch(/\.ab-page \{[^}]*--gold-fill: /);
+    expect(CSS).toMatch(/\.ab-cta \{[^}]*background: var\(--gold-fill\)/);
+    expect(CSS).toMatch(/\.ab-hub-core \{[^}]*var\(--gold-fill\)/);
+    // A solid cyan node needs dark ink on the dark stage; the deep light-stage
+    // cyan flips it back to white.
+    expect(CSS).toMatch(/\.ab-node\.is-active \{[^}]*color: #1a0b16/);
+    expect(CSS).toMatch(/\.theme-light \.ab-node\.is-active \{[^}]*color: #fff/);
+  });
+
+  it('lets the sticky nav reach the viewport instead of trapping it', () => {
+    mount();
+    // `overflow: hidden` on the page root makes it a scrollport of its own, and
+    // a sticky nav inside a box that never scrolls simply never sticks. `clip`
+    // still contains the decorative glows that hang off both edges.
+    expect(CSS).not.toMatch(/\.ab-page \{[^}]*overflow: hidden/);
+    expect(CSS).toMatch(/\.ab-page \{[^}]*overflow-x: clip/);
+    // The blanket layer rule must skip the nav and the footer, both of which
+    // carry their own stacking and would otherwise be pinned to z-index 1.
+    expect(CSS).toMatch(/\.ab-page > \*:not\(\.ab-glow\):not\(\.universal-nav\):not\(\.site-footer\)/);
+  });
+
+  it('colors the shared footer from its own tokens, not an undefined --accent', () => {
+    mount();
+    // Only a couple of pages define --accent, and they define it on their own
+    // page root. Reading it unguarded made every accent rule invalid at
+    // computed-value time, which silently cost the footer its top border, its
+    // logo ring, the dashed spinner and its gold headings.
+    expect(FOOTER_CSS).toMatch(/--foot-accent: var\(--accent, /);
+    expect(FOOTER_CSS).not.toMatch(/color[^;]*var\(--accent\)/);
+    expect(FOOTER_CSS).toMatch(/--foot-on-accent: #f7f1e6/);
+  });
+
+  it('numbers each band so the page reads as an ordered story', () => {
+    const { container } = mount();
+    const eyebrows = [...container.querySelectorAll('.ab-eyebrow')];
+
+    expect(eyebrows).toHaveLength(4);
+    expect(eyebrows.map((node) => node.querySelector('b').textContent)).toEqual(['01', '02', '03', '04']);
+    // Every eyebrow sits inside the band it labels.
+    ['.ab-why', '.ab-map', '.ab-team', '.ab-mission'].forEach((section) => {
+      expect(container.querySelector(`${section} .ab-eyebrow`)).toBeInTheDocument();
+    });
+  });
+
+  it('offers a theme switch that reads as a control in the nav', () => {
+    const NAV_CSS = fs.readFileSync(path.join(__dirname, 'components/SiteNav.css'), 'utf8');
+    const { container } = mount();
+
+    const toggle = container.querySelector('.universal-theme-button');
+    expect(toggle).toBeInTheDocument();
+    // It has to be a pill with its own surface, not a bare icon that reads as
+    // decoration next to the real controls.
+    expect(NAV_CSS).toMatch(/\.universal-theme-button \{[^}]*border-radius: 999px/);
+    expect(NAV_CSS).toMatch(/\.universal-theme-button \{[^}]*border: 1px solid/);
+    expect(NAV_CSS).toMatch(/\.universal-theme-button \{[^}]*background:/);
+    expect(NAV_CSS).toMatch(/\.universal-theme-button:hover \{[^}]*border-color: var\(--nav-accent\)/);
+    // The icon needs a fixed size, otherwise width:100% squashes it inside the pill.
+    expect(NAV_CSS).toMatch(/\.universal-theme-button svg \{[^}]*width: 15px/);
+
+    fireEvent.click(toggle);
+    expect(container.querySelector('.ab-page').className).toContain('theme-light');
+  });
+
+  it('seats the shared footer under the mission band', () => {
+    const { container } = mount();
+    const footer = container.querySelector('.ab-page > .site-footer');
+
+    expect(footer).toBeInTheDocument();
+    // The mission band's surface runs to the end of its section, so the footer
+    // needs a positive gap and a marked seam. A negative margin would drag the
+    // footer up over the closing buttons.
+    expect(CSS).not.toMatch(/\.ab-page > \.site-footer \{[^}]*margin-top: -/);
+    expect(CSS).toMatch(/\.ab-page > \.site-footer \{[^}]*margin-top: 28px/);
+    expect(CSS).toMatch(/\.ab-page > \.site-footer \{[^}]*border-top: 1px solid/);
+    // The light seam has to be written `.ab-page.theme-light`, because the theme
+    // class is applied to the page root itself. The older `.theme-light .ab-page`
+    // form asks for a themed *ancestor* of the root, which never exists, so the
+    // whole rule was inert; the light stage silently kept the dark-stage seam.
+    expect(CSS).not.toMatch(/\.theme-light \.ab-page > \.site-footer/);
+    expect(CSS).toMatch(/\.ab-page\.theme-light > \.site-footer \{[^}]*box-shadow/);
+    // The scroll-to-top control lives in that footer on every page.
+    expect(within(footer).getByRole('button', { name: /back to the beginning/i })).toBeInTheDocument();
   });
 
   it('keeps the text short and links onward', () => {

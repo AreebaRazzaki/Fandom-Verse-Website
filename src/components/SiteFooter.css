@@ -1,4 +1,4 @@
-/* Shared site footer, lifted from the home page so every page can reuse it.
+﻿/* Shared site footer, lifted from the home page so every page can reuse it.
    The footer owns its own colour tokens so its text stays readable no matter
    which page renders it or which theme that page is in. */
 
@@ -7,13 +7,20 @@
   --foot-muted: #a9a59d;
   --foot-line: rgba(242, 238, 230, .22);
   --foot-bg: #05070b;
-  --foot-chip: #0b0d11;
+  --foot-on-accent: #0b0d11;
+  /* Only a couple of pages define --accent, and they define it on their own page
+     root. Everywhere else the token is simply undefined, which makes every
+     var(--accent) below invalid at computed-value time: the top border, the logo
+     ring, the dashed spinner, the hover fills and the gold headings all silently
+     disappear. Prefer a page-supplied accent when there is one, otherwise fall
+     back to the footer's own gold. */
+  --foot-accent: var(--accent, #ffc247);
   position: relative;
   z-index: 2;
   width: 100%;
   margin: 0;
   padding: 94px max(28px, calc((100vw - 1480px) / 2)) 30px;
-  border-top: 1px solid color-mix(in srgb, var(--accent), transparent 58%);
+  border-top: 1px solid color-mix(in srgb, var(--foot-accent), transparent 58%);
   color: var(--foot-ink);
   background: var(--foot-bg);
   font-family: Arial, sans-serif;
@@ -21,10 +28,17 @@
 
 .theme-light .site-footer {
   --foot-ink: #171820;
-  --foot-muted: #474b54;
+  /* The tan light-stage surface is mid-tone, so the muted grey only reached 3.6:1
+     here; this near-black keeps the small print readable. */
+  --foot-muted: #2c2f36;
   --foot-line: rgba(23, 24, 32, .22);
   --foot-bg: #b3a494;
-  --foot-chip: #171820;
+  /* The light-stage accent is a dark bronze, so the ink that sits on top of it
+     has to be light, not the dark chip the dark stage uses. */
+  --foot-on-accent: #f7f1e6;
+  /* A page that supplies its own light-theme accent keeps it; the fallback is a
+     deep bronze, the only gold dark enough to read on the tan surface. */
+  --foot-accent: var(--accent, #452e02);
 }
 
 .footer-main {
@@ -47,23 +61,23 @@
   place-items: center;
   width: 78px;
   height: 78px;
-  border: 1px solid color-mix(in srgb, var(--accent), transparent 34%);
+  border: 1px solid color-mix(in srgb, var(--foot-accent), transparent 34%);
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent), transparent 78%), transparent 72%);
+  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--foot-accent), transparent 78%), transparent 72%);
   transition: transform 420ms cubic-bezier(.16, .82, .25, 1), box-shadow 420ms ease;
 }
 
 .footer-logo::after {
   position: absolute;
   inset: -7px;
-  border: 1px dashed color-mix(in srgb, var(--accent), transparent 52%);
+  border: 1px dashed color-mix(in srgb, var(--foot-accent), transparent 52%);
   border-radius: 50%;
   content: '';
   animation: footer-logo-spin 22s linear infinite;
 }
 
-.footer-logo img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent), transparent 42%)); }
-.footer-brand:hover .footer-logo { box-shadow: 0 0 30px color-mix(in srgb, var(--accent), transparent 58%); transform: rotate(-6deg) scale(1.05); }
+.footer-logo img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--foot-accent), transparent 42%)); }
+.footer-brand:hover .footer-logo { box-shadow: 0 0 30px color-mix(in srgb, var(--foot-accent), transparent 58%); transform: rotate(-6deg) scale(1.05); }
 
 .footer-brand-text { display: grid; gap: 12px; }
 .footer-brand-text strong { color: var(--foot-ink); font-size: 17px; font-weight: 800; letter-spacing: .2em; }
@@ -71,17 +85,20 @@
 .footer-brand-text em { color: var(--foot-ink); font-style: normal; font-weight: 800; }
 
 .footer-column { display: grid; align-content: start; gap: 13px; }
-.footer-column > strong { margin-bottom: 6px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.footer-column > strong { margin-bottom: 6px; color: var(--foot-accent); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .footer-column a { width: max-content; color: var(--foot-muted); font-size: 14px; font-weight: 600; text-decoration: none; transition: color 180ms ease, transform 180ms ease; }
 .footer-column a:hover { color: var(--foot-ink); transform: translateX(4px); }
 
 .social-links { display: flex; gap: 8px; margin-top: 9px; }
-.social-links a { display: grid; place-items: center; width: 31px; height: 31px; border: 1px solid var(--foot-line); border-radius: 50%; color: var(--accent); font-size: 10px; font-weight: 800; text-transform: uppercase; }
-.social-links a:hover { border-color: var(--accent); background: var(--accent); color: var(--foot-chip); transform: none; }
+.social-links a { display: grid; place-items: center; width: 31px; height: 31px; border: 1px solid var(--foot-line); border-radius: 50%; color: var(--foot-accent); font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.social-links a:hover { border-color: var(--foot-accent); background: var(--foot-accent); color: var(--foot-on-accent); transform: none; }
 
 .footer-bottom {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
+  gap: 14px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -94,8 +111,32 @@
   text-transform: uppercase;
 }
 
-.footer-bottom a { color: var(--accent); font-weight: 800; text-decoration: none; }
-.footer-bottom a:hover { text-decoration: underline; }
+.footer-bottom a,
+.footer-top { color: var(--foot-accent); font-weight: 800; text-decoration: none; }
+.footer-bottom a:hover,
+.footer-top:hover { text-decoration: underline; }
+
+/* An action, not a link, so it carries the button reset and a pill affordance
+   to show it is clickable now that it no longer looks like a link. */
+.footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  justify-self: start;
+  padding: 10px 18px;
+  border: 1px solid var(--foot-line);
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+.footer-top-arrow { font-size: 13px; line-height: 1; transition: transform 180ms ease; }
+.footer-top:hover { color: var(--foot-on-accent); border-color: var(--foot-accent); background: var(--foot-accent); text-decoration: none; }
+.footer-top:hover .footer-top-arrow { transform: translateY(-2px); }
+.footer-top:focus-visible { outline: 2px solid var(--foot-accent); outline-offset: 3px; }
 
 @keyframes footer-logo-spin { to { transform: rotate(360deg); } }
 
