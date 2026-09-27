@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { isSaved, removeBookmark, saveBookmark, setBookmarkNote, useBookmarks } from '../bookmarks';
 import './BookmarkButton.css';
 
-const TYPE_GLYPH = { article: 'A', trailer: 'T', event: 'E', release: 'R', product: 'P' };
+const TYPE_GLYPH = { article: 'A', trailer: 'T', event: 'E', release: 'R', product: 'P', character: 'C', gallery: 'G' };
 
 function BookmarkButton({ entry, label = 'Save', className = '' }) {
   const saved = useBookmarks();

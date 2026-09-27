@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
 const KEY = 'fandomverse-bookmarks';
-const TYPES = ['article', 'trailer', 'event', 'release', 'product'];
+const TYPES = ['article', 'trailer', 'event', 'release', 'product', 'character'];
 
 let cache = null;
 let listeners = [];

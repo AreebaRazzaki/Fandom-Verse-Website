@@ -122,8 +122,12 @@
   box-shadow: 0 26px 60px rgba(0, 0, 0, .5);
 }
 
-/* The panel is its own surface, so the ink on top of it stays readable in both themes. */
-.theme-light .universal-search-panel { border-color: rgba(23, 24, 32, .16); background: #fbf8ff; }
+/* The panel is its own surface, so the ink on top of it stays readable in both
+   themes. It is keyed off the nav's own theme class rather than an ancestor's,
+   because pages disagree on what they call their light theme — `.theme-light`,
+   `.anime-theme-light`, `.comics-theme-light` and so on — so an ancestor
+   selector matched on some pages and silently did nothing on the rest. */
+.universal-nav.theme-light .universal-search-panel { border-color: rgba(23, 24, 32, .16); background: #fbf8ff; }
 
 .universal-search-hits { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .universal-search-hits a { display: grid; gap: 3px; padding: 9px 11px; border-radius: 11px 4px 11px 4px; color: var(--nav-ink); text-decoration: none; }
@@ -156,7 +160,7 @@
   background: rgba(127, 127, 127, .1);
   background: color-mix(in srgb, var(--nav-accent), transparent 92%);
   opacity: 1;
-  font-size: 9.5px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -170,25 +174,184 @@
   transform: translateY(-1px);
 }
 .universal-theme-button:focus-visible { outline: 2px solid var(--nav-accent); outline-offset: 2px; }
-.universal-signin { margin-left: 5px; padding: 9px 5px; border: 0; font-size: 13px; font-weight: 800; letter-spacing: .06em; }
+.universal-signin { margin-left: 5px; padding: 9px 5px; border: 0; font-size: 14.5px; font-weight: 800; letter-spacing: .06em; }
 .universal-signin b { margin-left: 9px; color: var(--nav-accent); font-size: 16px; }
 
-@media (max-width: 720px) {
-  .universal-nav { display: flex; flex-wrap: wrap; width: calc(100% - 28px); height: auto; min-height: 68px; margin-top: 8px; padding: 7px 14px 9px; }
-  .universal-nav-links { order: 3; width: 100%; justify-content: flex-start; gap: 13px; margin-top: 9px; overflow-x: auto; scrollbar-width: none; }
-  .universal-nav-links::-webkit-scrollbar { display: none; }
-  .universal-nav-link { white-space: nowrap; font-size: 12px; }
-  .universal-nav-actions { margin-left: auto; gap: 3px; }
-  .universal-icon-button { width: 32px; height: 32px; }
-  .universal-search-box { width: 32px; height: 34px; }
+/* ---------- small-screen drawer ----------
+   The bar used to squeeze its links into a horizontally scrolling strip, and a
+   scrolling strip is an overflow container, so the Fandoms and Discover panels
+   were clipped to the strip and could never be seen. Below the breakpoint the
+   bar is now just the brand and a toggle, and the links, search, saved button,
+   theme switch and sign-in move into a drawer that stacks them and opens the
+   panels inline. The wrapper is `display: contents` on wide screens, so the
+   desktop bar is laid out by exactly the same rules as before.
+
+   The breakpoint is 1024px, not a phone width: the bar does not wrap, so past
+   some point it simply overflows its own box and the options on the right are
+   cut off. Measured at the sizes below, the full bar needs roughly 1270px
+   before it stops clipping, which puts every tablet — 768 and 820 in portrait,
+   1024 in landscape — on the wrong side of the line. */
+
+.universal-nav-drawer { display: contents; }
+
+.universal-nav-toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 42px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--nav-ink), transparent 78%);
+  border-radius: 999px;
+  color: var(--nav-ink);
+  background: color-mix(in srgb, var(--nav-ink), transparent 88%);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.universal-nav-toggle span {
+  display: block;
+  width: 17px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 220ms cubic-bezier(.16, .82, .25, 1), opacity 160ms ease;
+}
+
+.universal-nav-toggle:hover { color: var(--nav-accent); border-color: var(--nav-accent); }
+.universal-nav-toggle:focus-visible { outline: 2px solid var(--nav-accent); outline-offset: 2px; }
+
+/* Open: the three bars fold into a cross. */
+.universal-nav-toggle.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.universal-nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.universal-nav-toggle.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .universal-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    justify-content: stretch;
+    column-gap: 10px;
+    width: calc(100% - 28px);
+    height: auto;
+    min-height: 64px;
+    margin-top: 8px;
+    padding: 7px 12px 8px 14px;
+  }
+
+  /* The gold frame is a clip-path in percentages, so on a box that grows to the
+     height of the open drawer its spikes stretch with it. Pinned to the bar's
+     own 64px, the frame keeps its proportions and the drawer carries its own
+     surface instead. */
+  .universal-nav::before { bottom: auto; height: 64px; }
+  .universal-nav::after { inset: 3px 3px auto; height: 58px; }
+
+  /* Row one is the bar: brand left, toggle right. */
+  .universal-brand { grid-row: 1; min-width: 0; }
+  .universal-nav-toggle { display: flex; grid-row: 1; grid-column: 2; justify-self: end; }
+
+  /* Row two is the drawer, hidden until the toggle opens it. */
+  .universal-nav-drawer { display: none; }
+  .universal-nav.is-menu-open .universal-nav-drawer {
+    display: grid;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 12px 14px 14px;
+  }
+  /* The drawer carries its own surface, and it has to flip with the theme:
+     --nav-ink is dark ink on the light stage, so a dark panel there swallowed
+     every label. The surface is deliberately NOT written onto the is-menu-open
+     rule: that selector is one class more specific, so it outranked the light
+     pair below and left dark text on a dark panel. */
+  .universal-nav .universal-nav-drawer {
+    border: 1px solid color-mix(in srgb, var(--nav-accent), transparent 62%);
+    border-radius: 18px 6px 18px 6px;
+    background: #14101f;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, .34);
+  }
+  .universal-nav.theme-light .universal-nav-drawer {
+    border-color: rgba(23, 24, 32, .16);
+    background: #fbf8ff;
+    box-shadow: 0 22px 48px rgba(60, 20, 90, .12);
+  }
+
+  /* A short phone in landscape cannot fit every row, so the drawer scrolls
+     inside the bar rather than shoving the page around. */
+  .universal-nav.is-menu-open {
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .universal-nav-links { flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; margin: 0; }
+  .universal-nav-link { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 2px; font-size: 13.5px; text-align: left; border-bottom: 1px solid color-mix(in srgb, var(--nav-ink), transparent 90%); }
+  /* The underline reads as a hover cue on a horizontal bar. Stacked rows get a
+     left accent instead, which still lines up if a label wraps. */
+  .universal-nav-link::after { top: 8px; right: auto; bottom: 8px; left: -10px; width: 3px; height: auto; border-radius: 3px; transform: none; }
+  .universal-nav-link.is-active { color: var(--nav-accent); }
+
+  /* The panels stop floating and open in flow. An absolutely positioned one is
+     clipped by any scrolling ancestor, which is what broke them. */
+  .universal-nav-menu { position: static; }
+  .universal-dropdown,
+  .universal-discover-dropdown {
+    position: static;
+    min-width: 0;
+    margin: 4px 0 6px;
+    padding: 4px 0 4px 12px;
+    border: 0;
+    border-left: 2px solid color-mix(in srgb, var(--nav-accent), transparent 45%);
+    border-radius: 0;
+    background: color-mix(in srgb, var(--nav-ink), transparent 92%);
+    box-shadow: none;
+  }
+  .universal-dropdown a { padding: 11px 12px; color: var(--nav-ink); font-size: 13px; }
+
+  .universal-nav-actions { flex-wrap: wrap; align-items: center; justify-content: flex-start; justify-self: stretch; gap: 8px; margin: 0; }
+  /* The search gets a full row to itself: there is no longer a bar to keep it
+     compact, and at full width it is a usable tap target. */
+  .universal-search { flex: 1 1 100%; }
+  .universal-search-box,
   .universal-search.is-open .universal-search-box,
-  .universal-search-box:focus-within { width: 190px; }
-  .universal-search-panel { right: -46px; width: min(300px, 84vw); }
+  .universal-search-box:focus-within { width: 100%; height: 42px; }
+  .universal-search-panel { right: 0; left: 0; width: 100%; }
+
+  .universal-icon-button { width: 40px; height: 40px; }
+  /* The label fits in a drawer row, so the switch names the theme again instead
+     of hiding behind a bare glyph. */
+  .universal-theme-button { width: auto; height: 40px; padding: 0 16px 0 12px; }
+  .universal-theme-button span { display: inline; }
+  .universal-signin { margin-left: auto; padding: 9px 4px; font-size: 11.5px; }
+
+  .universal-brand img { width: 44px; height: 44px; }
+  .universal-brand { font-size: 11px; }
+}
+
+/* Between the drawer and the full bar the links are still a row, so the row has
+   to be trimmed until it fits. The wordmark and the theme label are the first
+   things to go, then the logo and the gaps come down; together they buy back the
+   ~320px the full bar needs above this tier, which is why a 1025px laptop and a
+   1280px one can share the same bar without either of them clipping. */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .universal-nav { column-gap: clamp(18px, 2.4vw, 34px); width: calc(100% - 48px); padding: 0 20px; }
+  .universal-brand img { width: 54px; height: 54px; }
+  .universal-brand span { display: none; }
+  .universal-nav-links { gap: 18px; }
+  .universal-nav-link { font-size: 13px; }
+  .universal-icon-button { width: 32px; height: 32px; }
   .universal-theme-button { width: 32px; height: 32px; padding: 0; justify-content: center; }
   .universal-theme-button span { display: none; }
-  .universal-signin { padding: 7px 3px; font-size: 10px; }
-  .universal-brand img { width: 50px; height: 50px; }
-  .universal-brand { font-size: 11px; }
+  .universal-signin { margin-left: 2px; padding: 8px 3px; font-size: 12.5px; }
+  /* The resting pill is unchanged; it just opens to a width that still leaves
+     the saved and theme buttons on screen. */
+  .universal-search.is-open .universal-search-box,
+  .universal-search-box:focus-within { width: 200px; }
 }
 
 

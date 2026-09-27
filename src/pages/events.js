@@ -265,7 +265,7 @@ function TicketPanel({ tickets, onClose }) {
   );
 }
 
-export default function Events() {
+export default function Events({ fandom: fandomRoute = null, eventId: eventRoute = null }) {
   const [theme, setTheme] = useState(readTheme);
   const [data, setData] = useState({ events: [], categories: [] });
   const [status, setStatus] = useState('loading');
@@ -290,6 +290,22 @@ export default function Events() {
       .catch(() => { if (alive) setStatus('error'); });
     return () => { alive = false; };
   }, []);
+
+  // A fandom page can hand over its own id, which the passport filters on. Any
+  // id the json does not know about falls back to the full list rather than
+  // showing an empty page.
+  useEffect(() => {
+    if (!fandomRoute) return;
+    const known = (data.categories || []).some((item) => item.id === fandomRoute);
+    setFandom(known ? fandomRoute : 'all');
+  }, [fandomRoute, data.categories]);
+
+  // A single pass can be deep-linked as well. It can only be opened once the
+  // list has arrived, so the id is parked until the fetch lands.
+  useEffect(() => {
+    if (!eventRoute) return;
+    if (status === 'ready' && (data.events || []).some((item) => item.id === eventRoute)) setOpenId(eventRoute);
+  }, [eventRoute, status, data.events]);
 
   useEffect(() => {
     setLimit(PAGE_SIZE);
@@ -316,6 +332,9 @@ export default function Events() {
   const shown = visible.slice(0, limit);
   const featured = events.find((item) => item.id === data.featuredId) || events[0] || null;
   const accentOf = (id) => (categories.find((item) => item.id === id) || {}).accent || '#ffc247';
+  // Resolved against the loaded list, so a deep link to a pass that has since
+  // been removed from the json opens nothing instead of a half-filled sheet.
+  const openEvent = openId ? events.find((item) => item.id === openId) || null : null;
 
   const kinds = useMemo(() => {
     const seen = [];
@@ -487,10 +506,10 @@ export default function Events() {
             </div>
           )}
 
-          {openId && (
+          {openEvent && (
             <EventModal
-              event={events.find((item) => item.id === openId)}
-              accent={accentOf((events.find((item) => item.id === openId) || {}).category)}
+              event={openEvent}
+              accent={accentOf(openEvent.category)}
               onClose={() => setOpenId(null)}
             />
           )}

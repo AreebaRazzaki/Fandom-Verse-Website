@@ -13,6 +13,7 @@
   --tv-accent: #d9343b;
   --tv-soft-accent: #882b32;
   --tv-crystal-line: rgba(255, 255, 255, .1);
+  --tv-nav-h: 88px;
   min-height: 100svh;
   overflow: hidden;
   color: var(--tv-ink);
@@ -32,9 +33,11 @@
   background: var(--tv-bg);
 }
 
-.tvshows-hero { position: relative; width: 100%; height: calc(100svh - 82px); min-height: 590px; overflow: hidden; isolation: isolate; background: var(--tv-bg); }
-.tvshows-crystal { position: absolute; z-index: 0; inset: 0; background: radial-gradient(circle at 12% 18%, rgba(207, 44, 53, .26), transparent 25%), radial-gradient(circle at 88% 82%, rgba(255, 255, 255, .14), transparent 24%), linear-gradient(126deg, transparent 0 24%, var(--tv-crystal-line) 24.2% 24.4%, transparent 24.7% 100%), linear-gradient(38deg, transparent 0 56%, var(--tv-crystal-line) 56.2% 56.4%, transparent 56.7% 100%), linear-gradient(150deg, transparent 0 73%, var(--tv-crystal-line) 73.2% 73.4%, transparent 73.7% 100%), linear-gradient(135deg, #4a373b, #1b1c21 58%, #464247); opacity: 1; }
-.tvshows-theme-light .tvshows-crystal { background: radial-gradient(circle at 12% 18%, rgba(169, 38, 46, .2), transparent 25%), radial-gradient(circle at 88% 82%, rgba(255, 255, 255, .42), transparent 24%), linear-gradient(126deg, transparent 0 24%, var(--tv-crystal-line) 24.2% 24.4%, transparent 24.7% 100%), linear-gradient(38deg, transparent 0 56%, var(--tv-crystal-line) 56.2% 56.4%, transparent 56.7% 100%), linear-gradient(150deg, transparent 0 73%, var(--tv-crystal-line) 73.2% 73.4%, transparent 73.7% 100%), linear-gradient(135deg, #d5d1d2, #a9a8ac 58%, #eee9e9); }
+.tvshows-hero { position: relative; width: 100%; height: 100svh; min-height: 678px; margin-top: calc(-1 * var(--tv-nav-h)); overflow: hidden; isolation: isolate; background: var(--tv-bg); }
+.tvshows-backdrop { position: absolute; inset: 0; }
+.tvshows-stage { position: absolute; top: var(--tv-nav-h); right: 0; bottom: 0; left: 0; }
+.tvshows-crystal { position: absolute; z-index: 0; inset: 0; background: radial-gradient(circle at 12% 18%, rgba(207, 44, 53, .26), transparent 25%), radial-gradient(circle at 88% 82%, rgba(255, 255, 255, .14), transparent 24%), linear-gradient(126deg, transparent 0 24%, var(--tv-crystal-line) 24.2% 24.4%, transparent 24.7% 100%), linear-gradient(38deg, transparent 0 56%, var(--tv-crystal-line) 56.2% 56.4%, transparent 56.7% 100%), linear-gradient(150deg, transparent 0 73%, var(--tv-crystal-line) 73.2% 73.4%, transparent 73.7% 100%), linear-gradient(135deg, #331c22, #1b1c21 58%, #2b191f); opacity: 1; }
+.tvshows-theme-light .tvshows-crystal { background: radial-gradient(circle at 12% 18%, rgba(169, 38, 46, .2), transparent 25%), radial-gradient(circle at 88% 82%, rgba(255, 255, 255, .42), transparent 24%), linear-gradient(126deg, transparent 0 24%, var(--tv-crystal-line) 24.2% 24.4%, transparent 24.7% 100%), linear-gradient(38deg, transparent 0 56%, var(--tv-crystal-line) 56.2% 56.4%, transparent 56.7% 100%), linear-gradient(150deg, transparent 0 73%, var(--tv-crystal-line) 73.2% 73.4%, transparent 73.7% 100%), linear-gradient(135deg, #e0d5d6, #b6aaac 58%, #f6ecec); }
 .tvshows-frame { position: absolute; z-index: 2; inset: clamp(18px, 2.5vw, 34px) clamp(18px, 4.5vw, 68px) clamp(18px, 2.6vw, 32px); overflow: hidden; isolation: isolate; background: var(--tv-frame); clip-path: polygon(0 6%, 2.4% 0, 97.6% 0, 100% 6%, 100% 94%, 97.6% 100%, 2.4% 100%, 0 94%); filter: drop-shadow(0 24px 28px rgba(0, 0, 0, .28)); }
 .tvshows-frame::before { position: absolute; z-index: 8; inset: 0; border: 1px solid var(--tv-frame-edge); clip-path: inherit; content: ''; pointer-events: none; }
 .tvshows-frame::after { position: absolute; z-index: 8; top: 22px; right: 4%; left: 4%; height: 1px; background: var(--tv-frame-edge); content: ''; opacity: .62; pointer-events: none; }
@@ -72,7 +75,7 @@
 .tvshows-dots { display: flex; gap: 7px; }
 .tvshows-dots button { width: 22px; height: 3px; padding: 0; border: 0; background: var(--tv-frame-edge); cursor: pointer; transition: width 220ms ease, background 220ms ease; }
 .tvshows-dots button.is-active { width: 42px; background: var(--tv-accent); }
-.tvshows-footer { position: absolute; z-index: 7; right: 5%; bottom: 22px; left: 5%; display: flex; justify-content: space-between; color: var(--tv-muted); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .15em; }
+.tvshows-footer { position: absolute; z-index: 7; right: 5%; bottom: 22px; left: 5%; display: flex; justify-content: flex-end; color: var(--tv-muted); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .15em; }
 .tvshows-footer span:last-child { color: var(--tv-accent); }
 
 @keyframes tvshows-copy-in { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
@@ -83,16 +86,25 @@
 }
 
 @media (max-width: 850px) and (min-width: 721px) {
-  .tvshows-hero { min-height: 620px; }
+  .tvshows-hero { min-height: 660px; }
   .tvshows-copy { top: 8%; left: 5%; width: 48%; padding: 22px 24px 26px 20px; }
   .tvshows-copy h1 { font-size: clamp(42px, 6vw, 64px); }
   .tvshows-description { font-size: 12px; }
   .tvshows-side-code { display: none; }
 }
 
+/* The hero keeps the whole first screen and the sections below it are free to
+   run on for as many screens as they need, so the page no longer clips them. */
+.tvshows-page {
+  height: auto;
+  min-height: 100svh;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
 @media (max-width: 720px) {
-  .tvshows-page { overflow-x: hidden; overflow-y: auto; }
-  .tvshows-hero { height: calc(100svh - 124px); min-height: 760px; }
+  .tvshows-page { --tv-nav-h: 124px; overflow-x: hidden; overflow-y: auto; }
+  .tvshows-hero { min-height: 760px; }
   .tvshows-frame { inset: 14px 12px 16px; }
   .tvshows-frame::after { top: 14px; right: 7%; left: 7%; }
   .tvshows-masthead { top: 27px; right: 7%; left: 7%; font-size: 7px; letter-spacing: .1em; }
@@ -117,7 +129,6 @@
   .tvshows-dots button { width: 15px; }
   .tvshows-dots button.is-active { width: 28px; }
   .tvshows-footer { right: 7%; bottom: 14px; left: 7%; font-size: 7px; }
-  .tvshows-footer span:first-child { max-width: 155px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,478 @@
+/* The two doors: a heading, then one button per next page.
+
+   Like the media wall, every colour arrives from the fandom's own page
+   stylesheet through `paletteVars(..., 'door')`, so the block below is only the
+   fallback for an unregistered fandom plus the derived steps. */
+
+.door {
+  --door-line-2: color-mix(in srgb, var(--door-line), var(--door-ink) 24%);
+  --door-tint: color-mix(in srgb, var(--door-accent), transparent 88%);
+  --door-tint-2: color-mix(in srgb, var(--door-accent), transparent 76%);
+
+  --door-page: #17181a;
+  --door-sunk: #0f1012;
+  --door-card: #252628;
+  --door-ink: #f2f1ee;
+  --door-soft: #cdcbc6;
+  --door-muted: #8f8d86;
+  --door-line: rgba(242, 241, 238, .15);
+  --door-accent: #b98516;
+  --door-accent-two: #c5962e;
+
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  width: 100%;
+  padding: clamp(64px, 6.5vw, 96px) 0 clamp(72px, 7vw, 108px);
+  color: var(--door-ink);
+  background: var(--door-page);
+  font-family: 'Elgraine', Georgia, serif;
+}
+
+/* ------------------------------------------------------------------ */
+/* Backdrop: an accent glow, a ruled grid, five hairlines, two         */
+/* doorways with the light coming out of them, loose geometry, a       */
+/* measured rule, a trail of chevrons and drifting dust, then grain.   */
+/* ------------------------------------------------------------------ */
+
+.door-bg,
+.door-bg-rule,
+.door-bg-glow,
+.door-bg-arch,
+.door-bg-shapes,
+.door-bg-ticks,
+.door-bg-chevrons,
+.door-bg-motes,
+.door-bg-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.door-bg {
+  background:
+    radial-gradient(72% 60% at 92% 0%, var(--door-tint), transparent 62%),
+    linear-gradient(180deg, var(--door-sunk), var(--door-page) 58%, var(--door-sunk));
+}
+
+.door-bg-rule i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--door-accent), transparent 76%), transparent);
+}
+.door-bg-rule i:nth-child(1) { left: 6%; }
+.door-bg-rule i:nth-child(2) { left: 29%; opacity: .55; }
+.door-bg-rule i:nth-child(3) { left: 50%; opacity: .4; }
+.door-bg-rule i:nth-child(4) { left: 71%; opacity: .55; }
+.door-bg-rule i:nth-child(5) { left: 94%; }
+
+.door-bg-glow {
+  background-image:
+    linear-gradient(to right, var(--door-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--door-line) 1px, transparent 1px);
+  background-size: 148px 148px;
+  opacity: .32;
+  mask-image: radial-gradient(112% 90% at 50% 0%, #000 18%, transparent 72%);
+  -webkit-mask-image: radial-gradient(112% 90% at 50% 0%, #000 18%, transparent 72%);
+}
+
+.door-bg-grain {
+  opacity: .3;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23d)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---- the two doorways ---- */
+
+/* One arch per door, standing behind its card, with a second arch inside the
+   first and a wedge of light on the floor in front of it. */
+.door-bg-arch i {
+  position: absolute;
+  bottom: -6%;
+  display: block;
+  width: clamp(200px, 25vw, 400px);
+  height: 78%;
+  border: 1px solid color-mix(in srgb, var(--door-accent), transparent 70%);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 34% 34% 0 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--door-accent), transparent 92%), transparent 66%);
+}
+.door-bg-arch i:nth-child(1) { left: 6%; }
+.door-bg-arch i:nth-child(2) { right: 6%; }
+
+.door-bg-arch i::before {
+  position: absolute;
+  inset: 15px;
+  content: '';
+  border: 1px solid color-mix(in srgb, var(--door-accent), transparent 80%);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 34% 34% 0 0;
+}
+.door-bg-arch i::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 190%;
+  height: 30%;
+  content: '';
+  background: radial-gradient(58% 100% at 50% 0%, color-mix(in srgb, var(--door-accent), transparent 82%), transparent 74%);
+  transform: translateX(-50%);
+}
+
+/* ---- loose geometry in the margins ---- */
+
+.door-bg-shapes i { position: absolute; display: block; }
+
+.door-bg-shapes i:nth-child(1) {
+  top: 8%;
+  left: 4%;
+  width: clamp(120px, 15vw, 240px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--door-accent), transparent 74%);
+  border-radius: 50%;
+}
+.door-bg-shapes i:nth-child(2) {
+  top: 6%;
+  right: 5%;
+  width: clamp(80px, 10vw, 160px);
+  aspect-ratio: 1;
+  border: 1px dashed color-mix(in srgb, var(--door-ink), transparent 78%);
+  border-radius: 50%;
+  animation: door-spin 52s linear infinite;
+}
+.door-bg-shapes i:nth-child(3) {
+  bottom: 16%;
+  left: 2.5%;
+  width: clamp(60px, 7vw, 120px);
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--door-accent-two), transparent 84%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.door-bg-shapes i:nth-child(4) {
+  right: 3%;
+  bottom: 22%;
+  width: clamp(52px, 6vw, 104px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--door-accent), transparent 70%);
+  transform: rotate(45deg);
+}
+.door-bg-shapes i:nth-child(5) {
+  top: 30%;
+  left: 1.5%;
+  width: clamp(44px, 5vw, 92px);
+  aspect-ratio: 1.15;
+  background: color-mix(in srgb, var(--door-ink), transparent 90%);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+.door-bg-shapes i:nth-child(6) {
+  top: 24%;
+  right: 1.5%;
+  width: clamp(28px, 3.2vw, 50px);
+  aspect-ratio: 1;
+  background:
+    linear-gradient(color-mix(in srgb, var(--door-accent), transparent 66%), color-mix(in srgb, var(--door-accent), transparent 66%)) center / 100% 30% no-repeat,
+    linear-gradient(color-mix(in srgb, var(--door-accent), transparent 66%), color-mix(in srgb, var(--door-accent), transparent 66%)) center / 30% 100% no-repeat;
+}
+
+@keyframes door-spin { to { transform: rotate(360deg); } }
+
+/* ---- a measured rule along the floor ---- */
+
+.door-bg-ticks {
+  top: auto;
+  right: 0;
+  bottom: 9%;
+  left: 0;
+  height: 40px;
+}
+.door-bg-ticks::before {
+  position: absolute;
+  top: 0;
+  right: 5%;
+  left: 5%;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--door-ink), transparent 80%) 9%, color-mix(in srgb, var(--door-ink), transparent 80%) 91%, transparent);
+}
+.door-bg-ticks i {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 10px;
+  background: color-mix(in srgb, var(--door-accent), transparent 56%);
+}
+.door-bg-ticks i:nth-child(1) { left: 5%; }
+.door-bg-ticks i:nth-child(2) { left: 13.5%; }
+.door-bg-ticks i:nth-child(3) { left: 22%; }
+.door-bg-ticks i:nth-child(4) { left: 30.5%; }
+.door-bg-ticks i:nth-child(5) { left: 39%; }
+.door-bg-ticks i:nth-child(6) { left: 47.5%; height: 16px; }
+.door-bg-ticks i:nth-child(7) { left: 56%; }
+.door-bg-ticks i:nth-child(8) { left: 64.5%; }
+.door-bg-ticks i:nth-child(9) { left: 73%; }
+.door-bg-ticks i:nth-child(10) { left: 81.5%; }
+.door-bg-ticks i:nth-child(11) { left: 90%; }
+.door-bg-ticks i:nth-child(12) { left: 95%; }
+
+/* ---- the way out: a dashed path and three chevrons walking off it ---- */
+
+.door-bg-chevrons {
+  top: 16%;
+  right: 3%;
+  bottom: auto;
+  left: auto;
+  width: 90px;
+  height: 90px;
+}
+.door-bg-chevrons::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: '';
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--door-accent), transparent 62%) 0 9px, transparent 9px 19px);
+  transform: rotate(28deg);
+  transform-origin: 0 0;
+}
+.door-bg-chevrons i {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--door-accent), transparent 44%);
+  border-right: 1px solid color-mix(in srgb, var(--door-accent), transparent 44%);
+  transform: rotate(45deg);
+}
+.door-bg-chevrons i:nth-child(1) { top: 4px; left: 6px; }
+.door-bg-chevrons i:nth-child(2) { top: 30px; left: 28px; }
+.door-bg-chevrons i:nth-child(3) { top: 56px; left: 50px; }
+
+/* ---- dust in the light ---- */
+
+.door-bg-motes i {
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--door-accent-two), transparent 52%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--door-accent-two), transparent 58%);
+  animation: door-drift 15s ease-in-out infinite;
+}
+.door-bg-motes i:nth-child(1) { top: 24%; left: 16%; }
+.door-bg-motes i:nth-child(2) { top: 46%; left: 82%; animation-delay: -3s; }
+.door-bg-motes i:nth-child(3) { top: 70%; left: 28%; animation-delay: -6s; }
+.door-bg-motes i:nth-child(4) { top: 34%; left: 52%; animation-delay: -9s; }
+.door-bg-motes i:nth-child(5) { top: 82%; left: 71%; animation-delay: -12s; }
+
+@keyframes door-drift {
+  0%, 100% { opacity: .2; transform: translate3d(0, 0, 0); }
+  50% { opacity: .7; transform: translate3d(-14px, -26px, 0); }
+}
+
+/* ------------------------------------------------------------------ */
+/* Frame                                                               */
+/* ------------------------------------------------------------------ */
+
+.door-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.door-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 44px);
+  align-items: end;
+  margin-bottom: clamp(26px, 3vw, 42px);
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--door-line);
+}
+
+.door-head-copy { min-width: 0; }
+
+.door-kicker {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 12px;
+  color: var(--door-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+}
+.door-kicker span {
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--door-accent), var(--door-accent-two));
+}
+
+.door-title {
+  margin: 0;
+  color: var(--door-ink);
+  font-size: clamp(30px, 4.4vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.door-tagline {
+  max-width: 66ch;
+  margin: 14px 0 0;
+  color: var(--door-soft);
+  font-size: clamp(13.5px, 1.1vw, 16px);
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------ */
+/* The two doors                                                       */
+/* ------------------------------------------------------------------ */
+
+.door-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+.door-go {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px clamp(16px, 2vw, 26px);
+  align-items: start;
+  padding: clamp(22px, 2.6vw, 34px);
+  overflow: hidden;
+  border: 1px solid var(--door-line);
+  border-radius: 3px;
+  color: inherit;
+  background: color-mix(in srgb, var(--door-card), transparent 34%);
+  font-family: inherit;
+  text-decoration: none;
+  transition: border-color 240ms ease, background 240ms ease, transform 300ms cubic-bezier(.16, .82, .25, 1), box-shadow 300ms ease;
+}
+
+/* The fill wipes up from the bottom edge, so the door reads as a threshold
+   being crossed rather than a box that changed colour. */
+.door-go::before {
+  position: absolute;
+  inset: auto 0 0;
+  height: 0;
+  content: '';
+  background: var(--door-tint);
+  transition: height 380ms cubic-bezier(.16, .82, .25, 1);
+}
+.door-go:hover,
+.door-go:focus-visible {
+  border-color: var(--door-accent);
+  box-shadow: 0 26px 54px -30px color-mix(in srgb, var(--door-sunk), transparent 4%);
+  transform: translateY(-5px);
+}
+.door-go:hover::before,
+.door-go:focus-visible::before { height: 100%; }
+
+.door-go-no {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid color-mix(in srgb, var(--door-accent), transparent 46%);
+  border-radius: 2px;
+  color: var(--door-accent);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  transition: border-color 240ms ease, color 240ms ease, background 240ms ease;
+}
+.door-go:hover .door-go-no {
+  border-color: var(--door-accent);
+  color: var(--door-ink);
+  background: var(--door-tint-2);
+}
+
+.door-go-body { position: relative; min-width: 0; }
+.door-go-body b {
+  display: block;
+  color: var(--door-ink);
+  font-size: clamp(19px, 1.9vw, 26px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.14;
+  transition: color 220ms ease;
+}
+.door-go:hover .door-go-body b { color: var(--door-accent); }
+.door-go-body small {
+  display: block;
+  max-width: 46ch;
+  margin-top: 10px;
+  color: var(--door-muted);
+  font-size: 12.5px;
+  line-height: 1.58;
+}
+
+.door-go-cta {
+  position: relative;
+  grid-column: 2;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--door-line);
+  color: var(--door-soft);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: color 220ms ease;
+}
+.door-go-cta i { font-style: normal; transition: transform 220ms ease; }
+.door-go:hover .door-go-cta { color: var(--door-accent); }
+.door-go:hover .door-go-cta i { transform: translateX(5px); }
+
+.door :focus-visible { outline: 2px solid var(--door-accent); outline-offset: 3px; }
+
+@media (max-width: 860px) {
+  .door-pair { grid-template-columns: minmax(0, 1fr); }
+  .door-bg-chevrons { display: none; }
+}
+
+@media (max-width: 560px) {
+  .door-go { grid-template-columns: minmax(0, 1fr); }
+  .door-go-cta { grid-column: 1; }
+  .door-bg-rule i:nth-child(2),
+  .door-bg-rule i:nth-child(4) { display: none; }
+  .door-bg-shapes i:nth-child(2),
+  .door-bg-shapes i:nth-child(5),
+  .door-bg-shapes i:nth-child(6) { display: none; }
+  .door-bg-ticks i:nth-child(2),
+  .door-bg-ticks i:nth-child(4),
+  .door-bg-ticks i:nth-child(6),
+  .door-bg-ticks i:nth-child(8),
+  .door-bg-ticks i:nth-child(10),
+  .door-bg-ticks i:nth-child(12) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door-go,
+  .door-go::before,
+  .door-go-no,
+  .door-bg-shapes i:nth-child(2),
+  .door-bg-motes i,
+  .door-go-cta i { transition: none !important; animation: none !important; }
+  .door-go:hover,
+  .door-go:focus-visible { transform: none; }
+  .door-go:hover .door-go-cta i { transform: none; }
+  .door-bg-motes i { opacity: .45; }
+}

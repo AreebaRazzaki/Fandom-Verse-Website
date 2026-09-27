@@ -4,6 +4,13 @@
 .comics-page,
 .comics-page * { box-sizing: border-box; }
 
+/* The nav is `position: sticky` and hangs over the top of the page, but an
+   overflow on <body> makes the body the nearest scrollport: its height is its
+   own content, so it never scrolls, and the bar rides up off the screen instead
+   of sticking. `clip` cuts sideways overflow off without becoming a scrollport,
+   which is the only reason this page may sit on top of the global body rule. */
+body:has(.comics-page) { overflow-x: clip; overflow-y: visible; }
+
 .comics-page {
   --comics-paper: #2f2825;
   --comics-ink: #292321;
@@ -20,8 +27,10 @@
   --comics-shift-y: 0px;
   --comics-art-x: 0px;
   --comics-art-y: 0px;
+  --comics-nav-h: 88px;
   min-height: 100svh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   color: var(--comics-paper);
   background: var(--comics-bg);
   font-family: 'Elgraine', Georgia, serif;
@@ -45,11 +54,15 @@
 .comics-hero {
   position: relative;
   width: 100%;
-  height: calc(100svh - 82px);
-  min-height: 570px;
+  height: 100svh;
+  min-height: 700px;
+  margin-top: calc(-1 * var(--comics-nav-h));
   overflow: hidden;
   isolation: isolate;
 }
+
+.comics-backdrop { position: absolute; inset: 0; }
+.comics-stage { position: absolute; top: var(--comics-nav-h); right: 0; bottom: 0; left: 0; }
 
 .comics-background,
 .comics-background-veil,
@@ -96,17 +109,17 @@
 .comics-left-label { position: absolute; z-index: 7; top: 11%; left: 4.5%; display: grid; gap: 8px; color: var(--comics-ink); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .15em; writing-mode: vertical-rl; transform: rotate(180deg); }
 .comics-left-label b { color: var(--comics-orange); font-size: 9px; }
 
-.comics-copy { position: absolute; z-index: 8; top: 23%; right: 8%; width: min(390px, 30%); color: var(--comics-ink); font-weight: 600; animation: comics-copy-in 900ms 100ms cubic-bezier(.16, .82, .25, 1) both; }
+.comics-copy { position: absolute; z-index: 8; top: 13%; right: 8%; width: min(390px, 30%); color: var(--comics-ink); font-weight: 600; animation: comics-copy-in 900ms 100ms cubic-bezier(.16, .82, .25, 1) both; }
 .comics-kicker { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--comics-orange); font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
 .comics-kicker span { width: 30px; height: 2px; background: currentColor; }
-.comics-index { margin: 27px 0 13px; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .15em; }
+.comics-index { margin: 20px 0 11px; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .15em; }
 .comics-index b { color: var(--comics-orange); }
 .comics-copy h1 { margin: 0; color: var(--comics-ink); font-size: clamp(54px, 6vw, 92px); font-weight: 800; letter-spacing: -.1em; line-height: .78; }
 .comics-copy h1 em { color: transparent; font-style: normal; -webkit-text-stroke: 1px var(--comics-stroke); }
-.comics-description { max-width: 300px; margin: 31px 0 0; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.55; }
-.comics-meta { display: flex; gap: 24px; margin-top: 27px; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.comics-description { max-width: 300px; margin: 24px 0 0; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.55; }
+.comics-meta { display: flex; gap: 24px; margin-top: 21px; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .comics-meta b { display: block; margin-bottom: 5px; color: var(--comics-orange); font-size: 18px; }
-.comics-cta { display: inline-flex; align-items: center; gap: 14px; margin-top: 20px; padding: 12px 16px; border: 1px solid color-mix(in srgb, var(--comics-ink), transparent 48%); color: var(--comics-ink); font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
+.comics-cta { display: inline-flex; align-items: center; gap: 14px; margin-top: 16px; padding: 12px 16px; border: 1px solid color-mix(in srgb, var(--comics-ink), transparent 48%); color: var(--comics-ink); font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
 .comics-cta:hover { background: var(--comics-orange); color: #fff8f1; transform: translateY(-2px); }
 .comics-cta span { color: var(--comics-orange); font-size: 18px; }
 .comics-footer { position: absolute; z-index: 8; right: 5%; bottom: 22px; left: 5%; display: flex; justify-content: space-between; color: var(--comics-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .15em; }
@@ -126,15 +139,15 @@
 
 @media (max-width: 850px) and (min-width: 721px) {
   .comics-hero { min-height: 640px; }
-  .comics-copy { top: 10%; right: 6%; width: 40%; }
+  .comics-copy { top: 6%; right: 6%; width: 40%; }
   .comics-copy h1 { font-size: clamp(42px, 6vw, 64px); }
   .comics-description { font-size: 12px; }
   .comics-left-label { display: none; }
 }
 
 @media (max-width: 720px) {
-  .comics-page { overflow-x: hidden; overflow-y: auto; }
-  .comics-hero { height: calc(100svh - 124px); min-height: 720px; }
+  .comics-page { --comics-nav-h: 124px; overflow-x: clip; overflow-y: visible; }
+  .comics-hero { min-height: 720px; }
   .comics-frame { inset: 14px 12px 16px; }
   .comics-frame::after { top: 14px; right: 7%; left: 7%; }
   .comics-background { object-position: 62% center; }

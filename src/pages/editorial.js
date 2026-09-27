@@ -76,7 +76,7 @@ const relatedFor = (articles, article, limit = 3) => {
   return [...sameCategory.sort(byNewest), ...sharedTag.sort(byNewest), ...rest.sort(byNewest)].slice(0, limit);
 };
 
-function Editorial({ category = 'all' }) {
+function Editorial({ category = 'all', slug = null }) {
   const { status, articles, issue, retry } = useArticles();
   const [theme, setTheme] = useState(() => window.localStorage.getItem('editorial-theme') || 'light');
   const [active, setActive] = useState(category);
@@ -89,6 +89,12 @@ function Editorial({ category = 'all' }) {
   useEffect(() => {
     setActive(category);
   }, [category]);
+
+  // A fandom page can link to one story as well as to the filtered page. The
+  // slug is held until the articles land, so the reader never opens on nothing.
+  useEffect(() => {
+    if (slug && articles.some((article) => article.slug === slug)) setOpenSlug(slug);
+  }, [slug, articles]);
 
   const counts = useMemo(() => {
     const map = { all: articles.length };

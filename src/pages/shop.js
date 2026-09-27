@@ -19,10 +19,10 @@ const TABS = [
 ];
 
 const SORTS = [
-  { id: 'featured', label: 'Featured' },
-  { id: 'low', label: 'Price: low to high' },
-  { id: 'high', label: 'Price: high to low' },
-  { id: 'az', label: 'Name: A to Z' },
+  { id: 'featured', label: 'Featured', hint: 'Vault picks, in shelf order' },
+  { id: 'low', label: 'Price: low to high', hint: 'Cheapest piece first' },
+  { id: 'high', label: 'Price: high to low', hint: 'Priciest piece first' },
+  { id: 'az', label: 'Name: A to Z', hint: 'Alphabetical by title' },
 ];
 
 const slugOf = (label) => String(label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -60,6 +60,120 @@ const useOverlay = (onClose) => {
 
 const BagIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7.5h13l-1 12.5h-11z" /><path d="M9 7.5V6a3 3 0 0 1 6 0v1.5" /></svg>;
 const CloseIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>;
+const ChevronIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6" /></svg>;
+
+// The sort control paints its own menu instead of handing the job to a native
+// <select>. The OS popup cannot be styled, so on every platform it opened as a
+// flat white rectangle that shared nothing with the shelf's angled, neon faces —
+// the one control in the filter bar that looked like it came from another site.
+// Owning the listbox also buys the active row, the tick and the rotating chevron
+// that tell the shopper the menu is open and which sort is live.
+function SortMenu({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [cursor, setCursor] = useState(0);
+  const wrapRef = useRef(null);
+  const listRef = useRef(null);
+  const triggerRef = useRef(null);
+  const current = SORTS.find((item) => item.id === value) || SORTS[0];
+
+  // Opening parks the cursor on the sort already in force, so the first arrow
+  // press steps away from where the shelf is rather than jumping to a far row.
+  useEffect(() => {
+    if (!open) return undefined;
+    const at = SORTS.findIndex((item) => item.id === value);
+    setCursor(at < 0 ? 0 : at);
+    // Focus moves onto the list itself, which is what lets aria-activedescendant
+    // announce the highlighted row while the shopper keeps arrowing.
+    listRef.current?.focus();
+
+    const onPointerDown = (event) => {
+      if (wrapRef.current?.contains(event.target)) return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown);
+    return () => document.removeEventListener('mousedown', onPointerDown);
+  }, [open, value]);
+
+  const close = (refocus) => {
+    setOpen(false);
+    if (refocus) triggerRef.current?.focus();
+  };
+
+  const choose = (id) => {
+    onChange(id);
+    close(true);
+  };
+
+  const step = (delta) => setCursor((index) => (index + delta + SORTS.length) % SORTS.length);
+
+  // Arrows open the menu first, then walk it. Enter and space commit, Escape and
+  // Tab back out, and Home/End jump to either end of the list.
+  const onKeyDown = (event) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!open) { setOpen(true); return; }
+      step(event.key === 'ArrowDown' ? 1 : -1);
+      return;
+    }
+    if (!open) return;
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); choose(SORTS[cursor].id); return; }
+    if (event.key === 'Escape') { event.preventDefault(); close(true); return; }
+    if (event.key === 'Tab') { close(false); return; }
+    if (event.key === 'Home') { event.preventDefault(); setCursor(0); return; }
+    if (event.key === 'End') { event.preventDefault(); setCursor(SORTS.length - 1); }
+  };
+
+  return (
+    <div className="fv-sort" ref={wrapRef} onKeyDown={onKeyDown}>
+      <span className="fv-sort-label" aria-hidden="true">Sort</span>
+
+      <button
+        type="button"
+        ref={triggerRef}
+        className={`fv-sort-trigger${open ? ' is-open' : ''}`}
+        onClick={() => (open ? close(false) : setOpen(true))}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`Sort products, currently ${current.label}`}
+      >
+        <span className="fv-sort-current">{current.label}</span>
+        <ChevronIcon />
+      </button>
+
+      {open && (
+        <ul
+          className="fv-sort-menu"
+          role="listbox"
+          tabIndex={-1}
+          ref={listRef}
+          aria-label="Sort products"
+          aria-activedescendant={`fv-sort-option-${SORTS[cursor].id}`}
+        >
+          {SORTS.map((item, index) => (
+            <li
+              key={item.id}
+              id={`fv-sort-option-${item.id}`}
+              role="option"
+              aria-selected={item.id === value}
+              className={`fv-sort-option${item.id === value ? ' is-current' : ''}${index === cursor ? ' is-cursor' : ''}`}
+              onMouseEnter={() => setCursor(index)}
+              // Keep the list from losing focus mid-press, which would blur the
+              // menu out from under the click that is still on its way.
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => choose(item.id)}
+            >
+              <span className="fv-sort-tick" aria-hidden="true" />
+              <span className="fv-sort-copy">
+                <b>{item.label}</b>
+                <i aria-hidden="true">{item.hint}</i>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 // View Details opens a centred popup: the shopper clicked a card, so the piece
 // they picked comes forward in the middle of the stage with its full details.
@@ -105,10 +219,10 @@ function ProductModal({ product, onClose, onAdd }) {
   );
 }
 
-// Pressing View Vault opens this centred popup, not a side drawer: the shopper
-// asked to see the vault, so the whole of it lands in one dialog with every
-// piece they added laid out in front of them.
-function CartModal({ lines, onClose, onChange, onRemove, onClear }) {
+// Pressing View Vault slides this drawer in from the right edge: the shopper
+// asked to see the vault, and a side panel keeps the shelf behind it in view
+// while they read, change or drop what they picked.
+function CartDrawer({ lines, onClose, onChange, onRemove, onClear }) {
   const closeRef = useRef(null);
 
   useEffect(() => { closeRef.current?.focus(); }, []);
@@ -118,55 +232,50 @@ function CartModal({ lines, onClose, onChange, onRemove, onClear }) {
   const total = lines.reduce((sum, line) => sum + line.qty * priceMid(line), 0);
 
   return (
-    <div className="fv-overlay" role="presentation">
+    <div className="fv-overlay fv-overlay-bag" role="presentation">
       <div className="fv-veil" onClick={onClose} data-testid="cart-veil" />
 
-      <div className="fv-cart" role="dialog" aria-modal="true" aria-label="Your vault">
-        <header className="fv-cart-head">
+      <aside className="fv-bag" role="dialog" aria-modal="true" aria-label="Your vault">
+        <header className="fv-bag-head">
           <div>
-            <p className="fv-cart-kicker">The fan vault</p>
             <h2>Your Vault</h2>
-            <p className="fv-cart-count" aria-live="polite">
-              {count} {count === 1 ? 'piece' : 'pieces'} waiting
-            </p>
+            <span aria-live="polite">{count} {count === 1 ? 'item' : 'items'}</span>
           </div>
-          <button type="button" className="fv-cart-close" ref={closeRef} onClick={onClose} aria-label="Close your vault"><CloseIcon /></button>
+          <button type="button" className="fv-bag-close" ref={closeRef} onClick={onClose} aria-label="Close your vault"><CloseIcon /></button>
         </header>
 
-        <div className="fv-cart-body">
-          {lines.length === 0 ? (
-            <p className="fv-cart-empty">
-              The vault is empty. Hover a cover and press <b>Add to cart</b>, or open any item to add it from there.
-            </p>
-          ) : (
-            <ul className="fv-cart-list">
-              {lines.map((line) => (
-                <li key={line.id} className="fv-cart-line">
-                  <img src={line.image} alt={`Artwork for ${line.name}`} />
-                  <div className="fv-cart-info">
-                    <b>{line.name}</b>
-                    <span>{line.category} &middot; {priceText(line)}</span>
-                    <div className="fv-qty">
-                      <button type="button" onClick={() => onChange(line.id, line.qty - 1)} aria-label={`Remove one ${line.name}`}>&minus;</button>
-                      <span aria-label={`Quantity of ${line.name}`}>{line.qty}</span>
-                      <button type="button" onClick={() => onChange(line.id, line.qty + 1)} aria-label={`Add one more ${line.name}`}>+</button>
-                    </div>
-                  </div>
-                  <button type="button" className="fv-cart-remove" onClick={() => onRemove(line.id)} aria-label={`Remove ${line.name} from the vault`}>&times;</button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {lines.length === 0 && (
+          <p className="fv-bag-empty">
+            The vault is empty. Hover a cover and press <b>Add to cart</b>, or open any item to add it from there.
+          </p>
+        )}
+
+        <ul className="fv-bag-list">
+          {lines.map((line) => (
+            <li key={line.id} className="fv-bag-line">
+              <img src={line.image} alt={`Artwork for ${line.name}`} />
+              <div className="fv-bag-info">
+                <b>{line.name}</b>
+                <span>{line.category} &middot; {priceText(line)}</span>
+                <div className="fv-qty">
+                  <button type="button" onClick={() => onChange(line.id, line.qty - 1)} aria-label={`Remove one ${line.name}`}>&minus;</button>
+                  <span aria-label={`Quantity of ${line.name}`}>{line.qty}</span>
+                  <button type="button" onClick={() => onChange(line.id, line.qty + 1)} aria-label={`Add one more ${line.name}`}>+</button>
+                </div>
+              </div>
+              <button type="button" className="fv-bag-remove" onClick={() => onRemove(line.id)} aria-label={`Remove ${line.name} from the vault`}>&times;</button>
+            </li>
+          ))}
+        </ul>
 
         {lines.length > 0 && (
-          <footer className="fv-cart-foot">
-            <p className="fv-cart-total"><span>Total</span><b>{money(total)}</b></p>
-            <p className="fv-cart-hint">No payment here. The vault is a preview of the full checkout flow.</p>
-            <button type="button" className="fv-cart-clear" onClick={onClear}>Clear cart</button>
+          <footer className="fv-bag-foot">
+            <p className="fv-bag-total"><span>Total</span><b>{money(total)}</b></p>
+            <p className="fv-bag-hint">No payment here. The vault is a preview of the full checkout flow.</p>
+            <button type="button" className="fv-bag-clear" onClick={onClear}>Clear cart</button>
           </footer>
         )}
-      </div>
+      </aside>
     </div>
   );
 }
@@ -221,13 +330,16 @@ function Shop() {
   const [lines, setLines] = useState([]);
   const [fly, setFly] = useState(null);
   const [pulse, setPulse] = useState(false);
+  const [addedNotice, setAddedNotice] = useState('');
   const vaultRef = useRef(null);
   const flyTimer = useRef(null);
   const pulseTimer = useRef(null);
+  const noticeTimer = useRef(null);
 
   useEffect(() => () => {
     window.clearTimeout(flyTimer.current);
     window.clearTimeout(pulseTimer.current);
+    window.clearTimeout(noticeTimer.current);
   }, []);
 
   // Drops a clone of the cover at its real position, then flies it into the
@@ -321,6 +433,12 @@ function Shop() {
       return [...list, { ...product, qty: 1 }];
     });
     setOpenProduct(null);
+    setPulse(true);
+    setAddedNotice(`${product.name} added to your vault`);
+    window.clearTimeout(pulseTimer.current);
+    window.clearTimeout(noticeTimer.current);
+    pulseTimer.current = window.setTimeout(() => setPulse(false), 600);
+    noticeTimer.current = window.setTimeout(() => setAddedNotice(''), 2600);
     launchFly(product, source);
   };
 
@@ -343,6 +461,11 @@ function Shop() {
       {status === 'ready' && products.length > 0 && (
         <>
           <header className="fv-hero">
+            <span className="fv-hero-grid" aria-hidden="true" />
+            <img className="fv-hero-art" src="/assets/images/shop%20bg.png" alt="" aria-hidden="true" />
+            <span className="fv-hero-ticker" aria-hidden="true">FV / CURATED OBJECTS / DROP 01</span>
+            <span className="fv-hero-stamp" aria-hidden="true">LIMITED RUNS</span>
+
             <div className="fv-hero-copy">
               <p className="fv-hero-kicker">Fandomverse Editions · Open shelf</p>
               <h1>THE FAN <em>VAULT</em></h1>
@@ -354,25 +477,23 @@ function Shop() {
             </div>
 
             <div className="fv-hero-vault">
-              <div className="fv-vault-panel">
-                <p className="fv-vault-panel-head"><BagIcon /><span>Your vault</span></p>
-                <button
-                  type="button"
-                  ref={vaultRef}
-                  className={`fv-vault-button${bagOpen ? ' is-open' : ''}${bagCount ? ' has-items' : ''}${pulse ? ' is-pulse' : ''}`}
-                  onClick={() => setBagOpen(true)}
-                  aria-label={`View vault${bagCount ? `, ${bagCount} item${bagCount === 1 ? '' : 's'}` : ', empty'}`}
-                >
-                  <BagIcon />
-                  <span>View Vault</span>
-                  <b aria-hidden="true">{bagCount}</b>
-                </button>
-                <p className="fv-vault-panel-note" aria-live="polite">
-                  {bagCount
-                    ? <>{bagCount} {bagCount === 1 ? 'piece' : 'pieces'} waiting in your vault.</>
-                    : 'Hover a cover for the details, or add a piece and it will fly up here.'}
-                </p>
-              </div>
+              <button
+                type="button"
+                ref={vaultRef}
+                className={`fv-vault-button${bagOpen ? ' is-open' : ''}${bagCount ? ' has-items' : ''}${pulse ? ' is-pulse' : ''}`}
+                onClick={() => setBagOpen(true)}
+                aria-label={`View vault${bagCount ? `, ${bagCount} item${bagCount === 1 ? '' : 's'}` : ', empty'}`}
+              >
+                <BagIcon />
+                <span>View Vault</span>
+                <b aria-hidden="true">{bagCount}</b>
+              </button>
+              <p className="fv-hero-vault-note">
+                {bagCount
+                  ? <>{bagCount} {bagCount === 1 ? 'piece' : 'pieces'} waiting in your vault.</>
+                  : 'Hover a cover for the details, or add a piece and it will fly up here.'}
+              </p>
+              <p className="fv-added-notice" aria-live="polite">{addedNotice}</p>
             </div>
           </header>
 
@@ -416,12 +537,7 @@ function Shop() {
               ))}
             </nav>
 
-            <label className="fv-sort">
-              <span>Sort</span>
-              <select value={sort} onChange={(event) => setSort(event.target.value)} aria-label="Sort products">
-                {SORTS.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
-              </select>
-            </label>
+            <SortMenu value={sort} onChange={setSort} />
           </div>
 
           {shown.length === 0 ? (
@@ -452,7 +568,7 @@ function Shop() {
       )}
 
       {bagOpen && (
-        <CartModal
+        <CartDrawer
           lines={lines}
           onClose={() => setBagOpen(false)}
           onChange={changeQty}

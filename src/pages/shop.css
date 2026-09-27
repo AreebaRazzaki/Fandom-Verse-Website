@@ -9,7 +9,11 @@
   --panel: rgba(255, 255, 255, .05);
   position: relative;
   min-height: 100vh;
-  padding-bottom: 40px;
+  /* No bottom padding on the page root: the footer is its last child, so any
+     padding here would show up as a bare strip of page background underneath the
+     footer (a light band under the tan footer on the light stage). The breathing
+     room before the footer lives in the last block instead — .fv-vault's
+     padding-bottom, or .fv-note's own margins in the loading/empty states. */
   /* The glow orbs hang off both edges, so the page clips sideways. `clip` is
      used in preference to `hidden` on purpose: `hidden` turns this element into
      a scroll container, and sticky measures against the nearest scrollport, so
@@ -68,8 +72,19 @@
 /* ---------- hero ---------- */
 
 /* Copy on the left, the View Vault trigger on the right, so the shopper always
-   knows where the bag lives before they add anything. */
-.fv-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; max-width: 1180px; margin: 0 auto; padding: 132px 24px 40px; text-align: left; }
+   knows where the bag lives before they add anything. The hero paints its own
+   stage: a notched neon face behind the copy, a faint grid, the shop artwork
+   sitting under everything and two corner stamps. `isolation: isolate` keeps the
+   negative z-index layers inside the hero, so they can never fall behind the
+   page backdrop or cover the nav. */
+.fv-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; max-width: 1180px; min-height: 420px; margin: 0 auto; padding: 118px 24px 48px; overflow: hidden; text-align: left; }
+.fv-hero::before { position: absolute; inset: 26px 0 12px; z-index: -2; border: 1px solid rgba(255, 45, 149, .24); background: linear-gradient(135deg, rgba(255, 45, 149, .12), transparent 42%, rgba(53, 226, 242, .09)), repeating-linear-gradient(135deg, rgba(255, 255, 255, .045) 0 1px, transparent 1px 28px); clip-path: polygon(0 10%, 4% 0, 96% 0, 100% 10%, 100% 90%, 96% 100%, 4% 100%, 0 90%); content: ''; }
+.fv-hero::after { position: absolute; top: 16%; right: 5%; z-index: -1; width: 260px; height: 260px; border: 1px solid rgba(53, 226, 242, .38); background: repeating-linear-gradient(90deg, transparent 0 19px, rgba(53, 226, 242, .12) 20px, transparent 21px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); transform: rotate(18deg); content: ''; }
+.fv-hero-grid { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, transparent 0 49.8%, rgba(255, 255, 255, .11) 50%, transparent 50.2%), linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px); background-size: auto, 44px 44px, 44px 44px; mask-image: linear-gradient(180deg, #000, transparent 92%); opacity: .72; }
+.fv-hero-art { position: absolute; top: 53%; left: 57%; z-index: -1; width: min(560px, 48vw); max-height: 390px; object-fit: contain; pointer-events: none; opacity: .42; transform: translate(-50%, -50%); filter: drop-shadow(0 22px 28px rgba(0, 0, 0, .28)); }
+.theme-light .fv-hero-art { opacity: .5; }
+.fv-hero-ticker { position: absolute; top: 34px; left: 24px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 9px; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; }
+.fv-hero-stamp { position: absolute; top: 32px; right: 24px; padding: 7px 12px; border: 1px dashed var(--magenta); color: var(--magenta); font-family: Arial, sans-serif; font-size: 8px; font-weight: 900; letter-spacing: .18em; transform: rotate(4deg); }
 
 .fv-hero-kicker { margin: 0 0 18px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 900; letter-spacing: .34em; text-transform: uppercase; }
 /* The heading states its own colour, measure and tracking. Another page ships a
@@ -82,15 +97,10 @@
 .fv-hero-blurb { margin: 16px 0 0; max-width: 60ch; color: var(--muted); font-family: Arial, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.7; }
 
 .fv-hero-vault { display: grid; gap: 14px; justify-items: end; text-align: right; }
+.fv-hero-vault-note { max-width: 30ch; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; line-height: 1.6; text-transform: uppercase; }
+.fv-added-notice { min-height: 16px; margin: 0; color: var(--cyan); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
 
-/* The right-hand column is the vault itself: a titled panel with the View Vault
-   trigger inside it, so the shelf and the bag always read as one unit. */
-.fv-vault-panel { display: grid; gap: 14px; width: min(290px, 100%); padding: 20px; border: 1px solid var(--line); border-radius: 26px 8px 26px 8px; background: var(--panel); backdrop-filter: blur(10px); }
-.fv-vault-panel-head { display: flex; align-items: center; justify-content: flex-end; gap: 9px; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .26em; text-transform: uppercase; }
-.fv-vault-panel-head svg { width: 15px; height: 15px; fill: none; stroke: var(--cyan); stroke-width: 1.6; }
-.fv-vault-panel-note { max-width: 30ch; margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; line-height: 1.6; text-transform: uppercase; }
-
-.fv-vault-button { position: relative; display: grid; place-items: center; gap: 10px; width: 100%; padding: 26px 22px 24px; border: 1px solid var(--line-strong); border-radius: 22px 6px 22px 6px; color: var(--ink); background: linear-gradient(150deg, rgba(255, 45, 149, .18), rgba(53, 226, 242, .1)), var(--panel); font-family: Arial, sans-serif; cursor: pointer; box-shadow: 0 22px 50px rgba(0, 0, 0, .42); transition: transform 240ms cubic-bezier(.16, .82, .25, 1), border-color 240ms ease, box-shadow 240ms ease; }
+.fv-vault-button { position: relative; display: grid; place-items: center; gap: 10px; width: 208px; padding: 30px 22px 26px; border: 1px solid var(--line-strong); border-radius: 26px 8px 26px 8px; color: var(--ink); background: linear-gradient(150deg, rgba(255, 45, 149, .18), rgba(53, 226, 242, .1)), var(--panel); font-family: Arial, sans-serif; cursor: pointer; box-shadow: 0 22px 50px rgba(0, 0, 0, .42); transition: transform 240ms cubic-bezier(.16, .82, .25, 1), border-color 240ms ease, box-shadow 240ms ease; }
 .theme-light .fv-vault-button { background: linear-gradient(150deg, rgba(255, 45, 149, .12), rgba(53, 226, 242, .12)), #fff; box-shadow: 0 22px 50px rgba(60, 20, 90, .16); }
 .fv-vault-button:hover { transform: translateY(-3px); border-color: var(--magenta); box-shadow: 0 26px 60px rgba(255, 45, 149, .3); }
 .fv-vault-button svg { width: 30px; height: 30px; fill: none; stroke: var(--magenta); stroke-width: 1.6; }
@@ -100,6 +110,9 @@
 .fv-vault-button.has-items { border-color: var(--magenta); }
 .fv-vault-button.is-open { border-color: var(--cyan); }
 .fv-vault-button.is-pulse { animation: fv-vault-pulse 560ms ease; }
+.fv-vault-button:focus-visible,
+.fv-add:focus-visible,
+.fv-card-view:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
 
 @keyframes fv-vault-pulse {
   0% { transform: scale(1); }
@@ -198,9 +211,107 @@
 .fv-tab.is-active { color: #fff; border-color: var(--magenta); background: var(--magenta); }
 .fv-tab.is-active i { color: rgba(255, 255, 255, .82); }
 
-.fv-sort { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
-.fv-sort select { padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 10px 3px 10px 3px; color: var(--ink); background: var(--panel); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; cursor: pointer; }
-.fv-sort select option { color: #140a1c; background: #fff; }
+/* ---------- sort menu ----------
+   A hand-built listbox, not a native <select>. The OS popup cannot be styled, so
+   it arrived on every platform as a flat white rectangle that shared nothing with
+   the shelf's angled neon faces. The trigger, the open menu, the highlighted row
+   and the tick are all painted here, so the control finally reads as part of the
+   filter bar. The asymmetric radius and the cyan accent come from .fv-card-view. */
+
+.fv-sort { position: relative; display: inline-flex; align-items: center; gap: 12px; font-family: Arial, sans-serif; }
+.fv-sort-label { color: var(--muted); font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+
+.fv-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 172px;
+  padding: 10px 13px 10px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px 4px 12px 4px;
+  color: var(--ink);
+  background: linear-gradient(150deg, rgba(255, 45, 149, .1), rgba(53, 226, 242, .07)), #1c1429;
+  font-family: Arial, sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+}
+.theme-light .fv-sort-trigger { background: linear-gradient(150deg, rgba(201, 16, 111, .09), rgba(10, 107, 126, .07)), #fff; }
+/* The label is the part that has to stay legible, so it takes the room and the
+   chevron is pinned to the far edge of the control. */
+.fv-sort-current { flex: 1 1 auto; }
+.fv-sort-trigger svg { flex: 0 0 auto; width: 13px; height: 13px; fill: none; stroke: var(--cyan); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 240ms cubic-bezier(.16, .82, .25, 1); }
+.fv-sort-trigger:hover { border-color: var(--cyan); }
+.fv-sort-trigger:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+/* Open state: the trigger lifts and the chevron flips, so the button and the menu
+   below it read as one control rather than a button that happens to have a popup. */
+.fv-sort-trigger.is-open { border-color: var(--magenta); color: #fff; box-shadow: 0 14px 32px rgba(255, 45, 149, .26); }
+.fv-sort-trigger.is-open svg { transform: rotate(180deg); stroke: var(--magenta); }
+
+.fv-sort-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 8;
+  display: grid;
+  gap: 4px;
+  min-width: 100%;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px 5px 16px 5px;
+  background: #1a1026;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, .55);
+  animation: fv-sort-in 200ms cubic-bezier(.16, .82, .25, 1);
+}
+.theme-light .fv-sort-menu { background: #fff; box-shadow: 0 26px 60px rgba(60, 20, 90, .24); }
+.fv-sort-menu:focus { outline: none; }
+
+@keyframes fv-sort-in {
+  from { opacity: 0; transform: translateY(-8px) scale(.98); }
+}
+
+/* Each row carries its own tick gutter, so the magenta bar on the live sort and
+   the hover fill on the other rows line up instead of shifting the text. */
+.fv-sort-option {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px 3px 9px 3px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.fv-sort-tick {
+  width: 7px;
+  height: 7px;
+  justify-self: center;
+  border: 1px solid var(--line-strong);
+  background: none;
+  transform: rotate(45deg);
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.fv-sort-copy { display: grid; gap: 3px; }
+.fv-sort-copy b { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; }
+.fv-sort-copy i { color: var(--muted); font-size: 9px; font-style: normal; font-weight: 700; letter-spacing: .06em; }
+
+/* The keyboard cursor and the mouse hover land on the same fill, so the row the
+   shopper is about to commit to looks the same either way. */
+.fv-sort-option.is-cursor { color: var(--ink); border-color: var(--line-strong); background: rgba(255, 255, 255, .07); }
+.theme-light .fv-sort-option.is-cursor { background: rgba(20, 10, 28, .05); }
+.fv-sort-option.is-current { color: #fff; }
+.fv-sort-option.is-current .fv-sort-copy i { color: rgba(255, 255, 255, .72); }
+.fv-sort-option.is-current .fv-sort-tick { border-color: var(--magenta); background: var(--magenta); box-shadow: 0 0 14px rgba(255, 45, 149, .7); }
+.fv-sort-option.is-current.is-cursor { border-color: var(--magenta); background: linear-gradient(120deg, rgba(255, 45, 149, .22), rgba(53, 226, 242, .1)); }
+.theme-light .fv-sort-option.is-current { color: #140a1c; }
+.theme-light .fv-sort-option.is-current .fv-sort-copy i { color: var(--muted); }
 
 /* ---------- vault grid ----------
    A plain four-up retail grid. The old twelve-column mosaic spanned tiles across
@@ -359,63 +470,69 @@
 .fv-modal-note { margin: 18px 0 0; padding: 12px 14px; border-left: 2px solid var(--magenta); color: var(--muted); font-family: Arial, sans-serif; font-size: 11.5px; font-weight: 600; line-height: 1.6; }
 .fv-modal-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 24px; }
 
-/* ---------- vault cart popup ----------
-   View Vault opens the vault as a dialog in the middle of the stage, not a
-   panel bolted to the side of it. The list scrolls inside a fixed-height shell
-   so the header and the total stay put while a long shelf scrolls underneath,
-   and the pieces sit two-up on a wide screen so everything the shopper added is
-   visible at once. */
+/* ---------- vault drawer ----------
+   View Vault opens the vault as a panel bolted to the right edge of the stage,
+   not a dialog floating in the middle of it: the shopper keeps the shelf in view
+   behind the veil while they read, raise the quantity on or drop what they
+   picked. The list scrolls inside a full-height shell so the header and the
+   total stay put while a long shelf scrolls underneath. */
 
-.fv-cart {
+.fv-overlay-bag { align-items: stretch; justify-content: flex-end; padding: 0; }
+
+.fv-bag {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(760px, 100%);
-  max-height: min(84vh, 760px);
+  width: min(480px, 100%);
+  max-height: 100vh;
+  margin-left: auto;
+  padding: 26px;
+  overflow-y: auto;
   border: 1px solid var(--line-strong);
-  border-radius: 30px 8px 30px 8px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 26px 0 0 26px;
   background: #100a18;
   box-shadow: 0 50px 120px rgba(0, 0, 0, .7);
+  scrollbar-width: none;
   animation: fv-rise 280ms cubic-bezier(.16, .82, .25, 1);
 }
-.theme-light .fv-cart { background: #fff; box-shadow: 0 40px 90px rgba(60, 20, 90, .24); }
+.fv-bag::-webkit-scrollbar { display: none; }
+.theme-light .fv-bag { background: #fff; box-shadow: 0 40px 90px rgba(60, 20, 90, .24); }
 
-.fv-cart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 26px 26px 20px; border-bottom: 1px solid var(--line); }
-.fv-cart-kicker { margin: 0 0 8px; color: var(--magenta); font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .26em; text-transform: uppercase; }
-.fv-cart-head h2 { margin: 0; font-size: clamp(20px, 2.6vw, 28px); line-height: 1.1; }
-.fv-cart-count { margin: 10px 0 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
-.fv-cart-close { flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink); background: none; cursor: pointer; }
-.fv-cart-close svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
-.fv-cart-close:hover { color: #fff; border-color: var(--magenta); background: var(--magenta); }
+.fv-bag-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.fv-bag-head h2 { margin: 0; font-size: 22px; }
+.fv-bag-head span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+.fv-bag-close { flex: 0 0 auto; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink); background: none; cursor: pointer; }
+.fv-bag-close svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; }
+.fv-bag-close:hover { color: #fff; border-color: var(--magenta); background: var(--magenta); }
 
-.fv-cart-body { flex: 1 1 auto; overflow-y: auto; padding: 20px 26px; scrollbar-width: none; }
-.fv-cart-body::-webkit-scrollbar { display: none; }
+.fv-bag-empty { margin: 26px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.fv-bag-empty b { color: var(--ink); }
 
-.fv-cart-empty { margin: 0; padding: 30px 0 34px; color: var(--muted); font-size: 14px; line-height: 1.7; text-align: center; }
-.fv-cart-empty b { color: var(--ink); }
-
-.fv-cart-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
-.fv-cart-line { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px; border: 1px solid var(--line); border-radius: 16px 5px 16px 5px; background: var(--panel); }
-.fv-cart-line img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px 3px 10px 3px; background: rgba(0, 0, 0, .3); }
-.theme-light .fv-cart-line img { background: rgba(20, 10, 28, .06); }
-.fv-cart-info b { display: block; font-size: 14px; line-height: 1.25; }
-.fv-cart-info > span { display: block; margin-top: 5px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: .04em; }
+.fv-bag-list { display: grid; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+.fv-bag-line { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 16px 5px 16px 5px; background: var(--panel); }
+.fv-bag-line img { width: 62px; height: 62px; object-fit: contain; border-radius: 10px 3px 10px 3px; background: rgba(0, 0, 0, .3); }
+.theme-light .fv-bag-line img { background: rgba(20, 10, 28, .06); }
+.fv-bag-info b { display: block; font-size: 14px; line-height: 1.25; }
+.fv-bag-info > span { display: block; margin-top: 4px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: .04em; }
 
 .fv-qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; }
 .fv-qty button { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--line-strong); border-radius: 8px 2px 8px 2px; color: var(--ink); background: none; font-size: 14px; font-weight: 900; line-height: 1; cursor: pointer; }
 .fv-qty button:hover { color: #fff; border-color: var(--cyan); background: var(--cyan); }
 .fv-qty span { min-width: 22px; color: var(--ink); font-family: Arial, sans-serif; font-size: 13px; font-weight: 900; text-align: center; }
 
-.fv-cart-remove { align-self: flex-start; border: 0; color: var(--muted); background: none; font-size: 20px; line-height: 1; cursor: pointer; }
-.fv-cart-remove:hover { color: var(--magenta); }
+.fv-bag-remove { align-self: flex-start; border: 0; color: var(--muted); background: none; font-size: 20px; line-height: 1; cursor: pointer; }
+.fv-bag-remove:hover { color: var(--magenta); }
 
-.fv-cart-foot { display: grid; gap: 10px; padding: 18px 26px 24px; border-top: 1px solid var(--line); }
-.fv-cart-total { display: flex; align-items: baseline; justify-content: space-between; margin: 0; }
-.fv-cart-total span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
-.fv-cart-total b { color: var(--cyan); font-size: 26px; }
-.fv-cart-hint { margin: 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 11px; font-weight: 600; line-height: 1.6; }
-.fv-cart-clear { justify-self: start; padding: 12px 20px; border: 1px solid var(--magenta); color: var(--magenta); background: none; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: color 200ms ease, background 200ms ease; }
-.fv-cart-clear:hover { color: #fff; background: var(--magenta); }
+.fv-bag-foot { margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.fv-bag-total { display: flex; align-items: baseline; justify-content: space-between; margin: 0; }
+.fv-bag-total span { color: var(--muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+.fv-bag-total b { color: var(--cyan); font-size: 26px; }
+.fv-bag-hint { margin: 10px 0 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 11px; font-weight: 600; line-height: 1.6; }
+.fv-bag-clear { margin-top: 16px; padding: 12px 20px; border: 1px solid var(--magenta); color: var(--magenta); background: none; font-family: Arial, sans-serif; font-size: 9.5px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: color 200ms ease, background 200ms ease; }
+.fv-bag-clear:hover { color: #fff; background: var(--magenta); }
 
 /* ---------- notes ---------- */
 
@@ -449,21 +566,25 @@
 }
 
 @media (max-width: 760px) {
-  .fv-hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 118px 20px 30px; text-align: center; }
+  .fv-hero { grid-template-columns: minmax(0, 1fr); gap: 28px; min-height: 440px; padding: 104px 20px 34px; text-align: center; }
+  .fv-hero-ticker { left: 20px; font-size: 7px; letter-spacing: .12em; }
+  .fv-hero-stamp { right: 20px; font-size: 7px; }
+  .fv-hero::after { right: -72px; width: 220px; height: 220px; }
+  .fv-hero-art { top: 58%; left: 55%; width: min(420px, 92vw); opacity: .24; }
   .fv-hero-tagline,
   .fv-hero-blurb { margin-left: auto; margin-right: auto; }
   .fv-hero-vault { justify-items: center; text-align: center; }
-  .fv-vault-panel { width: 100%; max-width: 320px; }
-  .fv-vault-panel-head { justify-content: center; }
+  .fv-vault-button { width: 100%; max-width: 300px; padding: 24px 20px 22px; }
   .fv-toolbar { position: static; }
+  /* The tabs take the first row on a narrow stage, so the sort control takes a
+     whole row of its own. The trigger grows into what is left after the label
+     rather than claiming 100% of the row, which would push it past the edge. */
+  .fv-sort { width: 100%; }
+  .fv-sort-trigger { flex: 1 1 auto; }
   .fv-vault { grid-template-columns: minmax(0, 1fr); }
   .fv-card-art { height: 300px; }
   .fv-modal { grid-template-columns: minmax(0, 1fr); padding: 24px 22px 28px; max-height: 90vh; }
-  .fv-cart { max-height: 90vh; border-radius: 24px 6px 24px 6px; }
-  .fv-cart-head,
-  .fv-cart-body,
-  .fv-cart-foot { padding-left: 20px; padding-right: 20px; }
-  .fv-cart-list { grid-template-columns: minmax(0, 1fr); }
+  .fv-bag { width: min(430px, 100%); padding: 22px 20px; border-radius: 22px 0 0 22px; }
   .fv-match { padding: 24px 20px; }
 }
 
@@ -472,9 +593,14 @@
   .fv-card-art img,
   .fv-card-overlay,
   .fv-vault-button,
-  .fv-vault-panel,
   .fv-qty button,
+  .fv-sort-menu,
+  .fv-sort-trigger,
+  .fv-sort-trigger svg,
+  .fv-sort-option,
+  .fv-sort-tick,
   .fv-modal,
-  .fv-cart { animation: none; transition: none; }
+  .fv-bag { animation: none; transition: none; }
+  .fv-hero-stamp { transform: none; }
   .fv-fly { display: none; }
 }

@@ -428,7 +428,13 @@
 @keyframes pass-rise { from { opacity: 0; transform: translateY(26px) scale(.98); } to { opacity: 1; transform: none; } }
 
 .pass-sheet-edge { position: absolute; inset: 0 auto 0 0; width: 4px; background: linear-gradient(180deg, var(--pass-accent), transparent 78%); }
-.pass-sheet-media { position: relative; display: grid; place-items: center; padding: 26px; overflow: hidden; background: color-mix(in srgb, var(--pass-accent), transparent 90%); }
+/* The row has to be an explicit minmax(0, 1fr). Left implicit, the single auto
+   track took the poster's natural height (~1090px) during intrinsic sizing,
+   overflowed the shorter media box, and pinned the artwork to the top edge
+   where overflow: hidden cropped its lower half. A definite 1fr track makes
+   the max-width/max-height caps resolve against the real column height, so the
+   poster scales down and place-items centres it in the middle. */
+.pass-sheet-media { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); place-items: center; padding: 26px; overflow: hidden; background: color-mix(in srgb, var(--pass-accent), transparent 90%); }
 .pass-sheet-media img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; }
 
 .pass-sheet-stub { position: absolute; bottom: 0; left: 0; display: grid; place-items: center; padding: 16px 22px; color: #100c1a; background: var(--pass-accent); }
@@ -543,7 +549,11 @@
 
 @media (max-width: 850px) and (min-width: 721px) {
   .pass-sheet { grid-template-columns: 1fr; max-height: calc(100vh - 32px); }
-  .pass-sheet-media { min-height: 260px; }
+  /* A definite height is what lets the same minmax(0, 1fr) track cap the
+     poster here. Left on min-height alone the stacked column had indefinite
+     height, the track fell back to auto and the artwork rendered at its full
+     natural width-scaled height. */
+  .pass-sheet-media { height: clamp(240px, 34vh, 330px); }
 }
 
 @media (max-width: 720px) {
@@ -551,6 +561,7 @@
   .pass-hero-meta { gap: 20px; }
   .pass-grid { grid-template-columns: 1fr; }
   .pass-sheet { grid-template-columns: 1fr; }
+  .pass-sheet-media { height: clamp(220px, 32vh, 300px); }
   .pass-sheet-grid { grid-template-columns: 1fr; }
   .pass-sheet-body { padding: 24px 22px; }
   .pass-filters { padding: 16px 20px; }

@@ -110,7 +110,7 @@
 .anime-stage-image { position: relative; z-index: 3; width: 75%; height: 94%; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 24px 17px rgba(0, 0, 0, .5)); }
 .anime-stage-index, .anime-stage-label { position: absolute; z-index: 4; color: var(--anime-accent); font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .14em; }.anime-stage-index { right: 3%; bottom: 8%; }.anime-stage-label { top: 8%; left: 4%; writing-mode: vertical-rl; transform: rotate(180deg); }
 .anime-glitch-lines { position: absolute; z-index: 5; inset: 8% 7%; overflow: hidden; opacity: 0; pointer-events: none; }.anime-glitch-lines i { position: absolute; left: -30%; display: block; height: 3px; background: var(--anime-accent); box-shadow: 10px 0 color-mix(in srgb, var(--anime-paper), transparent 20%); }.anime-glitch-lines i:nth-child(1) { top: 23%; width: 52%; }.anime-glitch-lines i:nth-child(2) { top: 44%; width: 31%; }.anime-glitch-lines i:nth-child(3) { top: 62%; width: 68%; }.anime-glitch-lines i:nth-child(4) { top: 77%; width: 39%; }
-.anime-is-changing .anime-glitch-lines { opacity: .9; }.anime-is-changing .anime-glitch-lines i { animation: anime-glitch-line 620ms steps(2, end) both; }.anime-is-changing .anime-stage-image { filter: drop-shadow(8px 0 rgba(213, 155, 35, .68)) drop-shadow(-8px 0 rgba(230, 230, 224, .35)) drop-shadow(0 24px 17px rgba(0, 0, 0, .5)); transform: translateX(3px) skewX(-1deg); }
+.anime-is-changing .anime-glitch-lines { opacity: .9; }.anime-is-changing .anime-glitch-lines i { animation: anime-glitch-line 330ms steps(2, end) both; }.anime-is-changing .anime-stage-image { filter: drop-shadow(8px 0 rgba(213, 155, 35, .68)) drop-shadow(-8px 0 rgba(230, 230, 224, .35)) drop-shadow(0 24px 17px rgba(0, 0, 0, .5)); transform: translateX(3px) skewX(-1deg); }
 
 .anime-side-panel { position: relative; z-index: 3; grid-column: 3; grid-row: 1; align-self: center; padding: 0 0 32px 32px; border-left: 1px solid color-mix(in srgb, var(--anime-paper), transparent 76%); animation: anime-copy-in 900ms 130ms cubic-bezier(.16, .82, .25, 1) both; }
 .anime-side-kicker { margin: 0 0 23px; color: var(--anime-accent); font-family: Arial, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }.anime-side-panel h2 { max-width: 280px; margin: 0; color: var(--anime-paper); font-size: 28px; font-weight: 800; letter-spacing: -.05em; line-height: 1.03; }.anime-side-detail { max-width: 275px; margin: 17px 0 0; color: var(--anime-muted); font-size: 14px; font-weight: 600; line-height: 1.6; animation: anime-detail-in 700ms ease both; }.anime-signal { display: grid; grid-template-columns: 1fr auto; gap: 9px; align-items: center; max-width: 280px; margin-top: 30px; color: var(--anime-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }.anime-signal i { grid-column: 1; height: 3px; background: color-mix(in srgb, var(--anime-accent), transparent 78%); }.anime-signal i b { display: block; width: 94%; height: 100%; background: var(--anime-accent); }.anime-signal strong { grid-column: 2; grid-row: 2; color: var(--anime-accent); font-size: 11px; }.anime-slide-nav { display: flex; gap: 8px; margin-top: 36px; }.anime-slide-nav button { width: 31px; height: 25px; padding: 0; border: 0; border-bottom: 2px solid color-mix(in srgb, var(--anime-paper), transparent 72%); background: none; cursor: pointer; color: var(--anime-muted); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; }.anime-slide-nav button.active { border-color: var(--anime-accent); color: var(--anime-accent); }
@@ -127,7 +127,7 @@
 }
 
 @media (max-width: 720px) {
-  .anime-page { overflow-x: hidden; overflow-y: auto; }.anime-nav { display: flex; flex-wrap: wrap; width: calc(100% - 36px); height: auto; min-height: 76px; padding: 16px 0 12px; }.anime-nav-links { order: 3; width: 100%; justify-content: flex-start; gap: 20px; margin-top: 13px; overflow-x: auto; }.anime-nav-link { white-space: nowrap; font-size: 12px; }.anime-nav-actions { margin-left: auto; gap: 3px; }.anime-icon-button { width: 32px; height: 32px; }.anime-theme-button span { display: none; }.anime-signin { padding: 9px 10px; font-size: 10px; }
+  .anime-page { overflow-x: hidden; overflow-y: visible; }.anime-nav { display: flex; flex-wrap: wrap; width: calc(100% - 36px); height: auto; min-height: 76px; padding: 16px 0 12px; }.anime-nav-links { order: 3; width: 100%; justify-content: flex-start; gap: 20px; margin-top: 13px; overflow-x: auto; }.anime-nav-link { white-space: nowrap; font-size: 12px; }.anime-nav-actions { margin-left: auto; gap: 3px; }.anime-icon-button { width: 32px; height: 32px; }.anime-theme-button span { display: none; }.anime-signin { padding: 9px 10px; font-size: 10px; }
   .anime-hero { display: flex; flex-direction: column; align-items: stretch; width: calc(100% - 36px); height: auto; min-height: calc(100svh - 130px); padding: 46px 0 55px; }.anime-hero-copy { order: 1; padding: 0; }.anime-kicker { margin-bottom: 32px; font-size: 10px; }.anime-hero h1 { font-size: clamp(54px, 16vw, 76px); }.anime-intro { max-width: 360px; font-size: 14px; }.anime-stage-wrap { order: 2; width: 100%; height: 470px; margin-top: 15px; }.anime-stage { width: min(100%, 470px); height: 450px; }.anime-stage-image { width: 78%; }.anime-stats { order: 3; flex-wrap: wrap; gap: 16px 22px; font-size: 9px; }.anime-background-characters { top: 35%; right: 1%; font-size: 21vw; }.anime-canvas-one { top: 32%; right: 0; width: 42%; }.anime-canvas-two { bottom: 22%; left: 0; width: 45%; }
 }
 
@@ -179,8 +179,11 @@
 .anime-glitch-copy { position: absolute; bottom: 6%; left: 50%; z-index: 4; width: 78%; height: 94%; object-fit: contain; object-position: bottom center; opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-3%); }
 .anime-glitch-copy-one { filter: drop-shadow(8px 0 rgba(183, 116, 12, .84)); clip-path: inset(14% 0 56% 0); mix-blend-mode: multiply; }
 .anime-glitch-copy-two { filter: drop-shadow(-8px 0 rgba(75, 76, 76, .86)); clip-path: inset(61% 0 11% 0); mix-blend-mode: multiply; }
-.anime-is-changing .anime-glitch-copy { opacity: .7; }.anime-is-changing .anime-glitch-copy-one { animation: anime-slice-one 820ms steps(3, end) both; }.anime-is-changing .anime-glitch-copy-two { animation: anime-slice-two 820ms steps(3, end) both; }.anime-is-changing .anime-stage-image { animation: anime-main-slice 820ms steps(3, end) both; filter: drop-shadow(8px 0 rgba(183, 116, 12, .65)) drop-shadow(-8px 0 rgba(70, 71, 71, .58)) drop-shadow(0 24px 17px rgba(0, 0, 0, .5)); }
-.anime-is-changing .anime-glitch-lines i { animation-duration: 820ms; }
+/* The slice burst runs to 440ms, just inside the 760ms window the page keeps
+   .anime-is-changing up for, so the cover is back at rest before the class lifts
+   and nothing snaps back at the end of a burst. */
+.anime-is-changing .anime-glitch-copy { opacity: .7; }.anime-is-changing .anime-glitch-copy-one { animation: anime-slice-one 440ms steps(3, end) both; }.anime-is-changing .anime-glitch-copy-two { animation: anime-slice-two 440ms steps(3, end) both; }.anime-is-changing .anime-stage-image { animation: anime-main-slice 440ms steps(3, end) both; filter: drop-shadow(8px 0 rgba(183, 116, 12, .65)) drop-shadow(-8px 0 rgba(70, 71, 71, .58)) drop-shadow(0 24px 17px rgba(0, 0, 0, .5)); }
+.anime-is-changing .anime-glitch-lines i { animation-duration: 440ms; }
 
 @keyframes anime-slice-one { 0% { transform: translateX(-50%) translate(-24px, -3%); clip-path: inset(14% 0 56% 0); } 30% { transform: translateX(-50%) translate(26px, -4%); clip-path: inset(21% 0 49% 0); } 65% { transform: translateX(-50%) translate(-14px, -2%); clip-path: inset(9% 0 60% 0); } 100% { transform: translateX(-50%) translate(0, -3%); opacity: 0; } }
 @keyframes anime-slice-two { 0% { transform: translateX(-50%) translate(21px, -3%); clip-path: inset(61% 0 11% 0); } 35% { transform: translateX(-50%) translate(-28px, -2%); clip-path: inset(53% 0 18% 0); } 70% { transform: translateX(-50%) translate(14px, -4%); clip-path: inset(67% 0 8% 0); } 100% { transform: translateX(-50%) translate(0, -3%); opacity: 0; } }
@@ -227,10 +230,10 @@
 .anime-glitch-lines { inset: 7% 5%; }
 .anime-glitch-lines i { height: 2px; background: var(--anime-accent); box-shadow: none; }
 .anime-is-changing .anime-glitch-copy { opacity: .34; }
-.anime-is-changing .anime-glitch-copy-one { animation: anime-slice-calm-one 1220ms steps(4, end) both; filter: sepia(.5) saturate(1.7); }
-.anime-is-changing .anime-glitch-copy-two { animation: anime-slice-calm-two 1220ms steps(4, end) both; filter: grayscale(.55) contrast(1.4); }
-.anime-is-changing .anime-stage-image { animation: anime-main-calm 1220ms ease both; filter: drop-shadow(5px 0 rgba(183, 116, 12, .48)) drop-shadow(-5px 0 rgba(67, 68, 68, .5)) drop-shadow(0 26px 18px rgba(0, 0, 0, .52)); }
-.anime-is-changing .anime-glitch-lines i { animation-duration: 1220ms; }
+.anime-is-changing .anime-glitch-copy-one { animation: anime-slice-calm-one 660ms steps(4, end) both; filter: sepia(.5) saturate(1.7); }
+.anime-is-changing .anime-glitch-copy-two { animation: anime-slice-calm-two 660ms steps(4, end) both; filter: grayscale(.55) contrast(1.4); }
+.anime-is-changing .anime-stage-image { animation: anime-main-calm 660ms ease both; filter: drop-shadow(5px 0 rgba(183, 116, 12, .48)) drop-shadow(-5px 0 rgba(67, 68, 68, .5)) drop-shadow(0 26px 18px rgba(0, 0, 0, .52)); }
+.anime-is-changing .anime-glitch-lines i { animation-duration: 660ms; }
 
 @keyframes anime-slice-calm-one {
   0% { transform: translateX(-50%) translate(-8px, -3%); opacity: 0; }
@@ -261,22 +264,19 @@
   .anime-stage-grid { width: 87%; height: 84%; }
 }
 
-/* Desktop hero is one complete viewport, without a browser scroll seam. */
+/* The hero is one complete viewport, without a browser scroll seam, and the
+   sections below it are free to run on for as many screens as they need. */
 .anime-page,
 .anime-page * {
   box-sizing: border-box;
 }
 
 @media (min-width: 721px) {
-  html:has(.anime-page),
-  body:has(.anime-page) {
-    overflow: hidden;
-  }
-
   .anime-page {
-    height: 100svh;
-    min-height: 0;
-    overflow: hidden;
+    height: auto;
+    min-height: 100svh;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .anime-hero {
@@ -313,9 +313,6 @@
 }
 
 @media (max-width: 900px) and (min-width: 721px) {
-  html:has(.anime-page),
-  body:has(.anime-page) { overflow-x: hidden; overflow-y: auto; }
-  .anime-page { height: auto; min-height: 100svh; overflow: visible; }
   .anime-hero { height: auto; min-height: calc(100svh - 110px); overflow: visible; }
   .anime-stage-image, .anime-glitch-copy { height: 96%; }
 }

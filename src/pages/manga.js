@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
+import { paletteFor } from '../components/fandomConfig';
+import CharacterCodex from '../components/CharacterCodex';
+import FandomMediaWall from '../components/FandomMediaWall';
+import FandomDoors from '../components/FandomDoors';
 import './manga.css';
 
 const mangaSlides = [
@@ -81,6 +86,7 @@ function Manga() {
   };
 
   return (
+    <>
     <main className={`manga-page ${theme === 'light' ? 'manga-theme-light' : 'manga-theme-dark'} ${isChanging ? 'manga-is-changing' : ''}`}>
       <SiteNav theme={theme} setTheme={setTheme} active="manga" variant="manga" />
       <section className="manga-hero" aria-label="Manga universe introduction" onPointerMove={handlePointerMove} onPointerLeave={resetPointer} onPointerCancel={resetPointer}>
@@ -133,9 +139,19 @@ function Manga() {
           <p className="manga-director">Story / art / emotion<br /><b>{activeSlide.credit}</b></p>
         </aside>
 
-        <div className="manga-hero-footer"><span>FV — MANGA / 07</span><span>NEXT PANEL ↓</span></div>
+        <div className="manga-hero-footer"><span>NEXT PANEL ↓</span></div>
       </section>
+      <CharacterCodex fandom="manga" theme={theme} sectionNumber="02" />
+
+      <FandomMediaWall fandom="manga" theme={theme} />
+
+      <FandomDoors fandom="manga" theme={theme} />
     </main>
+
+    {/* The last thing on the page, closed in the manga palette rather than the
+        site-wide black stage, so it reads as part of this page. */}
+    <SiteFooter theme={theme} tones={paletteFor('manga', theme)} />
+    </>
   );
 }
 

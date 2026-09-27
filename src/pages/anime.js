@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
+import { paletteFor } from '../components/fandomConfig';
+import CharacterCodex from '../components/CharacterCodex';
+import FandomMediaWall from '../components/FandomMediaWall';
+import FandomDoors from '../components/FandomDoors';
 import './anime.css';
 
 const animeSlides = [
@@ -11,6 +16,23 @@ const animeSlides = [
   { image: '/assets/images/anime6.png', title: 'The dark always answers back.', detail: 'Meet the legends waiting at the edge of the next great adventure.' },
 ];
 
+// How often the stage re-glitches, and how long one glitch lasts. The swap and
+// the clear used to sit at 720ms and 1420ms on a 6.5s cycle, so each burst was
+// long enough to read as a full-screen tear. With the cycle pulled down to two
+// seconds the burst has to shrink with it, otherwise the cover is tearing more
+// often than it is at rest. These line up with the animation durations in
+// anime.css (.anime-is-changing rules).
+const GLITCH_EVERY = 2000;
+const GLITCH_SWAP = 380;
+const GLITCH_CLEAR = 760;
+
+// A two-second cycle turns the tear into a repeating flicker rather than a
+// one-off transition, so anyone who asked the OS for less motion gets the cover
+// rotating quietly instead: same carousel, none of the slicing.
+const prefersCalm = () => typeof window !== 'undefined'
+  && typeof window.matchMedia === 'function'
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function Anime() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
@@ -19,12 +41,16 @@ function Anime() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
+      if (prefersCalm()) {
+        setActiveIndex((currentIndex) => (currentIndex + 1) % animeSlides.length);
+        return;
+      }
       setIsChanging(true);
       window.setTimeout(() => {
         setActiveIndex((currentIndex) => (currentIndex + 1) % animeSlides.length);
-      }, 720);
-      window.setTimeout(() => setIsChanging(false), 1420);
-    }, 6500);
+      }, GLITCH_SWAP);
+      window.setTimeout(() => setIsChanging(false), GLITCH_CLEAR);
+    }, GLITCH_EVERY);
 
     return () => window.clearInterval(timer);
   }, []);
@@ -35,14 +61,16 @@ function Anime() {
 
   const selectSlide = (index) => {
     if (index === activeIndex || isChanging) return;
+    if (prefersCalm()) { setActiveIndex(index); return; }
     setIsChanging(true);
     window.setTimeout(() => {
       setActiveIndex(index);
-    }, 720);
-    window.setTimeout(() => setIsChanging(false), 1420);
+    }, GLITCH_SWAP);
+    window.setTimeout(() => setIsChanging(false), GLITCH_CLEAR);
   };
 
   return (
+    <>
     <main className={`anime-page ${theme === 'light' ? 'anime-theme-light' : ''} ${isChanging ? 'anime-is-changing' : ''}`}>
       <SiteNav theme={theme} setTheme={setTheme} active="anime" variant="anime" />
 
@@ -69,7 +97,7 @@ function Anime() {
           <p className="anime-kicker"><span /> Category 01 / Fandom hub</p>
           <h1>ANIME<br /><em>UNIVERSE</em></h1>
           <p className="anime-intro">Step beyond the screen into stories of impossible worlds, unforgettable heroes, and the moments that make every arc matter.</p>
-          <a className="anime-discover-link" href="#anime-content">Enter the universe <span>↗</span></a>
+          <a className="anime-discover-link" href="#anime-character-profiles">Enter the universe <span>↗</span></a>
         </div>
 
         <div className="anime-stage-wrap">
@@ -96,7 +124,17 @@ function Anime() {
 
         <div className="anime-stats" id="anime-content"><span><b>07</b> story worlds</span><span><b>24</b> featured arcs</span><span><b>∞</b> late-night theories</span></div>
       </section>
+
+      <CharacterCodex fandom="anime" theme={theme} sectionNumber="05" />
+
+      <FandomMediaWall fandom="anime" theme={theme} />
+
+      <FandomDoors fandom="anime" theme={theme} />
     </main>
+
+    {/* The last thing on the page, themed to match the fandom it closes. */}
+    <SiteFooter theme={theme} accent={paletteFor('anime', theme).accent} />
+    </>
   );
 }
 

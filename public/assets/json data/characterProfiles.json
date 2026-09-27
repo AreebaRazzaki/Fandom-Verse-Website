@@ -1,0 +1,2422 @@
+{
+  "issue": "CODEX-01",
+  "volume": "Vol. 01",
+  "sectionTitle": "The Character Codex",
+  "sectionTitles": {
+    "anime": "The Character Codex",
+    "gaming": "The Player Codex",
+    "movies": "The Film Codex",
+    "tvshows": "The Cast Codex",
+    "kpop": "The Stage Codex",
+    "comics": "The Panel Codex",
+    "manga": "The Chapter Codex"
+  },
+  "sectionLabels": {
+    "movies": {
+      "archive": "The film codex",
+      "series": "Film",
+      "watch": "Watch the film",
+      "plate": "Frame",
+      "companion": "Also on screen"
+    },
+    "tvshows": {
+      "archive": "The cast codex",
+      "series": "Series",
+      "watch": "Watch the episode",
+      "plate": "Still"
+    },
+    "kpop": {
+      "archive": "The stage codex",
+      "series": "Act",
+      "watch": "Watch the stage",
+      "plate": "Plate",
+      "companion": "Also on stage"
+    },
+    "comics": {
+      "archive": "The panel codex",
+      "series": "Title",
+      "watch": "Watch the trailer",
+      "plate": "Panel",
+      "companion": "Also in print"
+    },
+    "manga": {
+      "archive": "The chapter codex",
+      "series": "Title",
+      "watch": "Watch the trailer",
+      "plate": "Plate",
+      "companion": "Also in print"
+    }
+  },
+  "characters": [
+    {
+      "id": "anime-naruto-uzumaki",
+      "fandom": "anime",
+      "entry": "01",
+      "chapter": "Chapter 01",
+      "name": "Naruto Uzumaki",
+      "reading": "うずまき ナルト",
+      "epithet": "The loudest boy in the village became its loudest promise.",
+      "role": "Seventh Hokage",
+      "image": "/assets/images/Naruto_Uzumak%20(anime%201).png",
+      "accent": "#ff7a18",
+      "accentTwo": "#2f5fd0",
+      "series": {
+        "title": "Naruto Shippuden",
+        "year": "2007",
+        "studio": "Studio Pierrot",
+        "format": "TV series · 500 episodes",
+        "origin": "Hidden Leaf Village"
+      },
+      "traits": [
+        "Brave",
+        "Strategic",
+        "Determined"
+      ],
+      "quote": "Believe it! I'm going to be Hokage — dattebayo!",
+      "bio": [
+        "Naruto Uzumaki is born on the same night the Nine-Tailed Fox is sealed inside him, and the village spends his whole childhood treating the two as the same problem. He is loud, inattentive, desperate for anyone to say his name in a crowd, and he decides early — in front of a laughing crowd, with nobody backing him — that he will become Hokage anyway. The decision is not a strategy. It is the loudest thing he owns.",
+        "Shippuden is where the boy gets his answer. Neji tells him about the curse of the Hyuga, Gaara tells him what it costs to lose a village, and Itachi shows him the specific shape of the hatred Naruto is made of. The Rasengan comes out of that, and so does the first time he looks at Sasuke and sees a mirror instead of a rival. The boy who wanted recognition discovers he would rather have a team.",
+        "What makes him a lasting lead is the second half of that discovery. Naruto keeps choosing, at real cost, to protect people who do not protect him back — Gaara, Gaara's father, the Hyuga branch, the entire alliance he has to build to hold a war together. By the Fourth Great Ninja War he is spending his own life as a bargaining chip, and by the end he is not the loudest person in the room anymore. He is simply the one still standing, and the village finally hears it."
+      ],
+      "facts": [
+        {
+          "label": "First arc",
+          "value": "Land of Snow"
+        },
+        {
+          "label": "Signature move",
+          "value": "Rasengan · Shadow Clone Jutsu"
+        },
+        {
+          "label": "Bound by",
+          "value": "Sakura · Sasuke · Konohamaru"
+        },
+        {
+          "label": "Rival",
+          "value": "Sasuke Uchiha"
+        },
+        {
+          "label": "Stands for",
+          "value": "The village that never chose him"
+        }
+      ],
+      "youtube": {
+        "videoId": "XsJB9C30GCs",
+        "title": "Official Trailer #1 | Naruto Shippuden Set 2",
+        "channel": "VIZ",
+        "label": "Naruto Shippuden trailer"
+      },
+      "moreYoutube": null,
+      "movie": {
+        "title": "Naruto the Movie: The Last",
+        "year": "2014",
+        "studio": "Toei Animation",
+        "videoId": "SDIvvapG0sE",
+        "name": "NARUTO The Movie: The Last — Official Trailer",
+        "channel": "VIZ",
+        "label": "The Last trailer",
+        "blurb": "Two years after the war, the moon begins to fall. Naruto crosses a country with a single medicine case to save it.",
+        "moreYoutube": {
+          "videoId": "WhPOcizrFqg",
+          "name": "NARUTO The Movie Road To Ninja — Official Extended Trailer",
+          "channel": "VIZ",
+          "label": "Road to Ninja trailer"
+        }
+      }
+    },
+    {
+      "id": "anime-monkey-d-luffy",
+      "fandom": "anime",
+      "entry": "02",
+      "chapter": "Chapter 02",
+      "name": "Monkey D. Luffy",
+      "reading": "モンキー・D・ルフィ",
+      "epithet": "A rubber boy who treats the whole ocean as a locked door.",
+      "role": "Captain of the Straw Hat Pirates",
+      "image": "/assets/images/Monkey_D_Luffy%20(anime%202).png",
+      "accent": "#e03127",
+      "accentTwo": "#f0b429",
+      "series": {
+        "title": "ONE PIECE",
+        "year": "1999",
+        "studio": "Toei Animation",
+        "format": "TV series · 1000+ episodes",
+        "origin": "East Blue"
+      },
+      "traits": [
+        "Fearless",
+        "Loyal",
+        "Unbreakable"
+      ],
+      "quote": "Give up? That's not in my vocabulary.",
+      "bio": [
+        "Luffy is nineteen, wears a straw hat he refuses to explain, and has the rank of a nobody. Every single person he meets tells him the same thing — pirates who find the One Piece are killed, the line of conquerors runs through his family, and he is too weak to matter. He hears all of it, agrees with most of it, and sails anyway. The straw hat was his mother's, and the reason he keeps it is the only thing he ever explains unprompted.",
+        "Then there is the crew. Zoro, Nami, Usopp, Sanji and Chopper each arrive broken in a specific way, and Luffy's entire method is to hand his hat to them and wait. He does not counsel them, he does not persuade them, he simply decides they are his crew and then acts like it until it is true. The Belami fight, the Enies Lobby run, the moment he stands between his captain and a king — the crew is built entirely out of that stubborn, unarguable loyalty.",
+        "What keeps the story from repeating itself is the fruit. The Gomu Gomu no Mi gave him a body that cannot be cut, stabbed, shot or crushed, and it turns every quiet island into a fight he was not looking for. Luffy walks into danger that would kill anyone else because he genuinely does not understand that he is fragile. Gear Five takes that innocence and points it at a world that has been waiting a very long time for him to be serious."
+      ],
+      "facts": [
+        {
+          "label": "First arc",
+          "value": "Romance Dawn"
+        },
+        {
+          "label": "Power",
+          "value": "Gomu Gomu no Mi — rubber body"
+        },
+        {
+          "label": "Crew",
+          "value": "The Straw Hat Pirates"
+        },
+        {
+          "label": "Rival",
+          "value": "Trafalgar Law · Crocodile"
+        },
+        {
+          "label": "Searches for",
+          "value": "The One Piece"
+        }
+      ],
+      "youtube": {
+        "videoId": "YnczpEoeaDM",
+        "title": "Elbaph Arc Official Trailer | April 5, 2026 | ONE PIECE",
+        "channel": "ONE PIECE Official - ENG",
+        "label": "ONE PIECE arc trailer"
+      },
+      "moreYoutube": {
+        "videoId": "Ades3pQbeh8",
+        "title": "ONE PIECE | Official Trailer",
+        "channel": "Netflix",
+        "label": "Series trailer"
+      },
+      "movie": {
+        "title": "ONE PIECE FILM: RED",
+        "year": "2022",
+        "studio": "Toei Animation",
+        "videoId": "NbLOrNn8fvY",
+        "name": "ONE PIECE FILM RED | Official Trailer #1",
+        "channel": "Toei Animation",
+        "label": "Film Red trailer",
+        "blurb": "Uta, the most loved singer in the world, takes the stage at the World Music Festival — and the Straw Hats walk straight into the trap built for her.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "anime-goku",
+      "fandom": "anime",
+      "entry": "03",
+      "chapter": "Chapter 03",
+      "name": "Goku",
+      "reading": "孫悟空",
+      "epithet": "Training is the only argument he has ever needed.",
+      "role": "Saiyan protector of Earth",
+      "image": "/assets/images/Goku_character%20(anime%203).png",
+      "accent": "#2a8fe0",
+      "accentTwo": "#ff8a1f",
+      "series": {
+        "title": "Dragon Ball Super",
+        "year": "2015",
+        "studio": "Toei Animation",
+        "format": "TV series · ongoing",
+        "origin": "Planet Vegea"
+      },
+      "traits": [
+        "Relentless",
+        "Pure-hearted",
+        "Adaptive"
+      ],
+      "quote": "I don't like losing. So I train, and I get stronger. That's all.",
+      "bio": [
+        "Goku arrives on Earth as a low-ranking Saiyan and leaves every war with a new limit, not a new philosophy. He is a Saiyan raised by humans, which is the whole engine of the character: he fights because the world is interesting, and he stops to eat, farm, and help villagers because Earth is where he grew up rather than a place he conquered. The single-mindedness reads as innocence and it is also the thing that makes him terrifying in a fight.",
+        "Almost every arc runs the same shape. A stronger enemy shows up, Goku loses, he trains, he comes back with a transformation the enemy did not know existed, and the universe quietly rearranges itself around the new ceiling. Super Saiyan, Kaioken, God, Ultra Instinct — each one is a training montage with a name. What keeps it from being a loop is the cost he keeps accepting: he trains harder than his body should allow, in a story that has actually shown what that does.",
+        "And underneath all of it is the friend. Vegeta is the one rival who becomes an ally without ever becoming warm, Krillin is the one human he keeps protecting specifically because they cannot fight his battles, and Whis is the reminder that there is always another level above the one he just reached. Goku is not a character who wants to be the strongest. He is a character who wants to keep meeting someone who is."
+      ],
+      "facts": [
+        {
+          "label": "First arc",
+          "value": "Tenkaichi Budokai"
+        },
+        {
+          "label": "Power",
+          "value": "Ki · Super Saiyan · Ultra Instinct"
+        },
+        {
+          "label": "Mentors",
+          "value": "King Kai · Whis"
+        },
+        {
+          "label": "Rival",
+          "value": "Vegeta"
+        },
+        {
+          "label": "Protects",
+          "value": "Earth, and everyone on it"
+        }
+      ],
+      "youtube": {
+        "videoId": "iCD3Lf7Jf9o",
+        "title": "Dragon Ball Super: Beerus | Super Surge Official Trailer",
+        "channel": "Toei Animation",
+        "label": "Dragon Ball Super trailer"
+      },
+      "moreYoutube": {
+        "videoId": "t5CIs0jDqC8",
+        "title": "Dragon Ball Super: SUPER HERO | OFFICIAL TRAILER",
+        "channel": "Crunchyroll",
+        "label": "Super Hero trailer"
+      },
+      "movie": {
+        "title": "Dragon Ball Super: Broly",
+        "year": "2018",
+        "studio": "Toei Animation",
+        "videoId": "U_WaYehNVAM",
+        "name": "Dragon Ball Super — The Movie: Broly — Official Trailer",
+        "channel": "Crunchyroll",
+        "label": "Broly trailer",
+        "blurb": "A Saiyan who has never been beaten, a universe on edge, and the one fight Goku and Vegeta have to take together instead of apart.",
+        "moreYoutube": {
+          "videoId": "fTUhrqlCRKQ",
+          "name": "Dragon Ball Super: Broly | Trailer 2",
+          "channel": "20th Century Studios",
+          "label": "Broly trailer 2"
+        }
+      }
+    },
+    {
+      "id": "anime-gojo-satoru",
+      "fandom": "anime",
+      "entry": "04",
+      "chapter": "Chapter 04",
+      "name": "Gojo Satoru",
+      "reading": "五条 悟",
+      "epithet": "The strongest, and the loneliest teacher in the room.",
+      "role": "Special grade jujutsu sorcerer",
+      "image": "/assets/images/Gojo_Satoru%20(anime%204).png",
+      "accent": "#25c4dc",
+      "accentTwo": "#4f6bff",
+      "series": {
+        "title": "Jujutsu Kaisen",
+        "year": "2020",
+        "studio": "MAPPA",
+        "format": "TV series · 3 seasons",
+        "origin": "Tokyo Jujutsu High"
+      },
+      "traits": [
+        "Detached",
+        "Genius",
+        "Protective"
+      ],
+      "quote": "Don't worry. I'm the strongest.",
+      "bio": [
+        "Gojo Satoru is nineteen years old, blindfolded by choice, and holds the only position in jujutsu society that nobody else can argue with. The Six Eyes and Limitless make him, functionally, a walking natural disaster — but that is not why he wears the covering. He cannot look at cursed energy without reading a person's worst moment, and he has decided early that other people's pain is not his to carry.",
+        "The result is the most demoralising job in the series. He teaches a class of first-years who do not know what they are walking into, he is reports-ed to constantly, and he is the reason the higher-ups keep their hands on a leash. It is Gojo who hands Yuji Itadori a second chance at all; it is Gojo who stands between his students and every consequence that wants to land on them. He is not detached from the work. He is detached from the idea that he can afford to feel it.",
+        "Then the Prison Realm takes him off the board, and the story immediately shows what his absence costs. His students are brilliant and completely exposed. The thing he built — a generation strong enough not to need a single strongest person standing over them — turns out to be unfinished, and the Culling Game becomes the long argument about whether protecting someone is the same as making them able to stand. He is sealed for most of it, and he is still the centre of every decision anyone makes."
+      ],
+      "facts": [
+        {
+          "label": "First arc",
+          "value": "Kyoto Goodwill Event"
+        },
+        {
+          "label": "Techniques",
+          "value": "Six Eyes · Limitless · Infinity"
+        },
+        {
+          "label": "Students",
+          "value": "Yuji Itadori · Megumi Fushiguro"
+        },
+        {
+          "label": "Sealed by",
+          "value": "The Prison Realm"
+        },
+        {
+          "label": "Aims for",
+          "value": "A generation that stands without him"
+        }
+      ],
+      "youtube": {
+        "videoId": "MPfZhgLiK6w",
+        "title": "JUJUTSU KAISEN The Culling Game | Official Trailer",
+        "channel": "Crunchyroll",
+        "label": "Jujutsu Kaisen trailer"
+      },
+      "moreYoutube": {
+        "videoId": "pkKu9hLT-t8",
+        "title": "JUJUTSU KAISEN | OFFICIAL TRAILER",
+        "channel": "Crunchyroll",
+        "label": "Series trailer"
+      },
+      "movie": {
+        "title": "Jujutsu Kaisen 0",
+        "year": "2021",
+        "studio": "MAPPA",
+        "videoId": "2docezZl574",
+        "name": "JUJUTSU KAISEN 0 | OFFICIAL TRAILER 3",
+        "channel": "Crunchyroll",
+        "label": "JJK 0 trailer",
+        "blurb": "Before Gojo taught a classroom, there was Yuta Okkotsu, a boy with a cursed spirit on his back and no idea how to carry her.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "anime-tanjiro-kamado",
+      "fandom": "anime",
+      "entry": "05",
+      "chapter": "Chapter 05",
+      "name": "Tanjiro Kamado",
+      "reading": "竈門 炭治郎",
+      "epithet": "Carried his sister up a frozen mountain and refused to let go.",
+      "role": "Demon Slayer · Water Breathing",
+      "image": "/assets/images/Tanjiro_Kamado__(anime_5).png",
+      "accent": "#1f9c8f",
+      "accentTwo": "#d4362c",
+      "series": {
+        "title": "Demon Slayer: Infinity Castle",
+        "year": "2025",
+        "studio": "Ufotable",
+        "format": "Cinema trilogy · Crunchyroll",
+        "origin": "Mount Natagumo"
+      },
+      "traits": [
+        "Compassionate",
+        "Resolute",
+        "Selfless"
+      ],
+      "quote": "No matter what, Nezuko is my sister. I'll bring her back.",
+      "bio": [
+        "Tanjiro is a charcoal seller with a good memory for faces, and the last thing his family does before the massacre is laugh with him over a skewer. He comes down the mountain carrying Nezuko on his back and refuses to hand her to a swordsman. That refusal is the character: everyone else in the Corps is hunting a monster, and he is trying to save a person, and the whole series hangs on whether those are different things.",
+        "His fighting is an argument rather than a trick. Water Breathing is the first style he is taught and it stays his rhythm through every arc — the forms read like a conversation, and the breathing he uses at the end of a fight is the one his father showed him. What makes him dangerous is the same thing that makes him funny: he is stronger than the situation requires and completely unable to look away from someone who is suffering. He keeps trying to reason with demons, and he keeps being right to.",
+        "The Sunshine Breathing form is where all of it converges. Inherited from his father, it is described to him as an impossible form for a demon slayer to hold, and the fight that unlocks it is a straight refusal of what he was told was possible. After that, the Infinity Castle puts him in a castle that reshuffles itself, against an enemy who has been planned around for a century — and the price of the plan is paid by everyone Tanjiro is trying to protect, which is exactly the trade he refuses to make."
+      ],
+      "facts": [
+        {
+          "label": "First arc",
+          "value": "Mount Natagumo"
+        },
+        {
+          "label": "Breathing",
+          "value": "Water · Sun · Hinokami Kagura"
+        },
+        {
+          "label": "Sword",
+          "value": "Nichirin — a black blade"
+        },
+        {
+          "label": "Family",
+          "value": "Nezuko, turned demon"
+        },
+        {
+          "label": "Fights for",
+          "value": "Turning his sister human again"
+        }
+      ],
+      "youtube": {
+        "videoId": "wPFeBxt7VXI",
+        "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle | Main Trailer",
+        "channel": "Crunchyroll",
+        "label": "Infinity Castle trailer"
+      },
+      "moreYoutube": {
+        "videoId": "9kb7vK11_Rw",
+        "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle | OFFICIAL TRAILER",
+        "channel": "Aniplex USA",
+        "label": "Series trailer"
+      },
+      "movie": {
+        "title": "Demon Slayer: Mugen Train",
+        "year": "2020",
+        "studio": "Aniplex · Ufotable",
+        "videoId": "ATJYac_dORw",
+        "name": "Demon Slayer — The Movie: Mugen Train Official Trailer",
+        "channel": "Aniplex USA",
+        "label": "Mugen Train trailer",
+        "blurb": "Over forty people vanish off a train that never stops moving. Tanjiro boards it anyway, alongside the Flame Hashira.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "gaming-mario",
+      "fandom": "gaming",
+      "entry": "01",
+      "chapter": "Quest 01",
+      "name": "Mario",
+      "reading": "マリオ · MARIO",
+      "epithet": "A plumber with a moustache who treats a kingdom like a plumbing job.",
+      "role": "Hero of the Mushroom Kingdom",
+      "image": "/assets/images/Mario__(game_1).png",
+      "accent": "#ff6a5e",
+      "accentTwo": "#4fc3f7",
+      "series": {
+        "title": "Super Mario Odyssey",
+        "year": "2017",
+        "studio": "Nintendo EPD",
+        "format": "Game · Nintendo Switch",
+        "origin": "Mushroom Kingdom"
+      },
+      "traits": [
+        "Fearless",
+        "Improvising",
+        "Relentless"
+      ],
+      "quote": "Let's-a go! The moon's got a problem and so do I.",
+      "bio": [
+        "Mario has been the same person since 1981, which is the joke and the point. He is short, he is moustached, he runs, and he wins. Every new machine he lands on hands him a fresh excuse to do the only thing he has ever been good at — run at the problem, jump on it, and come down on the other side. Nothing about his kit is original; everything about how he uses it is.",
+        "Odyssey is the most generous of the home console games, and it works because it hands the movement to a character who has earned total freedom. There is no health bar to manage and no combat to speak of, so the only pressure is your own curiosity. Cappy lets him throw his hat, take a hat, ride a hat — a mechanic that turns a plumber into a loadout, and it is the reason the game never has to explain a tutorial.",
+        "The films are the same instinct in a different engine. The Super Mario Bros. Movie is a rescue story written by people who know the character is a game before he is a person, and that is exactly why it lands: Peach still needs saving, Bowser is still a plumber with the wrong brief, and Mario is still cheerful about all of it. Forty years of the same face and the audience still knows exactly who has to press start."
+      ],
+      "facts": [
+        {
+          "label": "First platformer",
+          "value": "Super Mario Bros. · 1985"
+        },
+        {
+          "label": "Power",
+          "value": "Cappy — capture anything, become it"
+        },
+        {
+          "label": "Brother",
+          "value": "Luigi"
+        },
+        {
+          "label": "Rival",
+          "value": "Bowser"
+        },
+        {
+          "label": "Rescues",
+          "value": "Princess Peach, every single time"
+        }
+      ],
+      "youtube": {
+        "videoId": "u6oPBIVjf8E",
+        "title": "Super Mario Odyssey Trailer - Nintendo Switch",
+        "channel": "Nintendo of America",
+        "label": "Super Mario Odyssey trailer"
+      },
+      "moreYoutube": {
+        "videoId": "88JL-WM_kV0",
+        "title": "Super Mario Bros. Wonder - Official Launch Trailer",
+        "channel": "IGN",
+        "label": "Wonder launch trailer"
+      },
+      "movie": {
+        "title": "The Super Mario Bros. Movie",
+        "year": "2023",
+        "studio": "Illumination · Nintendo",
+        "videoId": "TnGl01FkMMo",
+        "name": "The Super Mario Bros. Movie | Official Trailer",
+        "channel": "Universal Pictures",
+        "label": "Super Mario Bros. Movie trailer",
+        "blurb": "A Brooklyn plumbers' apprentice is pulled through a pipe into a living cartoon kingdom, where the princess and the king are both missing and Bowser has the wrong idea about what a rescue is.",
+        "moreYoutube": {
+          "videoId": "RjNcTBXTk4I",
+          "name": "The Super Mario Bros. Movie | Final Trailer",
+          "channel": "Illumination",
+          "label": "Movie final trailer"
+        }
+      }
+    },
+    {
+      "id": "gaming-link",
+      "fandom": "gaming",
+      "entry": "02",
+      "chapter": "Quest 02",
+      "name": "Link",
+      "reading": "リンク · LINK",
+      "epithet": "Chosen by a sword that has decided before he was born.",
+      "role": "Hero of Hyrule",
+      "image": "/assets/images/Link_Zelda__(game_2).png",
+      "accent": "#4fc46a",
+      "accentTwo": "#9ee84f",
+      "series": {
+        "title": "The Legend of Zelda: Breath of the Wild",
+        "year": "2017",
+        "studio": "Nintendo EPD",
+        "format": "Game · Nintendo Switch",
+        "origin": "Hyrule"
+      },
+      "traits": [
+        "Resourceful",
+        "Silent",
+        "Curious"
+      ],
+      "quote": "It's dangerous to go alone. Take this.",
+      "bio": [
+        "Link is the least present protagonist in the history of video games. He is a teenager in a green tunic, he has no lines, and for thirty years the plot has been about waking him up. The Master Sword is not given to him as a reward for anything — it is simply the answer to a question somebody else asked, and the character is defined by being the one person alive who can carry it.",
+        "Breath of the Wild strips the series back to a field manual. The Divine Beasts are shrines you have to solve yourself, the recipe book is a phone you have to keep checking, the enemies are puzzles that will happily knock you off a mountain. The famous first encounter is a cooking pot next to a sleeping Bokoblin: nothing is explained, nothing is signposted, and the game trusts the player to press the button they have just been handed.",
+        "It is easy to call it a sandbox. What actually made it matter is the absence of walls — the shrines, the physics puzzles, the weapon that fuses to whatever you picked up last, the korok seeds that are literally hidden for no reason at all. It is the rare game where wandering off is the progression, and the ending is the only part Link actually gets a cutscene in."
+      ],
+      "facts": [
+        {
+          "label": "Debut",
+          "value": "The Legend of Zelda · 1986"
+        },
+        {
+          "label": "Weapon",
+          "value": "The Master Sword"
+        },
+        {
+          "label": "Sheikah Slate",
+          "value": "Purportedly the Purah Pad"
+        },
+        {
+          "label": "Rival",
+          "value": "Ganon · Calamity Ganon"
+        },
+        {
+          "label": "Pet",
+          "value": "One very good dog"
+        }
+      ],
+      "youtube": {
+        "videoId": "1rPxiXXxftE",
+        "title": "The Legend of Zelda: Breath of the Wild E3 2016 Trailer",
+        "channel": "Nintendo of America",
+        "label": "Breath of the Wild trailer"
+      },
+      "moreYoutube": {
+        "videoId": "6LIq8ryhG9c",
+        "title": "The Legend of Zelda: Breath of the Wild - E3 2016 Trailer (Wii U)",
+        "channel": "Nintendo UK",
+        "label": "Wii U trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "gaming-lara-croft",
+      "fandom": "gaming",
+      "entry": "03",
+      "chapter": "Quest 03",
+      "name": "Lara Croft",
+      "reading": "ララ・クロフト · LARA CROFT",
+      "epithet": "The first playable character who was a full person, not a set of stats.",
+      "role": "Archaeologist and tomb raider",
+      "image": "/assets/images/Lara_Croft__(game_3).png",
+      "accent": "#d8ac5c",
+      "accentTwo": "#7fd4c1",
+      "series": {
+        "title": "Shadow of the Tomb Raider",
+        "year": "2018",
+        "studio": "Eidos-Montréal · Crystal Dynamics",
+        "format": "Game · consoles & PC",
+        "origin": "Cozumel, Mexico"
+      },
+      "traits": [
+        "Resourceful",
+        "Courageous",
+        "Unfinished"
+      ],
+      "quote": "Whatever's down there, I'm going to find it.",
+      "bio": [
+        "Lara arrived in 1996 as a shape and a voice and immediately became the most recognisable woman in games, which she has never entirely enjoyed. The original trilogy is a puzzle-box: catacomb, relic, back to the plane, and the camera is a separate character with its own opinions. Twenty years of sequels later the puzzles are the same and the person inside them is finally being written.",
+        "The 2013 reboot is where the turn happens. The backstory — a plane crash on a birthday trip, a father's death, a mansion she cannot stop dismantling — reframes the archaeologist as a woman with a reason to be in the tomb. The 2018 game finishes that thread by taking the reason away: Lara is the traitor now, the person who did it on purpose, and Shadow is the game where she has to outrun what that makes her.",
+        "Survival instincts, camp, and one last sunrise before the volcano: the trilogy is the rare example of a studio taking a franchise it had already milked for fifteen years and choosing to make the character sad instead of just efficient. It is also the reason she outlived every rival she was once compared to."
+      ],
+      "facts": [
+        {
+          "label": "Debut",
+          "value": "Tomb Raider · 1996"
+        },
+        {
+          "label": "Known for",
+          "value": "Acrobatics · puzzles · climbing"
+        },
+        {
+          "label": "Home",
+          "value": "Croft Manor, Somerset"
+        },
+        {
+          "label": "Rival",
+          "value": "Lara's own worst decisions"
+        },
+        {
+          "label": "Rule",
+          "value": "Never the same person twice"
+        }
+      ],
+      "youtube": {
+        "videoId": "r_WbvIDAcA4",
+        "title": "Shadow of the Tomb Raider - Launch Trailer",
+        "channel": "Tomb Raider",
+        "label": "Shadow of the Tomb Raider trailer"
+      },
+      "moreYoutube": {
+        "videoId": "M4SG6DfVvLs",
+        "title": "Tomb Raider (2013) - Official Game Trailer",
+        "channel": "Square Enix",
+        "label": "2013 reboot trailer"
+      },
+      "movie": {
+        "title": "Tomb Raider",
+        "year": "2018",
+        "studio": "Warner Bros. · MGM",
+        "videoId": "8ndhidEmUbI",
+        "name": "TOMB RAIDER - Official Trailer #1",
+        "channel": "Warner Bros.",
+        "label": "Tomb Raider movie trailer",
+        "blurb": "Twenty years after the game reboot, the first film rebuilds Lara from the ground up: no map, no legend, just a young woman who refuses to be rescued.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "gaming-kratos",
+      "fandom": "gaming",
+      "entry": "04",
+      "chapter": "Quest 04",
+      "name": "Kratos",
+      "reading": "クラトス · KRATOS",
+      "epithet": "Wrote a list of names on a piece of ash. Has been working through it ever since.",
+      "role": "God of War · protector of Midgard",
+      "image": "/assets/images/Kratos__(game_4).png",
+      "accent": "#ff6f5e",
+      "accentTwo": "#c2ccd6",
+      "series": {
+        "title": "God of War Ragnarök",
+        "year": "2022",
+        "studio": "Santa Monica Studio",
+        "format": "Game · PS5",
+        "origin": "Midgard"
+      },
+      "traits": [
+        "Ferocious",
+        "Loyal",
+        "Repenting"
+      ],
+      "quote": "I am a stranger to you. But I am no stranger to the gods.",
+      "bio": [
+        "Kratos is a game character who began as a supervillain and spent two decades being walked back. The PS2 original was a vengeful, hyper-mobile killer with a Spartan mask and a bleakness that was played almost entirely for cool. What the series has been doing since is the slow, unglamorous work of giving him a history he did not choose and then making him sit with it.",
+        "God of War (2018) is the hinge. He has a dead wife, a living son he does not know how to talk to, and a journey that is explicitly about the end of the world. The axe is a good axe, but the engine is the two of them walking up a mountain while the boy asks questions. Ragnarök puts that bond under siege: the boy's power starts to frighten him, the father has to say out loud what he did to try to stop it.",
+        "The rage is still the best thing about him. It is treated as a diagnosis rather than a power-up — visible, physical, and something he actively works at. A character whose entire gimmick is losing control, played across two sequels as a man slowly learning that the trick is choosing where to spend it."
+      ],
+      "facts": [
+        {
+          "label": "Debut",
+          "value": "God of War · 2004"
+        },
+        {
+          "label": "Weapon",
+          "value": "Leviathan Axe · Blades of Exile"
+        },
+        {
+          "label": "Boy",
+          "value": "Atreus"
+        },
+        {
+          "label": "Rival",
+          "value": "Baldur"
+        },
+        {
+          "label": "Home",
+          "value": "Midgard, and whatever is left of it"
+        }
+      ],
+      "youtube": {
+        "videoId": "g1wr0DfV73E",
+        "title": "God of War Ragnarök - Launch Trailer | PS5 & PS4 Games",
+        "channel": "PlayStation",
+        "label": "Ragnarök launch trailer"
+      },
+      "moreYoutube": {
+        "videoId": "EE-4GvjKcfs",
+        "title": "God Of War Ragnarök - PlayStation Showcase 2021 Reveal Trailer | PS5 Games",
+        "channel": "PlayStation",
+        "label": "Ragnarök reveal trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "gaming-sonic",
+      "fandom": "gaming",
+      "entry": "05",
+      "chapter": "Quest 05",
+      "name": "Sonic",
+      "reading": "ソニック · SONIC",
+      "epithet": "Blue, fast, and the fastest thing alive until something new is faster.",
+      "role": "The blue blur of Green Hill",
+      "image": "/assets/images/Sonic__(game_5).png",
+      "accent": "#41a9ff",
+      "accentTwo": "#ffd23f",
+      "series": {
+        "title": "Sonic Frontiers",
+        "year": "2022",
+        "studio": "Sonic Team · Sega",
+        "format": "Game · consoles & PC",
+        "origin": "Starfall Islands"
+      },
+      "traits": [
+        "Fast",
+        "Optimistic",
+        "Restless"
+      ],
+      "quote": "Can't you let me just enjoy the view for five seconds?",
+      "bio": [
+        "Sonic is a mascot character who has been genuinely, variously excellent at being a mascot character, and the interesting part is how much range lives under the running. He is confident, lazy, kind, and completely unable to sit still through a crisis. Every one of those four things is a joke on him; the games keep finding ways to make the combination mean something.",
+        "The 2D games are built on one loop: a level you learn, a speed you improve, a boss you learn. That is the whole template and it is why a small blue hedgehog became a global brand. Adventure (1998) pushed the seams — water, teams, a camera that could roll into the sky — and stayed fast enough to keep the promise the first four games made.",
+        "Frontiers is the open-zone swing and it is deliberately a bigger change than it looks: the map loops back on itself, the levels are Cyber Space, and the tone is oddly lonely for a game about a hedgehog. The film trilogy does the same stretch, taking a character built as a logo and insisting on the awkward, restless kid underneath it — and Shadow is the reason the third one has anything at stake."
+      ],
+      "facts": [
+        {
+          "label": "Debut",
+          "value": "Sonic the Hedgehog · 1991"
+        },
+        {
+          "label": "Runs at",
+          "value": "Mach 2, at least"
+        },
+        {
+          "label": "Home",
+          "value": "Green Hill Zone"
+        },
+        {
+          "label": "Rival",
+          "value": "Dr. Eggman · Shadow"
+        },
+        {
+          "label": "Collects",
+          "value": "Chaos Emeralds, and a friend"
+        }
+      ],
+      "youtube": {
+        "videoId": "RRkKZG1z9PY",
+        "title": "Sonic Frontiers - Announce Trailer",
+        "channel": "Sonic the Hedgehog",
+        "label": "Sonic Frontiers trailer"
+      },
+      "moreYoutube": {
+        "videoId": "RjSTwlFuaxk",
+        "title": "Sonic Frontiers - Nintendo Direct Mini: Partner Showcase | 6.28.2022",
+        "channel": "Nintendo of America",
+        "label": "Frontiers showcase"
+      },
+      "movie": {
+        "title": "Sonic the Hedgehog 3",
+        "year": "2024",
+        "studio": "Paramount · Sega",
+        "videoId": "OSOyFiOiNd4",
+        "name": "Sonic the Hedgehog 3 - Official Trailer",
+        "channel": "Sonic the Hedgehog",
+        "label": "Sonic 3 trailer",
+        "blurb": "Shadow has come back, and this time he is not the villain — which is a problem, because Sonic still has to be fast enough to find out what he is.",
+        "moreYoutube": {
+          "videoId": "qSu6i2iFMO0",
+          "name": "Sonic the Hedgehog 3 | Official Trailer (2024 Movie)",
+          "channel": "Paramount Pictures",
+          "label": "Sonic 3 Paramount trailer"
+        }
+      }
+    },
+    {
+      "id": "movies-harry-potter",
+      "fandom": "movies",
+      "entry": "01",
+      "chapter": "Reel 01",
+      "name": "Harry Potter",
+      "reading": "THE BOY WHO LIVED",
+      "epithet": "The orphan who walked into a school he was already late for, and found out he had been the hero of the story all along.",
+      "role": "The Boy Who Lived",
+      "image": "/assets/images/Harry_Potter__(movie_1).png",
+      "accent": "#c9a227",
+      "accentTwo": "#6b4fa8",
+      "series": {
+        "title": "Harry Potter and the Philosopher's Stone",
+        "year": "2001",
+        "studio": "Warner Bros.",
+        "format": "Film · 152 min",
+        "origin": "The cupboard under the stairs, 4 Privet Drive"
+      },
+      "traits": [
+        "Loyal",
+        "Headstrong",
+        "Unreasonably brave"
+      ],
+      "quote": "It does not do to dwell on dreams and forget to live.",
+      "bio": [
+        "The first Harry Potter film has almost no interest in being the first anything. It is 152 minutes long, it moves at the pace of a boy who does not know where anything is, and for most of that time Harry is simply being told things by adults who keep using words like \"obviously\" at him. The whole film is built out of that not-knowing: he cannot see the platform, he cannot read the timetable, he cannot find Platform Nine and Three-Quarters, and he has to be told that his parents were murdered before the school accepts him.",
+        "What it actually is, structurally, is a detective film with a castle in it. Dumbledore assembles a version of it in front of the children in the first act — three tasks guarded by three teachers — and then spends two hours pretending to be surprised when they solve it. Nobody in the film cheats. Snape is not a traitor, Hagrid is drunk rather than careless, and the villain gives away the hiding place of the thing he is guarding in a speech about the trap being too dangerous for anyone but him. It is cheerful, it is honest about being a children's film, and it trusts its audience to be on its side.",
+        "Its real achievement is a rulebook. Flying broomsticks are heavy, wands have no reverse spell, a loud noise is the last defense of a wizard, and a chocolate frog tastes like beaded glass. Harry is bad at the school for a very long time and nobody rescues him from it. By the time he walks into the Chamber for the last time he is the only one still standing because he is still the only one who has not worked out that the rules were never the point."
+      ],
+      "facts": [
+        {
+          "label": "First film",
+          "value": "Philosopher's Stone · 2001"
+        },
+        {
+          "label": "Signature",
+          "value": "Wand, glasses and a scar"
+        },
+        {
+          "label": "Stands for",
+          "value": "The school that chose him without asking"
+        },
+        {
+          "label": "Worst subject",
+          "value": "Flying, badly"
+        },
+        {
+          "label": "Wins by",
+          "value": "Not being invited to the feast"
+        }
+      ],
+      "youtube": {
+        "videoId": "l91Km49W9qI",
+        "title": "Harry Potter and the Philosopher's Stone | Official Trailer",
+        "channel": "Harry Potter",
+        "label": "Philosopher's Stone trailer"
+      },
+      "moreYoutube": null,
+      "movie": {
+        "title": "Harry Potter and the Deathly Hallows – Part 2",
+        "year": "2011",
+        "studio": "Warner Bros.",
+        "videoId": "5NYt1qirBWg",
+        "name": "Harry Potter and the Deathly Hallows – Part 2 | Trailer 2",
+        "channel": "Warner Bros.",
+        "label": "Deathly Hallows Part 2 trailer",
+        "blurb": "The last film hands the wand over and makes Harry walk into a graveyard knowing exactly what it is for, which is the one thing the first film never asked of him.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "movies-jack-sparrow",
+      "fandom": "movies",
+      "entry": "02",
+      "chapter": "Reel 02",
+      "name": "Captain Jack Sparrow",
+      "reading": "A PIRATE WITH A PROBLEM",
+      "epithet": "The captain who is never actually in command, and has never once been mistaken for a man who is.",
+      "role": "Captain of the Black Pearl",
+      "image": "/assets/images/Jack_Sparrow__(movie_2).png",
+      "accent": "#b5763a",
+      "accentTwo": "#1f6f6b",
+      "series": {
+        "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "year": "2003",
+        "studio": "Walt Disney Pictures",
+        "format": "Film · 143 min",
+        "origin": "Tortuga, flying in a stolen ship"
+      },
+      "traits": [
+        "Unreliable",
+        "Charming",
+        "Impossibly lucky"
+      ],
+      "quote": "You are my favourite pirate, after all.",
+      "bio": [
+        "Jack Sparrow walks into his own film in the middle of it. He is already a legend before the audience meets him, already notorious, already escaped Devil's Island by something the film declines to explain. Then he is hung, dragged out of the water, spat in the face, arrested twice, and at no point is he actually in charge of anything. The Black Pearl is crewed by people who would be promoted over him. He is a title in search of a ship, and the film knows it.",
+        "The trick is that the film is not a comedy about a drunk pirate, even when it plays like one. The first movie is a straightforward chase — a ledger, a debt, a Spanish crown, a chase across open water — and the comedy only exists to keep a chase from becoming repetitive. The moment people are drawn to Jack, the stakes get real: Elizabeth has to choose, Barbossa has to be stopped, and the film's most alarming sequence is Jack explaining exactly why the rum is worth killing for.",
+        "The performance is built almost entirely on rhythm. The limp is a metronome, the dreadlocks are used as a hand, and the compass is treated like a quirk until the moment it becomes the one honest thing Jack owns. Whether the man is a good captain is a question the franchise spends twenty years refusing to answer, and that refusal is the reason the character is still interesting: nobody can decide whether he is a rogue with a code or a liar who is telling the truth on purpose."
+      ],
+      "facts": [
+        {
+          "label": "First film",
+          "value": "Curse of the Black Pearl · 2003"
+        },
+        {
+          "label": "Signature",
+          "value": "A compass that points at what he wants"
+        },
+        {
+          "label": "Ship",
+          "value": "The Black Pearl"
+        },
+        {
+          "label": "Worst habit",
+          "value": "Trading a favour like money"
+        },
+        {
+          "label": "Believes",
+          "value": "The sea is not a metaphor"
+        }
+      ],
+      "youtube": {
+        "videoId": "naQr0uTrH_s",
+        "title": "Pirates of the Caribbean: The Curse of the Black Pearl Official Trailer 1 (2003) HD",
+        "channel": "Rotten Tomatoes Classic Trailers",
+        "label": "Black Pearl trailer"
+      },
+      "moreYoutube": null,
+      "movie": {
+        "title": "Pirates of the Caribbean: At World's End",
+        "year": "2007",
+        "studio": "Walt Disney Pictures",
+        "videoId": "HKSZtp_OGHY",
+        "name": "Pirates of the Caribbean: At World's End (2007) Official Trailer #1",
+        "channel": "Rotten Tomatoes Classic Trailers",
+        "label": "At World's End trailer",
+        "blurb": "Jack is locked in a locker at the bottom of the ocean and the only way out is a debt that three other captains have to be made to pay first.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "movies-neo",
+      "fandom": "movies",
+      "entry": "03",
+      "chapter": "Reel 03",
+      "name": "Neo",
+      "reading": "MR. ANDERSON",
+      "epithet": "The only person in the room who is not sure the room is real, which turns out to be the one useful thing to be.",
+      "role": "The One",
+      "image": "/assets/images/Neo_Matrix__(movie_3).png",
+      "accent": "#2f9e6b",
+      "accentTwo": "#1c3f8f",
+      "series": {
+        "title": "The Matrix",
+        "year": "1999",
+        "studio": "Warner Bros. · Village Roadshow",
+        "format": "Film · 136 min",
+        "origin": "A desk, a terminal, a very late night"
+      },
+      "traits": [
+        "Analytical",
+        "Stubborn",
+        "Learns too late"
+      ],
+      "quote": "The Matrix is the world that has been pulled over your eyes to blind you from the truth.",
+      "bio": [
+        "Neo starts the film as a programmer who is very good at noticing that something is wrong, and then dismisses it every single time he notices. He sees the endless repetition at the ends of the phone calls. He sees the agents are not quite real. He reads it, understands it, and then goes back to work. The film spends its first act making the audience notice the pattern ten years before he does, which is why the red pill works as an insult as much as a rescue.",
+        "What makes the movie last longer than its ideas is that it is careful about its own rules. The humans are not a metaphor for anything; they are asleep in a field, and the machines are farming them. That means every capability has a physical cost, the fights are hand-to-hand because the guns do not shoot bullets, and the prophecy is not a plot device but a database lookup. When Morpheus tells Neo he is the One, the film immediately makes that information a burden rather than a trophy.",
+        "The performances do the rest. Keanu Reeves plays a man who is genuinely thrown by every new fact, Laurence Fishburne turns calm into a threat, and Hugo Weaving gives Agent Smith the flat affect of a system that has already filed the paperwork on you. By the end Neo has taken the red pill, learned the rules, fought the entire system, and discovered that being the hero means being the one who cannot look away. The white light at the end is a beginning, not a victory."
+      ],
+      "facts": [
+        {
+          "label": "First film",
+          "value": "The Matrix · 1999"
+        },
+        {
+          "label": "Day job",
+          "value": "Systems programmer, Tank Grafts Inc."
+        },
+        {
+          "label": "Exit",
+          "value": "The red pill"
+        },
+        {
+          "label": "Weapon",
+          "value": "Anything, badly, at speed"
+        },
+        {
+          "label": "Stands for",
+          "value": "The people still asleep"
+        }
+      ],
+      "youtube": {
+        "videoId": "vKQi3bBA1y8",
+        "title": "The Matrix (1999) Official Trailer #1 - Sci-Fi Action Movie",
+        "channel": "Rotten Tomatoes Classic Trailers",
+        "label": "The Matrix trailer"
+      },
+      "moreYoutube": null,
+      "movie": {
+        "title": "The Matrix Resurrections",
+        "year": "2021",
+        "studio": "Warner Bros.",
+        "videoId": "9ix7TUGVYIo",
+        "name": "The Matrix Resurrections – Official Trailer 1",
+        "channel": "Warner Bros.",
+        "label": "Resurrections trailer",
+        "blurb": "Twenty-two years later the same system is still running, and the analyst sitting at the desk has been awake long enough to know that choosing red is the only part he ever really gets.",
+        "moreYoutube": {
+          "videoId": "nNpvWBuTfrc",
+          "name": "The Matrix Resurrections – Official Trailer 2",
+          "channel": "Warner Bros.",
+          "label": "Resurrections trailer 2"
+        }
+      }
+    },
+    {
+      "id": "movies-indiana-jones",
+      "fandom": "movies",
+      "entry": "04",
+      "chapter": "Reel 04",
+      "name": "Indiana Jones",
+      "reading": "PROFESSOR OF ARCHAEOLOGY",
+      "epithet": "The man who knows exactly how the trap is built, and can therefore never step over one safely.",
+      "role": "Professor of Archaeology",
+      "image": "/assets/images/Indiana_Jones__(movie_4).png",
+      "accent": "#a8763a",
+      "accentTwo": "#6a4a24",
+      "series": {
+        "title": "Raiders of the Lost Ark",
+        "year": "1981",
+        "studio": "Paramount · Lucasfilm",
+        "format": "Film · 115 min",
+        "origin": "A lecture hall, badly interrupted"
+      },
+      "traits": [
+        "Clever",
+        "Vainglorious",
+        "Unrepentant"
+      ],
+      "quote": "I am not what I appear to be. I am not what I have always appeared to be.",
+      "bio": [
+        "Raiders of the Lost Ark is only 115 minutes long and contains what is effectively four movies, which is a fact the character lives inside. Indy gets the Ark, loses the Ark, gets it back, and is left hanging from a moving plane. The second half of the film is a series of escapes rather than a plot, and it is the most influential two minutes in adventure cinema — the truck chase that followed it has been imitated for forty years.",
+        "The character is built as a contradiction and the film never resolves it. He is a university professor who is legally a grave robber, a scholar who is afraid of snakes, a man of enormous physical courage who talks constantly and wins every argument in public. Spielberg was explicit that Indy is a heroic archetype played deliberately straight — no wink, no irony, entirely sincere — and that decision is why the film still works. Every subsequent pulp adventurer is a variation on a man whose dignity and his compulsion are the same thing.",
+        "The Ark is the plot and the Nazis are the pressure, but what people remember is a set of physical rules: you can have the idol, the whip comes first, the torch is a light source and not a weapon, and the rat is a creature to be reasoned with. It is a film about expertise, where the hero wins because he has actually read about this. Sixty years of Indiana Jones have come and gone and the hat is still doing the heavy lifting."
+      ],
+      "facts": [
+        {
+          "label": "First film",
+          "value": "Raiders of the Lost Ark · 1981"
+        },
+        {
+          "label": "Subject",
+          "value": "Archaeology, reluctantly"
+        },
+        {
+          "label": "Weakness",
+          "value": "Snakes, and his own vanity"
+        },
+        {
+          "label": "Signature",
+          "value": "Fedora, bullwhip, terrible decisions"
+        },
+        {
+          "label": "Wants",
+          "value": "The Ark, and the lecture about it"
+        }
+      ],
+      "youtube": {
+        "videoId": "0xQSIdSRlAk",
+        "title": "INDIANA JONES AND THE RAIDERS OF THE LOST ARK | Official Trailer",
+        "channel": "Paramount Movies",
+        "label": "Raiders of the Lost Ark trailer"
+      },
+      "moreYoutube": null,
+      "movie": {
+        "title": "Indiana Jones and the Kingdom of the Crystal Skull",
+        "year": "2008",
+        "studio": "Paramount · Lucasfilm",
+        "videoId": "WAdJf4wTC5Y",
+        "name": "Indiana Jones and the Kingdom of the Crystal Skull (2008) Trailer #1",
+        "channel": "Movieclips Classic Trailers",
+        "label": "Crystal Skull trailer",
+        "blurb": "Back in 1957 with the Cold War closing in, the same whip, the same lecture, and a Soviet agent who wants what Indy knows.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "movies-wonder-woman",
+      "fandom": "movies",
+      "entry": "05",
+      "chapter": "Reel 05",
+      "name": "Diana Prince",
+      "reading": "DIANA OF THEMYSCIRA",
+      "epithet": "Trained from birth to be unkillable, and then asked to fight a war she was not taught was real.",
+      "role": "Amazon of Themyscira",
+      "image": "/assets/images/Wonder_Woman__(movie_5).png",
+      "accent": "#c0452f",
+      "accentTwo": "#c9a227",
+      "series": {
+        "title": "Wonder Woman",
+        "year": "2017",
+        "studio": "Warner Bros. · DC Entertainment",
+        "format": "Film · 141 min",
+        "origin": "Paradise Island, before the world knew"
+      },
+      "traits": [
+        "Certain",
+        "Compassionate",
+        "Unreasonably strong"
+      ],
+      "quote": "I was made to stand in the light, not the dark.",
+      "bio": [
+        "The 2017 Wonder Woman is the rare superhero film that spends its first act refusing the usual bargain. Diana is not hiding her identity — she has never had one. She was raised on an island that has never seen a man, she is trained to kill, and the film lets that stand. Nobody in Themyscira is a civilian. The Amazons' whole culture is built on the fact that their strength has no other use once the war ended, and Hippolyta will not let Diana leave because she knows exactly what the world does to weapons.",
+        "Steve Trevor is the door, and the film is honest about how flimsy the door is. A pilot falls out of the sky, a whole city is already in ruins, and Diana goes to a war to end all wars because she is the only person there who cannot see the arithmetic of it. The middle of the film is the honest part — the lectures, the dead villagers, the decision to be more than invulnerable — and the last hour is the part everyone came for, when she walks into a battlefield in Berlin dressed like a flag and the film finally lets itself be enormous.",
+        "What the film inherits from Superman in 1978 is its thesis: a god who has to be human, doing it in a world that is not ready. Zack Snyder's story, and Patty Jenkins' first film as director, is largely a texture of sand, rope and cloth instead of aluminium — Wonder Woman fights with a shield, a sword and a lasso rather than a lens, and the visual language never stops being that of a woman who trained in a place with no guns. It is the rare origin story where the origin is not a tragedy but a job, and the hero takes it anyway."
+      ],
+      "facts": [
+        {
+          "label": "First film",
+          "value": "Wonder Woman · 2017"
+        },
+        {
+          "label": "Signature",
+          "value": "The Lasso of Truth"
+        },
+        {
+          "label": "Home",
+          "value": "Themyscira — Paradise Island"
+        },
+        {
+          "label": "Arsenal",
+          "value": "Sword, shield, lasso"
+        },
+        {
+          "label": "Stands for",
+          "value": "Warriors who are not yet tired of war"
+        }
+      ],
+      "youtube": {
+        "videoId": "1Q8fG0TtVAY",
+        "title": "WONDER WOMAN - Official Trailer [HD]",
+        "channel": "Warner Bros.",
+        "label": "Wonder Woman trailer"
+      },
+      "moreYoutube": {
+        "videoId": "INLzqh7rZ-U",
+        "title": "WONDER WOMAN - Official Origin Trailer",
+        "channel": "Warner Bros.",
+        "label": "Origin trailer"
+      },
+      "movie": {
+        "title": "Wonder Woman 1984",
+        "year": "2020",
+        "studio": "Warner Bros.",
+        "videoId": "sfM7_JLk-84",
+        "name": "Wonder Woman 1984 – Official Trailer",
+        "channel": "Warner Bros.",
+        "label": "Wonder Woman 1984 trailer",
+        "blurb": "Years later, and this time the enemy is not a god but a businessman: the film puts Wonder Woman somewhere worse than a battlefield, which is a city that wants to believe.",
+        "moreYoutube": null
+      }
+    },
+    {
+      "id": "tvshows-wednesday-addams",
+      "fandom": "tvshows",
+      "entry": "01",
+      "chapter": "Episode 01",
+      "name": "Wednesday Addams",
+      "reading": "WEDNESDAY ADDAMS",
+      "epithet": "Emotionally flat on purpose, and somehow the warmest person in the house.",
+      "role": "Student of Nevermore Academy",
+      "image": "/assets/images/Wednesday_Addams__(tv_show_1).png",
+      "accent": "#d9343b",
+      "accentTwo": "#882b32",
+      "series": {
+        "title": "Wednesday",
+        "year": "2022",
+        "studio": "Netflix · MGM Television",
+        "format": "TV series · 2 seasons",
+        "origin": "Nevermore Academy, out of the fire"
+      },
+      "traits": [
+        "Observant",
+        "Monotone",
+        "Ruthlessly kind"
+      ],
+      "quote": "I am not going to tolerate sulking, and I am not going to coddle you either.",
+      "bio": [
+        "Wednesday Addams is the whole engine of this show precisely because she refuses to perform anything. Every other character in Nevermore is trying to be liked, feared or protected, and Wednesday is only ever trying to find out what is actually happening. She came back to the academy for a forensics course, solved a murder in three episodes, and then decided to stay for reasons she describes as academic and everyone else describes as family.",
+        "The writing treats her deadpan as a weapon, not a personality quirk. She is genuinely funny because the show never tells her that she is being funny, and she is genuinely unsettling because the show never tells the audience that she is being warm. The two facts sit in the same body, and the second season leans hard into that: she will lie to her entire family, break the law, and walk through fire to protect people she claims she does not care about.",
+        "What makes her a lasting character instead of a stylised one is the family she refuses to hug. Gomez and Morticia are delighted by her and she is not; Pugsley follows her into every danger without understanding why; the Thing takes her calls. She is written as the centre of a family that has decided to love her loudly whether or not she participates, and that is the joke and the tenderness of the whole series at once."
+      ],
+      "facts": [
+        {
+          "label": "First series",
+          "value": "Wednesday · 2022"
+        },
+        {
+          "label": "Signature",
+          "value": "Fencing blade, industrial strength"
+        },
+        {
+          "label": "Home",
+          "value": "Nevermore Academy"
+        },
+        {
+          "label": "Bound by",
+          "value": "Gomez · Morticia · Pugsley"
+        },
+        {
+          "label": "Stands for",
+          "value": "The people who never learned to ask for help"
+        }
+      ],
+      "youtube": {
+        "videoId": "l6AE9P7Wqw8",
+        "title": "Wednesday | Official Trailer | Netflix",
+        "channel": "Netflix",
+        "label": "Wednesday trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "tvshows-eleven",
+      "fandom": "tvshows",
+      "entry": "02",
+      "chapter": "Episode 02",
+      "name": "Eleven",
+      "reading": "MIKE WHEELER'S FRIEND",
+      "epithet": "Escaped a laboratory with a number, and grew into a name the whole town uses.",
+      "role": "Escapee from Hawkins Lab",
+      "image": "/assets/images/Eleven_Stranger__(tv_show_2).png",
+      "accent": "#c7362f",
+      "accentTwo": "#3d3d41",
+      "series": {
+        "title": "Stranger Things",
+        "year": "2016",
+        "studio": "Netflix · 21 Laps Entertainment",
+        "format": "TV series · 4 seasons",
+        "origin": "Hawkins Laboratory, 1983"
+      },
+      "traits": [
+        "Loyal",
+        "Telekinetic",
+        "Still learning"
+      ],
+      "quote": "Friends don't lie.",
+      "bio": [
+        "Eleven starts the show as a physical problem: a small girl in a white gown and a number, held in a room by men who treat her as equipment. Her power is a telekinetic force she barely understands, and her horror is that the men in charge are delighted with her. The first season is a jail-break, and the writing is at its most direct there — a child escaped a facility and a group of children decided that meant she was theirs.",
+        "Then the show grows her up in public. Eleven learns how to eat pizza, how to be introduced, how to lie about being afraid. She is the one member of the party whose arc runs from being protected to doing the protecting, and Mike is the person who does most of the work of explaining that transition to her. Their friendship is the emotional spine of the first three seasons, and the show never quite recovers from how abruptly it drops.",
+        "What keeps her from being a mascot is the cost. By season four she has powers she is ashamed of, a hair she is trying to grow out, and a decision to fight Vecna on her own terms that quietly costs her the thing she wanted most. The last image fans argued over is her walking off into an ending the show left open, and it works because the character was built for exactly that: someone who arrives with nothing, decides who to be, and is finally allowed to leave."
+      ],
+      "facts": [
+        {
+          "label": "First series",
+          "value": "Stranger Things · 2016"
+        },
+        {
+          "label": "Signature",
+          "value": "Telekinesis"
+        },
+        {
+          "label": "Home",
+          "value": "The Wheeler house, Hawkins"
+        },
+        {
+          "label": "Bound by",
+          "value": "Mike · Dustin · Lucas · Will"
+        },
+        {
+          "label": "Stands for",
+          "value": "A child nobody was willing to adopt back"
+        }
+      ],
+      "youtube": {
+        "videoId": "b9EkMc79dSU",
+        "title": "Stranger Things | Official Final Season Trailer",
+        "channel": "Netflix",
+        "label": "Stranger Things trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "tvshows-sherlock-holmes",
+      "fandom": "tvshows",
+      "entry": "03",
+      "chapter": "Episode 03",
+      "name": "Sherlock Holmes",
+      "reading": "SHERLOCK HOLMES",
+      "epithet": "Correct in every detail and completely wrong about the one thing that mattered.",
+      "role": "Consulting Detective",
+      "image": "/assets/images/Sherlock_Holmes__(tv_show_3).png",
+      "accent": "#a9862f",
+      "accentTwo": "#2f2f33",
+      "series": {
+        "title": "Sherlock",
+        "year": "2010",
+        "studio": "BBC One · Warner Bros. Television",
+        "format": "TV series · 4 series",
+        "origin": "221B Baker Street, London"
+      },
+      "traits": [
+        "Brilliant",
+        "Restless",
+        "Unbearably confident"
+      ],
+      "quote": "People don't look at me and think, 'He's an idiot.' That would be an insult.",
+      "bio": [
+        "Steven Moffat and Mark Gatiss took a character everyone already agreed they understood and rebuilt him from the inside out. Doyle's Holmes is a Victorian professional with a violin; this Holmes has a smartphone, a Twitter problem, an adrenal response to crime scenes and a flat that is a crime scene in itself. Benedict Cumberbatch plays him at a tempo that is essentially a physical joke, and the whole show is built on that: the faster he talks, the more the viewer suspects he is outrunning something.",
+        "The detective fiction is real fiction here, not a wrapper. Each series takes a case of genuine Victorian complexity — a serial killer staged as a copycat, a scandal covered with a government lie, a game of chicken between two geniuses — and lets Holmes be wrong about the answer, correctly, in ways the audience rarely catches. The title card of the opening credits, which names each episode with one of Sherlock's deductions, quietly spoils the whole series if you know what it is doing.",
+        "What makes the character last is the crack underneath. Irene Adler, then a second war, then Molly, then the jump he is genuinely afraid of — Moffat wrote a man who is most himself when he is performing himself, and the show keeps checking whether the performance is protection. By the final series the question is no longer who did it but whether Holmes can live in a world where he is not the smartest person in the room, and it lands because four seasons have earned it."
+      ],
+      "facts": [
+        {
+          "label": "First series",
+          "value": "Sherlock · 2010"
+        },
+        {
+          "label": "Signature",
+          "value": "Deduction — the deduction of the impossible"
+        },
+        {
+          "label": "Home",
+          "value": "221B Baker Street"
+        },
+        {
+          "label": "Bound by",
+          "value": "John Watson · Mrs Hudson"
+        },
+        {
+          "label": "Stands for",
+          "value": "The mind that never learned to rest"
+        }
+      ],
+      "youtube": {
+        "videoId": "9i0zQ_XL4sY",
+        "title": "Sherlock - Official Trailer - Series 1",
+        "channel": "BBC",
+        "label": "Sherlock trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "tvshows-walter-white",
+      "fandom": "tvshows",
+      "entry": "04",
+      "chapter": "Episode 04",
+      "name": "Walter White",
+      "reading": "HEISENBERG",
+      "epithet": "A chemistry teacher who found out he was good at something, and never stopped.",
+      "role": "Chemistry Teacher turned Manufacturer",
+      "image": "/assets/images/Walter_White_(tv_show_4).png",
+      "accent": "#3d7f4e",
+      "accentTwo": "#c7962e",
+      "series": {
+        "title": "Breaking Bad",
+        "year": "2008",
+        "studio": "AMC · High Bridge Productions",
+        "format": "TV series · 5 seasons",
+        "origin": "Albuquerque, New Mexico"
+      },
+      "traits": [
+        "Exacting",
+        "Proud",
+        "Slowly terminal"
+      ],
+      "quote": "I am not in the meth business. I am in the empire business.",
+      "bio": [
+        "Breaking Bad begins with a man who is invisible by choice. Walt is a fifty-year-old chemistry teacher with a small house, a second car, a diagnosis and a wife who loves him, and the first thing he does with a near-fatal diagnosis is refuse the help. The genius of the premise is that the man it happens to is genuinely the most qualified person in the room — he knows the chemistry, he has no interest in any of it, and he is the only person in Albuquerque who cares about being correct.",
+        "The transformation is staged as a series of small permissions. He cooks because it is beneath him, then because it is beneath everyone, then because it works, then because Skyler does not know the money source, then because a man with a gun is standing in his living room. Vince Gilligan's writing never lets him enjoy it cleanly: every skill that makes Walt the best cook in the business is the same skill that makes him unbearable to be around, and the show gives five seasons to watch a man discover that being feared and being respected are different currencies.",
+        "The final season gave him a version nobody expected — a man confronted with exactly how many people he hurt, in a hut in the snow, who decides to confess to the most dangerous person he knows rather than run. He loses at it. What made him a great character was never the meth or the money; it was that his pride was always doing the work, and the last thing it asked of him was the one thing he could not pay in coin."
+      ],
+      "facts": [
+        {
+          "label": "First series",
+          "value": "Breaking Bad · 2008"
+        },
+        {
+          "label": "Signature",
+          "value": "Pure meth — 99.97%"
+        },
+        {
+          "label": "Home",
+          "value": "Albuquerque, New Mexico"
+        },
+        {
+          "label": "Bound by",
+          "value": "Skyler · Jesse · Mike"
+        },
+        {
+          "label": "Stands for",
+          "value": "The teacher who asked whether he was worth more"
+        }
+      ],
+      "youtube": {
+        "videoId": "HhesaQXLuRY",
+        "title": "Breaking Bad | Official Series Trailer",
+        "channel": "AMC",
+        "label": "Breaking Bad trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "tvshows-daenerys-targaryen",
+      "fandom": "tvshows",
+      "entry": "05",
+      "chapter": "Episode 05",
+      "name": "Daenerys Targaryen",
+      "reading": "DAENERYS STORMBORN",
+      "epithet": "Bought an army with three dragons and spent five seasons deciding what it was for.",
+      "role": "Breaker of Chains",
+      "image": "/assets/images/Daenerys_Targaryen__(tv_shows_5).png",
+      "accent": "#b8873c",
+      "accentTwo": "#7b1f2b",
+      "series": {
+        "title": "Game of Thrones",
+        "year": "2011",
+        "studio": "HBO · Home Box Office",
+        "format": "TV series · 8 seasons",
+        "origin": "Meereen, beyond the Narrow Sea"
+      },
+      "traits": [
+        "Idealistic",
+        "Exile",
+        "Outgrowing herself"
+      ],
+      "quote": "I am the queen of the seven kingdoms.",
+      "bio": [
+        "Daenerys is introduced as a fifteen-year-old bride nobody wanted, handed to a warlord and put in a bathtub as a form of insult. What she does with that is the whole first act: she quietly learns her husband's language, sleeps with him, becomes pregnant, eats him, and leaves. The scene is famous because the show makes it cheerful and the character is a survivor. The exile that follows gives her a budget, a city and a title no one gave her, and by the end of season one she is governing.",
+        "The show is unusually honest about what that costs. Tyrion, who is her only honest adviser, is later tried for treason by the very queen he built, and Daenerys is a good ruler of Meereen right up until she stops being a good ruler. The Dothraki, Missandei, Grey Worm and Jon all love her, and the writing uses that love as a warning rather than a reward — she is loved by people who need her to be the last Targaryen, and she is slowly making decisions for their sake instead of the world's.",
+        "Her ending is the most argued-about in television because the show spent six seasons declining to lie about her and the eighth declined to soften her either. The argument is whether a character who freed slaves and burned a city deserves the ending she got. Benioff and Weiss' answer was that a good cause does not make a good person, and the scene works or fails depending on whether you think the show had earned the right to say it — which is a real argument about writing, not about dragons."
+      ],
+      "facts": [
+        {
+          "label": "First series",
+          "value": "Game of Thrones · 2011"
+        },
+        {
+          "label": "Signature",
+          "value": "Three dragons, and a very long plan"
+        },
+        {
+          "label": "Home",
+          "value": "Meereen, then King's Landing"
+        },
+        {
+          "label": "Bound by",
+          "value": "Tyrion · Jon · Grey Worm"
+        },
+        {
+          "label": "Stands for",
+          "value": "The last heir, and the one who came back"
+        }
+      ],
+      "youtube": {
+        "videoId": "KPLWWIOCOOQ",
+        "title": "Game of Thrones | Season 8 | Official Trailer",
+        "channel": "HBO",
+        "label": "Game of Thrones trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "kpop-rm",
+      "fandom": "kpop",
+      "entry": "01",
+      "chapter": "Act 01",
+      "name": "RM",
+      "reading": "김남준 · KIM NAM-JOON",
+      "epithet": "Named the group, then handed the microphone to everyone in it.",
+      "role": "Leader · Rapper",
+      "image": "/assets/images/RM__(k-pop_1).png",
+      "accent": "#72dced",
+      "accentTwo": "#123e70",
+      "series": {
+        "title": "BTS",
+        "year": "2013",
+        "studio": "BIGHIT MUSIC",
+        "format": "Group · 7 members",
+        "origin": "Seoul, South Korea"
+      },
+      "traits": [
+        "Leader",
+        "Writer",
+        "Loudly curious"
+      ],
+      "quote": "I think the most important thing is to love myself.",
+      "bio": [
+        "Kim Nam-joon joined a small Seoul hip-hop crew at fifteen because he wanted to be a rapper, and he left it when he understood that the thing he actually wanted was a room where more than one voice could be heard. That is the whole shape of the decision BTS is built on: he kept the technical ear he picked up in the underground scene, and he spent the rest of it opening a seat next to him for seven people who did not rap like him.",
+        "The leader title is the least interesting thing about him on purpose. He is credited with writing, with producing, with translating a grumbling underground scene into a language stadiums could repeat, and he does all of it while refusing the version of the role that only points. The music he makes alone is where the private side comes out — Indigo and Right Place, Wrong Person are records about doubt, time and the cost of being the one who always has an answer.",
+        "What has held across more than a decade is the plain refusal to be solemn about it. He reads on camera, he argues with fans about books and film, he reacts to his own members' work out loud, and the effect on the fandom is bigger than any single release: it makes a seven-person group feel like a room you are allowed to be in."
+      ],
+      "facts": [
+        {
+          "label": "First act",
+          "value": "BTS · 2013"
+        },
+        {
+          "label": "Signature",
+          "value": "Writing, producing, and the group idea"
+        },
+        {
+          "label": "Home",
+          "value": "Seoul · Ilsan"
+        },
+        {
+          "label": "Bound by",
+          "value": "The seven members he put on a stage"
+        },
+        {
+          "label": "Stands for",
+          "value": "The exit interview, taken four years early"
+        }
+      ],
+      "youtube": {
+        "videoId": "_gyultVTesk",
+        "title": "BTS '2.0' — Arirang",
+        "channel": "HYBE LABELS",
+        "label": "BTS Arirang trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "kpop-jimin",
+      "fandom": "kpop",
+      "entry": "02",
+      "chapter": "Act 02",
+      "name": "Jimin",
+      "reading": "박지민 · PARK JI-MIN",
+      "epithet": "The formation change nobody believes came from a human body.",
+      "role": "Main dancer · Vocalist",
+      "image": "/assets/images/Jimin__(k-pop_2).png",
+      "accent": "#8ad9ea",
+      "accentTwo": "#1b4a7a",
+      "series": {
+        "title": "BTS",
+        "year": "2013",
+        "studio": "BIGHIT MUSIC",
+        "format": "Group · 7 members",
+        "origin": "Busan, South Korea"
+      },
+      "traits": [
+        "Precise",
+        "Soft-spoken",
+        "Relentless in practice room"
+      ],
+      "quote": "I think the most beautiful thing is to be loved.",
+      "bio": [
+        "Jimin moved to Seoul from Busan at fourteen to train with what is now BTS, and the first thing the fandom ever catalogued about him was how little he said and how precisely he moved. Seven members, three rappers, three dancers, and then the member whose line is defined by a body angle held two beats longer than the song expects.",
+        "His solo work is the argument for taking the technique seriously. Like Crazy arrived in 2023 as a full statement rather than a feature: an understated, almost conversational track wrapped in choreography that treats the camera as a partner. It landed without a bombastic concept and held the centre of a comeback, which is a difficult thing for a main dancer to do.",
+        "What fans actually track is the repetition. The clips that go around are not accidents, they are years of the same take until the isolation, the tilt and the landing all happen on the same frame. It is why the choreography reads as inevitable on stage and impossible to reproduce in a practice room video."
+      ],
+      "facts": [
+        {
+          "label": "First act",
+          "value": "BTS · 2013"
+        },
+        {
+          "label": "Signature",
+          "value": "Like Crazy · 2023"
+        },
+        {
+          "label": "Home",
+          "value": "Busan, then Seoul"
+        },
+        {
+          "label": "Bound by",
+          "value": "The formation changes he taught the other six"
+        },
+        {
+          "label": "Stands for",
+          "value": "The line that holds while the song keeps moving"
+        }
+      ],
+      "youtube": {
+        "videoId": "_gyultVTesk",
+        "title": "BTS '2.0' — Arirang",
+        "channel": "HYBE LABELS",
+        "label": "BTS Arirang trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "kpop-jungkook",
+      "fandom": "kpop",
+      "entry": "03",
+      "chapter": "Act 03",
+      "name": "Jungkook",
+      "reading": "전정국 · JEON JUNG-KOOK",
+      "epithet": "Youngest of the group, loudest in the studio, quietest on stage.",
+      "role": "Vocalist · Rapper",
+      "image": "/assets/images/Jungkook__(k-pop_3).png",
+      "accent": "#5fc6dd",
+      "accentTwo": "#0f3358",
+      "series": {
+        "title": "BTS",
+        "year": "2013",
+        "studio": "BIGHIT MUSIC",
+        "format": "Group · 7 members",
+        "origin": "Busan, South Korea"
+      },
+      "traits": [
+        "Relentless",
+        "Direct",
+        "Songwriter on the side"
+      ],
+      "quote": "I just want to be really good at what I do.",
+      "bio": [
+        "Jeon Jung-kook joined the group as the youngest member and a dancer, and turned into the thing the fandom eventually nicknamed the golden maknae: a vocalist with a genuine pop range, a rapper who can carry a verse, and a writer who quietly accumulates credits on the group's own records.",
+        "The pattern that defines him is volume of work rather than any single moment. Recording lists, practice-room livestreams and the production tag that appears on songs the other six did not ask him to take are all part of the same character note, and they are why his solo debut, Seven, in 2023, worked as a genuine pop record and not only as a fandom event.",
+        "On stage he is the opposite of the persona the fancams invented, which is the point the fandom keeps returning to: the confidence and the shyness are the same fact, and he has never had to choose between them to be one of the most watched performers in the genre."
+      ],
+      "facts": [
+        {
+          "label": "First act",
+          "value": "BTS · 2013"
+        },
+        {
+          "label": "Signature",
+          "value": "Seven · 2023"
+        },
+        {
+          "label": "Home",
+          "value": "Busan, then Seoul"
+        },
+        {
+          "label": "Bound by",
+          "value": "A group he was the youngest member of"
+        },
+        {
+          "label": "Stands for",
+          "value": "The practice room, filmed and left running"
+        }
+      ],
+      "youtube": {
+        "videoId": "_gyultVTesk",
+        "title": "BTS '2.0' — Arirang",
+        "channel": "HYBE LABELS",
+        "label": "BTS Arirang trailer"
+      },
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "kpop-lisa",
+      "fandom": "kpop",
+      "entry": "04",
+      "chapter": "Act 04",
+      "name": "Lisa",
+      "reading": "라리사 마노발 · LALISA MANOBAL",
+      "epithet": "Took the break apart and rebuilt the whole floor under it.",
+      "role": "Main dancer · Rapper",
+      "image": "/assets/images/Lisa__(k-pop_4).png",
+      "accent": "#7fe0f0",
+      "accentTwo": "#14466f",
+      "series": {
+        "title": "BLACKPINK",
+        "year": "2016",
+        "studio": "YG Entertainment",
+        "format": "Group · 4 members",
+        "origin": "Bangkok, Thailand"
+      },
+      "traits": [
+        "Fearless",
+        "Rhythmic",
+        "Untouchable tempo"
+      ],
+      "quote": "I never thought about being the best. I just wanted to be good.",
+      "bio": [
+        "Lalisa Manobal trained for years in Bangkok before moving to Seoul to join BLACKPINK, and the reason she is the centre of the group's live reputation is the simplest one available: she can hold a tempo nobody else in the line can, and she does it for four minutes at a time in front of a stadium that is mostly there for the same reason.",
+        "The break in Lies is the piece of choreography the fandom will not let go of. It sits in a mid-tempo section where a full group formation could have gone anywhere, and instead it stops the song, isolates one body, and hands the entire runtime a rule to break on cue. It became the argument for choreographic difficulty as a lead vocal-adjacent feature rather than a bonus.",
+        "Her solo album Lalisa in 2021 made the case personal: rapped verses, a confident melodic register, and title tracks built around the same rhythmic identity she brings to the group. Coming out of Thailand, in a language she chose herself, is the detail that turned a technically gifted dancer into a figure the genre argues about on its own terms."
+      ],
+      "facts": [
+        {
+          "label": "First act",
+          "value": "BLACKPINK · 2016"
+        },
+        {
+          "label": "Signature",
+          "value": "Lalisa · 2021"
+        },
+        {
+          "label": "Home",
+          "value": "Bangkok, Thailand"
+        },
+        {
+          "label": "Bound by",
+          "value": "The three members who share the formation"
+        },
+        {
+          "label": "Stands for",
+          "value": "The break the whole floor learned"
+        }
+      ],
+      "youtube": {
+        "videoId": "v21LftxXj4s",
+        "title": "BLACKPINK 'HEAVENS GATE'",
+        "channel": "BLACKPINK",
+        "label": "HEAVENS GATE trailer"
+      },
+      "moreYoutube": {
+        "videoId": "2GJfWMYCWY0",
+        "name": "BLACKPINK 'GO'",
+        "channel": "BLACKPINK",
+        "label": "GO music video"
+      },
+      "movie": null
+    },
+    {
+      "id": "kpop-jennie",
+      "fandom": "kpop",
+      "entry": "05",
+      "chapter": "Act 05",
+      "name": "Jennie",
+      "reading": "제니 · JENNIE KIM",
+      "epithet": "Two names, one stage, and not a single wasted second between them.",
+      "role": "Main rapper · Vocalist",
+      "image": "/assets/images/Jennie__(k-pop_5).png",
+      "accent": "#69c9e0",
+      "accentTwo": "#0e2f4f",
+      "series": {
+        "title": "BLACKPINK",
+        "year": "2016",
+        "studio": "YG Entertainment",
+        "format": "Group · 4 members",
+        "origin": "Seoul, South Korea"
+      },
+      "traits": [
+        "Controlled",
+        "Brand-native",
+        "All business"
+      ],
+      "quote": "I want to be someone who is not defined by one thing.",
+      "bio": [
+        "Jennie Kim joined YG's trainee programme as a fifteen-year-old and was placed in the group that became BLACKPINK as the rapper and the youngest member, a combination the label treated as a gap to be trained out rather than an identity to be used. The group built its public image on four distinct silhouettes, and hers was always the one that looked the most severe until she stepped forward and started talking.",
+        "On record that rawness reads as precision. She is rarely the loudest voice in a verse, but her lines tend to be the ones quoted back, and the chemistry between her and Lisa is the thing the group is actually built on: two rappers who came from the same trainee pipeline and ended up framing most of BLACKPINK's hardest sections.",
+        "Solo in 2024 with Solo, and a year of brand work that made her the most commercially visible member in the group, she has spent the period deliberately refusing the easy version of the story. The ambition is obvious. The interesting part is that it is aimed at being a complete career rather than a bigger stage."
+      ],
+      "facts": [
+        {
+          "label": "First act",
+          "value": "BLACKPINK · 2016"
+        },
+        {
+          "label": "Signature",
+          "value": "Solo · 2024"
+        },
+        {
+          "label": "Home",
+          "value": "Seoul, South Korea"
+        },
+        {
+          "label": "Bound by",
+          "value": "Lisa · Rosé · Jisoo"
+        },
+        {
+          "label": "Stands for",
+          "value": "The member who decided the era was hers too"
+        }
+      ],
+      "youtube": {
+        "videoId": "dyRsYk0LyA8",
+        "title": "BLACKPINK 'Lovesick Girls'",
+        "channel": "BLACKPINK",
+        "label": "Lovesick Girls trailer"
+      },
+      "moreYoutube": {
+        "videoId": "v21LftxXj4s",
+        "name": "BLACKPINK 'HEAVENS GATE'",
+        "channel": "BLACKPINK",
+        "label": "HEAVENS GATE trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "comics-batman",
+      "fandom": "comics",
+      "entry": "01",
+      "chapter": "Issue 01",
+      "name": "Batman",
+      "reading": "BRUCE WAYNE · GOTHAM CITY",
+      "epithet": "Nine decades of a city telling him he is the problem, answered every time with a better question.",
+      "role": "The Dark Knight · Vigilante",
+      "image": "/assets/images/Batman__(comic_1).png",
+      "accent": "#f2c14b",
+      "accentTwo": "#2b2f38",
+      "series": {
+        "title": "Detective Comics",
+        "year": "1939",
+        "studio": "DC Comics",
+        "format": "Monthly · 80+ years in print",
+        "origin": "Gotham City, a port town built on guilt"
+      },
+      "traits": [
+        "Relentless",
+        "Paranoid",
+        "Never out of the fight"
+      ],
+      "quote": "I am vengeance. I am the night. I am Batman.",
+      "bio": [
+        "Bob Kane and Bill Finger handed the whole format its first recognisable shape in 1939: a square jaw, a cape, a city that manufactures its own excuses. What makes the character work is not the costume but the arithmetic underneath it. Bruce Wayne lost his parents to a robbery, spent the next fifteen years turning grief into equipment, and then went back to the street where it happened and started arresting people instead of hunting the one person who did it.",
+        "That refusal is the engine of nine decades. He is the only major hero who cannot simply overpower the problem, so the stories are always about preparation failing and him improvising anyway: the gadgets fail, the plan fails, the ally is compromised, and the last panel is still a man standing between a crowd and a bullet. The tragedy is structural rather than accidental — he wins the fight and the city is exactly as it was, which is why the same origin gets retold when the audience needs it most.",
+        "The line that keeps the character from being a grim loner is that he is never actually alone. A butler, a ward, a district of damaged people, an entire police force he refuses to work with and protects anyway. The codex entry is filed under Detective Comics for a reason: the whole character is a detective who works at night, and the mystery he is solving was committed to him personally a very long time ago."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Detective Comics #27 · 1939"
+        },
+        {
+          "label": "Created by",
+          "value": "Bob Kane and Bill Finger"
+        },
+        {
+          "label": "Base",
+          "value": "Gotham City"
+        },
+        {
+          "label": "Kit",
+          "value": "Batarang, grapple line, armour"
+        },
+        {
+          "label": "Stands for",
+          "value": "The city that refuses to be worth saving"
+        }
+      ],
+      "youtube": {
+        "videoId": "ftNOhfNjXjk",
+        "title": "Batman (1989) - Original Theatrical Trailer",
+        "channel": "Warner Bros.",
+        "label": "Batman trailer"
+      },
+      "moreYoutube": {
+        "videoId": "NhWg7AQLI_8",
+        "name": "Batman v Superman — Final Trailer",
+        "channel": "Warner Bros.",
+        "label": "Batman v Superman trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "comics-superman",
+      "fandom": "comics",
+      "entry": "02",
+      "chapter": "Issue 02",
+      "name": "Superman",
+      "reading": "KAL-EL · METROPOLIS",
+      "epithet": "The first cover that made people believe a comic book could be a front page.",
+      "role": "The Man of Steel · Symbol",
+      "image": "/assets/images/Superman__(comic_2).png",
+      "accent": "#d8412f",
+      "accentTwo": "#1f3f77",
+      "series": {
+        "title": "Action Comics",
+        "year": "1938",
+        "studio": "DC Comics",
+        "format": "Monthly · the first superhero title",
+        "origin": "The ship that brought him here, and the field that raised him"
+      },
+      "traits": [
+        "Unshakable",
+        "Public",
+        "Carrying a dead world"
+      ],
+      "quote": "Truth, justice and the American way.",
+      "bio": [
+        "Action Comics #1 came out in 1938 and invented the template the entire industry then sold for forty years: an ordinary-looking man, a secret explanation for why he is different, and a job that is also a public service. Jerry Siegel and Joe Shuster drew him as a strongman first and a symbol second, but the second half is what stuck. Superman was less a person than a promise the country made to itself out loud, printed at two cents so that anyone could own it.",
+        "The character works because he is nearly helpless without a rule he did not choose. Krypton is gone, the fortress of solitude is on a planet, and the only reason he can move at all is that a yellow sun happens to be the right shape for him. That dependence is the source of most of the good stories: the moment something disables the sun, or the costume, or the public's belief in him, the whole premise has to be rebuilt from scratch before breakfast.",
+        "What separates him from the rest of the roster is that he is a working superhero. Clark holds a job, files stories, and turns in late; the rescues happen on the way. He is the only entry in this codex whose most human decision is to keep the job, and the reason the character has survived every reboot is that the costume is the last thing to arrive, not the first."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Action Comics #1 · 1938"
+        },
+        {
+          "label": "Created by",
+          "value": "Jerry Siegel and Joe Shuster"
+        },
+        {
+          "label": "Base",
+          "value": "Metropolis"
+        },
+        {
+          "label": "Weakness",
+          "value": "Kryptonite, and deadlines"
+        },
+        {
+          "label": "Stands for",
+          "value": "The good faith of an entire audience"
+        }
+      ],
+      "youtube": {
+        "videoId": "2woCZg5QdVE",
+        "title": "Superman | Official Trailer",
+        "channel": "DC Studios",
+        "label": "Superman trailer"
+      },
+      "moreYoutube": {
+        "videoId": "uhUht6vAsMY",
+        "name": "Superman — Teaser",
+        "channel": "DC",
+        "label": "Superman teaser"
+      },
+      "movie": null
+    },
+    {
+      "id": "comics-spiderman",
+      "fandom": "comics",
+      "entry": "03",
+      "chapter": "Issue 03",
+      "name": "Spider-Man",
+      "reading": "PETER PARKER · NEW YORK CITY",
+      "epithet": "A power fantasy with a bill attached, which is the whole reason it is the best one.",
+      "role": "The Web-Slinger · Wall-Crawler",
+      "image": "/assets/images/Spider_Man__(comic_3).png",
+      "accent": "#e63946",
+      "accentTwo": "#1b3a6b",
+      "series": {
+        "title": "The Amazing Spider-Man",
+        "year": "1963",
+        "studio": "Marvel Comics",
+        "format": "Monthly · 60+ years in print",
+        "origin": "A radioactive spider and a bad decision"
+      },
+      "traits": [
+        "Mouth first",
+        "Underfunded",
+        "Refuses to quit"
+      ],
+      "quote": "With great power there must also come — great responsibility.",
+      "bio": [
+        "Stan Lee and Steve Ditko gave the format the one thing it had been missing: consequences. Everyone else in the roster wins their fights. Peter Parker photographs a murderer, runs away, and lets the man go, and a few issues later the man drops his aunt. The moral is clumsy on purpose — it is a joke told badly by a teenager — but it converted a genre of wish fulfilment into something that could be serialised for sixty years without running out of reasons to keep going.",
+        "The other Ditko contribution is the surface. Nobody else in this codex fights in a hoodie, loses to a brick, and gets a sunburn. He is the only hero whose secret identity is more dangerous than his superpower, and the only one whose power does essentially nothing about a parking ticket. Every bad decision in the strip is load-bearing: the job, the aunt, the girl, the rent, the photos that pay for all of it and would end him if anyone read them.",
+        "He is also the reason the modern superhero film exists, because he is the only one of these five whose audience will accept being a mess. The costume is a uniform in three panels. What carries a whole film is a kid who is late, tired, and still on the roof — and the running joke is that the mask is the only part of the situation that is under control."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Amazing Fantasy #15 · 1962"
+        },
+        {
+          "label": "Created by",
+          "value": "Stan Lee and Steve Ditko"
+        },
+        {
+          "label": "Base",
+          "value": "New York City"
+        },
+        {
+          "label": "Day job",
+          "value": "Freelance photographer"
+        },
+        {
+          "label": "Stands for",
+          "value": "The costume is a uniform, the man is not"
+        }
+      ],
+      "youtube": {
+        "videoId": "ZYzbalQ6Lg8",
+        "title": "Spider-Man: No Way Home | Official Trailer",
+        "channel": "Sony Pictures",
+        "label": "No Way Home trailer"
+      },
+      "moreYoutube": {
+        "videoId": "WgU7P6o-GkM",
+        "name": "Spider-Man: No Way Home — Teaser",
+        "channel": "Marvel Entertainment",
+        "label": "No Way Home teaser"
+      },
+      "movie": null
+    },
+    {
+      "id": "comics-iron-man",
+      "fandom": "comics",
+      "entry": "04",
+      "chapter": "Issue 04",
+      "name": "Iron Man",
+      "reading": "TONY STARK · STARK INDUSTRIES",
+      "epithet": "A weapons manufacturer who built a suit to get out of his own life, and never got out.",
+      "role": "Armour · Reluctant Avenger",
+      "image": "/assets/images/Iron_Man__(comic_4).png",
+      "accent": "#ff762b",
+      "accentTwo": "#5c1c14",
+      "series": {
+        "title": "Tales of Suspense",
+        "year": "1963",
+        "studio": "Marvel Comics",
+        "format": "Monthly · serialized in a backup strip",
+        "origin": "A cave, a captive, and a deadline"
+      },
+      "traits": [
+        "Genius",
+        "Obnoxious",
+        "Genuinely trying"
+      ],
+      "quote": "I am Iron Man.",
+      "bio": [
+        "Iron Man was not created to be a better hero. He was created to be a better villain who had a change of heart mid-fight, because Marvel needed a flagship that could run next to Thor in a backup strip and because Stan Lee wanted to talk about Vietnam without saying the word. The origin is a machine: a weapons designer captured by the men he supplies, a chest wound, and a cave with just enough scrap in it to build a way out that also kills people.",
+        "That is the arrangement for the next fifty years. The armour is the moral position and the damage is the same mechanism, so every story is a debrief. Tony is a genius who cannot stop producing, an industrialist whose company sells the problem, and a man who knows the number of people his work has killed because he is the one who has to sign it. He is the only entry in this codex whose primary conflict is a supply chain.",
+        "He is also the reason this fandom has a film shelf at all, because he is the only one here who is funny. The arrogance is a structural requirement, not a flourish: the jokes let a two-hour runtime admit that the man in the suit is a mess. Strip the armour and the character dies. That is the joke, and it has been the joke since 1963."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Tales of Suspense #39 · 1963"
+        },
+        {
+          "label": "Created by",
+          "value": "Stan Lee, Larry Lieber, Don Heck, Jack Kirby"
+        },
+        {
+          "label": "Base",
+          "value": "Stark Tower, New York"
+        },
+        {
+          "label": "Runs on",
+          "value": "Arc reactor, and denial"
+        },
+        {
+          "label": "Stands for",
+          "value": "The cost of a good idea at scale"
+        }
+      ],
+      "youtube": {
+        "videoId": "CjTXth3uaEY",
+        "title": "Iron Man — Official Trailer 2",
+        "channel": "Marvel Studios",
+        "label": "Iron Man trailer"
+      },
+      "moreYoutube": {
+        "videoId": "pBvH8hvnJPk",
+        "name": "Spider-Man: No Way Home — IMAX",
+        "channel": "IMAX",
+        "label": "IMAX feature"
+      },
+      "movie": null
+    },
+    {
+      "id": "comics-wonder-woman",
+      "fandom": "comics",
+      "entry": "05",
+      "chapter": "Issue 05",
+      "name": "Wonder Woman",
+      "reading": "DIANA PRINCE · THEMYSCIRA",
+      "epithet": "The one who was invented to be the argument, and never stopped losing the panel.",
+      "role": "Amazon · Champion of Truth",
+      "image": "/assets/images/Wonder_Woman__(comic_5).png",
+      "accent": "#b8860b",
+      "accentTwo": "#7a1f3d",
+      "series": {
+        "title": "All Star Comics",
+        "year": "1941",
+        "studio": "DC Comics",
+        "format": "Anthology · 80+ years in print",
+        "origin": "Paradise Island, and the lasso that has to be believed in"
+      },
+      "traits": [
+        "Certain",
+        "Compassionate",
+        "Impossibly literal"
+      ],
+      "quote": "You have the choice to do better. So do it.",
+      "bio": [
+        "William Moulton Marston wrote Wonder Woman as a device: make the strongest character in the room also the most straightforwardly truthful one and see whether a reader can recognise the argument. The Amazons are an island that bans contact, Diana is raised to believe in it absolutely, and she is sent out into a world that would rather she stayed quiet. Eighty years later that is still the plot of every one of her stories.",
+        "The setting is the real contribution. Themyscira is a closed world with no men, no weapons of the kind she later wields, and a language she has to learn like anyone else — the Amazons hide their script from outsiders and she has to decipher it. A superhero who is a refugee from utopia, running a literacy barrier on day one, is a very different proposition from a superhero who is a cop, and it explains the optimism that the rest of the roster finds hardest to fake.",
+        "The lasso of truth is the part the writers understood best. It does not compel honesty by magic, it removes the ability to lie, which means she still has to ask the right question. It is the only power in this codex that makes someone more powerful the more honest the hero is, and it is why the character is still the one the roster reaches for when a story wants to say something plainly."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "All Star Comics #8 · 1941"
+        },
+        {
+          "label": "Created by",
+          "value": "William Moulton Marston"
+        },
+        {
+          "label": "Base",
+          "value": "Themyscira / Washington, D.C."
+        },
+        {
+          "label": "Kit",
+          "value": "Lasso of truth, bracers, invisible plane"
+        },
+        {
+          "label": "Stands for",
+          "value": "The argument that truth costs something"
+        }
+      ],
+      "youtube": {
+        "videoId": "1Q8fG0TtVAY",
+        "title": "Wonder Woman — Official Trailer",
+        "channel": "Warner Bros.",
+        "label": "Wonder Woman trailer"
+      },
+      "moreYoutube": {
+        "videoId": "INLzqh7rZ-U",
+        "name": "Wonder Woman — Official Origin Trailer",
+        "channel": "Warner Bros.",
+        "label": "Origin trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "manga-light-yagami",
+      "fandom": "manga",
+      "entry": "01",
+      "chapter": "Chapter 01",
+      "name": "Light Yagami",
+      "reading": "LIGHT YAGAMI · TOKYO, JAPAN",
+      "epithet": "A notebook with a god in it, and a boy who decides that the rules do not apply to him.",
+      "role": "The Kira · Student of law",
+      "image": "/assets/images/Light_Yagami__(manga_1).png",
+      "accent": "#e0b3da",
+      "accentTwo": "#3b3143",
+      "series": {
+        "title": "Death Note",
+        "year": "2003",
+        "studio": "Tsugumi Ohba & Takeshi Obata",
+        "format": "Weekly Shōnen Jump · 108 chapters",
+        "origin": "Tokyo, a city of eleven million witnesses"
+      },
+      "traits": [
+        "Composed",
+        "Certain",
+        "Willing to be hated"
+      ],
+      "quote": "There is no heaven and no earth. Only me.",
+      "bio": [
+        "Death Note begins with a lie dressed as a joke: a schoolboy finds a notebook that kills anyone whose name is written in it, and the first page tells him to try it. What could have been a horror gag becomes a two-hander about the moment a gifted teenager decides that the dead are a rounding error. Light never struggles with whether the power is real, only with whether he deserves it, and he answers that question in the first chapter and never revisits it.",
+        "The structure is the argument. Light builds a case for himself in public — top of the class, volunteer work, a helpful and warm personality — while the same chapters cut to the investigators, who already know exactly what he is and cannot prove it. A note, a heartbeat within forty seconds, a witness ready to talk. The serial killer and the detective drama are told side by side and the audience is trusted to hold both.",
+        "What survives the ending is a study in how a person becomes the villain of their own story. Light is not a monster who enjoyed hurting people; he is a boy who wanted to be a god and found a world that would not let him. That is why the last chapter is drawn as a parade: the story he told himself about himself, the celebrations, the glimpses of the other world — all of it running while the man who built it is finally, quietly, sentenced."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Weekly Shōnen Jump #1 · Dec 2003"
+        },
+        {
+          "label": "Created by",
+          "value": "Tsugumi Ohba & Takeshi Obata"
+        },
+        {
+          "label": "Base",
+          "value": "Tokyo, Japan"
+        },
+        {
+          "label": "Kit",
+          "value": "A notebook, a pen, a face nobody suspects"
+        },
+        {
+          "label": "Stands for",
+          "value": "Rule by example, and the cost of obeying yourself"
+        }
+      ],
+      "youtube": null,
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "manga-eren-yeager",
+      "fandom": "manga",
+      "entry": "02",
+      "chapter": "Chapter 02",
+      "name": "Eren Yeager",
+      "reading": "EREN YEAGER · SHIGANSHINA DISTRICT",
+      "epithet": "He wanted to see the ocean. The world gave him the sea of blood behind it.",
+      "role": "The Survey Corps · Founding Titan",
+      "image": "/assets/images/Eren_Yeager__(manga_2).png",
+      "accent": "#cdbb9f",
+      "accentTwo": "#4b3f55",
+      "series": {
+        "title": "Attack on Titan",
+        "year": "2009",
+        "studio": "Hajime Isayama",
+        "format": "Bessatsu Shōnen Magazine · 139 chapters",
+        "origin": "Shiganshina District, behind a wall"
+      },
+      "traits": [
+        "Defiant",
+        "Furious",
+        "Incurably hopeful"
+      ],
+      "quote": "If we win, we live. If we lose, we die. Either way, we fight.",
+      "bio": [
+        "Attack on Titan opens on a joke about the most important job in the world: a military that eats its soldiers, a humanity that eats giants, and one recruit so angry about the fat he cannot eat that he signs up to kill them. Eren Yeager is drawn as a shout — forward-leaning, teeth visible, never quite standing still — so that the reader knows what the story is about long before it explains anything.",
+        "Then the walls fall. The first half of the manga is a horror story about a closed country, and it earns the horror by refusing to let anyone be safe: the people who build the army are the people who profit from the wall, and the heroes of the first season are also its victims. Eren is on the page for it, holding a severed head, laughing when he should not be able to.",
+        "The last third is the difficult part. Isayama turns the protagonist into the reason the story happened and asks whether freedom for one person can justify a genocide for everyone. Eren keeps his entry, his will, and his cheerfulness, and the manga never lets him off the hook for it. The ocean, when it finally appears, is a shore with nothing on it and the whole weight of the final act resting on whether a single person gets to have it."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Bessatsu Shōnen Magazine · Sep 2009"
+        },
+        {
+          "label": "Created by",
+          "value": "Hajime Isayama"
+        },
+        {
+          "label": "Base",
+          "value": "Shiganshina District, Paros Island"
+        },
+        {
+          "label": "Kit",
+          "value": "ODM gear, twin blades, a hard-held grudge"
+        },
+        {
+          "label": "Stands for",
+          "value": "A childhood promise that outgrew its author"
+        }
+      ],
+      "youtube": {
+        "videoId": "3xNH23QkNpk",
+        "title": "Attack on Titan — Final Season",
+        "channel": "YouTube",
+        "label": "Attack on Titan Final Season trailer"
+      },
+      "moreYoutube": {
+        "videoId": "4ep0TxcIQcc",
+        "name": "Attack on Titan — THE LAST ATTACK",
+        "channel": "YouTube",
+        "label": "Attack on Titan The Last Attack trailer"
+      },
+      "movie": null
+    },
+    {
+      "id": "manga-ichigo-kurosaki",
+      "fandom": "manga",
+      "entry": "03",
+      "chapter": "Chapter 03",
+      "name": "Ichigo Kurosaki",
+      "reading": "ICHIG KUROSAKI · KARAKURA TOWN",
+      "epithet": "A substitute soul reaper who never applied for the job and refuses to hand it back.",
+      "role": "Soul Reaper · Substitute",
+      "image": "/assets/images/Ichigo_Kurosaki__(manga_3).png",
+      "accent": "#c9a8d6",
+      "accentTwo": "#453a4e",
+      "series": {
+        "title": "Bleach",
+        "year": "2004",
+        "studio": "Tite Kubo",
+        "format": "Weekly Shōnen Jump · 686 chapters",
+        "origin": "Karakura Town, a city of ghosts nobody admitted to"
+      },
+      "traits": [
+        "Loud",
+        "Stubborn",
+        "Protective of strangers"
+      ],
+      "quote": "Stand back. I am protecting someone.",
+      "bio": [
+        "Bleach opens in medias res with a boy bleeding in a warehouse and a stranger who appears to be a ghost walking out of him. Ichigo Kurosaki was fifteen, had already lost his mother, and was about to be handed a job that requires dying — except that the ghost he is, Rukia Kuchiki, ran out of souls to take and accidentally left her own in him. The opening chapter is a body swap, a badly timed rescue, and a boy deciding the arrangement is fine.",
+        "The early volumes are comic-book bright: a school that doubles as a training ground, a rival who says thank you, a giant sword, and a Soul Society that is at heart a very large police department. It is the rare shōnen manga that treats friendship as its actual subject, and the reason a lot of readers stayed for the hundred and fifty chapters after the jokes stopped being jokes.",
+        "The late chapters are where Kubo earns the length. Ichigo is put through a world that protects its own structure rather than its own people, the endless-city war is fought over a single act of mercy, and the ending hands the character who was defined by inherited power a choice about what to do with it. The last panel gives the job back. It is the only honest answer available."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Weekly Shōnen Jump #1 · Aug 2004"
+        },
+        {
+          "label": "Created by",
+          "value": "Tite Kubo"
+        },
+        {
+          "label": "Base",
+          "value": "Karakura Town · Soul Society"
+        },
+        {
+          "label": "Kit",
+          "value": "Zangetsu, a substitute gigai, no patience"
+        },
+        {
+          "label": "Stands for",
+          "value": "Showing up for people who did not ask"
+        }
+      ],
+      "youtube": null,
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "manga-edward-elric",
+      "fandom": "manga",
+      "entry": "04",
+      "chapter": "Chapter 04",
+      "name": "Edward Elric",
+      "reading": "EDWARD ELRIC · RESEMBOOL, AMESTRIS",
+      "epithet": "The youngest state alchemist in history, and the boy who paid for the title in two legs and an arm.",
+      "role": "The Fullmetal Alchemist · State Alchemist",
+      "image": "/assets/images/Edward_Elric__(manga_4).png",
+      "accent": "#e6d2a8",
+      "accentTwo": "#5b4d66",
+      "series": {
+        "title": "Fullmetal Alchemist",
+        "year": "2001",
+        "studio": "Hiromu Arakawa & Akira Toriyama",
+        "format": "Monthly Shōnen Gangan · 116 chapters",
+        "origin": "Resembool, a small country with a very large debt"
+      },
+      "traits": [
+        "Stubborn",
+        "Brilliant",
+        "Bound to his own bargain"
+      ],
+      "quote": "I am not going to change the world. I am going to fix what I broke.",
+      "bio": [
+        "Two brothers try to bring their dead mother back by drawing her in blood on a transmutation circle, and the story opens with the price being collected. Edward Elric loses a leg and an arm and discovers he is bound to his own body by the same circle he drew — the alchemist who cannot be healed by alchemy. The premise is a joke with a nail in it, and it is why the manga is remembered as a story about debt rather than as a story about magic.",
+        "The tone is the other surprise: after the prologue, Fullmetal Alchemist is a travelling adventure with a rolling cast of con artists, a dog that eats everything, and a narrator who cheerfully tells you when a plan is a very bad one. Edward is a seventeen-year-old running a national investigation with a stolen notebook, a chef, and a dog, and the light tone is not a mask over the darkness — it is the proof that the darkness is survivable.",
+        "The last chapter is the best in the shōnen canon. The war is over, two thirds of the country is dead, and the answer the characters arrive at is a frankly unflattering, very honest one: the cost was paid, the person who owed it is dead, and so get up and go fix the rest of the world. Edward goes home to his ordinary kitchen, and the story ends on a plate of curry because ordinary is the thing he earned."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Monthly Shōnen Gangan · Jul 2001"
+        },
+        {
+          "label": "Created by",
+          "value": "Hiromu Arakawa & Akira Toriyama"
+        },
+        {
+          "label": "Base",
+          "value": "Resembool · Amestris"
+        },
+        {
+          "label": "Kit",
+          "value": "Transmutation circle, automail arms, one impossible question"
+        },
+        {
+          "label": "Stands for",
+          "value": "Equivalence, and the price of breaking it"
+        }
+      ],
+      "youtube": null,
+      "moreYoutube": null,
+      "movie": null
+    },
+    {
+      "id": "manga-mikasa-ackerman",
+      "fandom": "manga",
+      "entry": "05",
+      "chapter": "Chapter 05",
+      "name": "Mikasa Ackerman",
+      "reading": "MIKASA ACKERMAN · PAROS ISLAND",
+      "epithet": "The strongest soldier in the corps, held together by a red scarf and one decision made very young.",
+      "role": "The Survey Corps · Ackerman heiress",
+      "image": "/assets/images/Mikasa_Ackerman_(_manga_5).png",
+      "accent": "#a896b5",
+      "accentTwo": "#33283d",
+      "series": {
+        "title": "Attack on Titan",
+        "year": "2009",
+        "studio": "Hajime Isayama",
+        "format": "Bessatsu Shōnen Magazine · 139 chapters",
+        "origin": "Shiganshina District, behind a wall"
+      },
+      "traits": [
+        "Loyal",
+        "Ferocious",
+        "Quiet about both"
+      ],
+      "quote": "This world is cruel — and also very beautiful.",
+      "bio": [
+        "Mikasa Ackerman is introduced twice. The first time she is nine, a child with no parents and no reason to be alive, who picks up a blade because a man in a cloak kneels down and offers to kill them all. The second time she is the best soldier in the regiment and barely speaks. Between those two panels is the entire character, and Isayama never once makes her say so out loud.",
+        "She is the counterweight to Eren. Where he is loud and sure, she is quiet and completely certain, and the two of them read as one argument rather than two people: he decides to move forward, she decides who he will be while he does it. The red scarf is not a fashion note. It is the only thing in the manga drawn with any softness, and it is on in the first panel and the last.",
+        "The endgame asks what happens to the half of a person that was only ever a reaction. Mikasa gets the answer the quiet way: she is given the choice the loud half will not hand over, and the final chapter has her say four words to him on a rooftop and then live. It is the most restrained ending in the genre, and the only one that costs the reader nothing."
+      ],
+      "facts": [
+        {
+          "label": "First panel",
+          "value": "Bessatsu Shōnen Magazine · Sep 2009"
+        },
+        {
+          "label": "Created by",
+          "value": "Hajime Isayama"
+        },
+        {
+          "label": "Base",
+          "value": "Shiganshina District, Paros Island"
+        },
+        {
+          "label": "Kit",
+          "value": "Dual ODM gear, twin blades, a red scarf"
+        },
+        {
+          "label": "Stands for",
+          "value": "What loyalty costs when it is total"
+        }
+      ],
+      "youtube": {
+        "videoId": "Ux4sQG1Lvco",
+        "title": "Attack on Titan — Part 2",
+        "channel": "YouTube",
+        "label": "Attack on Titan Part 2 trailer"
+      },
+      "moreYoutube": {
+        "videoId": "dpP4GDGovp0",
+        "name": "Attack on Titan — Parts 1 & 2",
+        "channel": "YouTube",
+        "label": "Attack on Titan Parts 1 and 2 trailer"
+      },
+      "movie": null
+    }
+  ]
+}

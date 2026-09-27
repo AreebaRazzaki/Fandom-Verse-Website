@@ -149,8 +149,11 @@ describe('the contact page', () => {
     expect(container.querySelectorAll('.ct-shape').length).toBeGreaterThanOrEqual(5);
     expect(container.querySelector('.ct-shape.is-dot')).toBeInTheDocument();
     expect(container.querySelector('.ct-lede').textContent.length).toBeGreaterThan(40);
-    // The footer no longer floats above an empty band at the bottom.
-    expect(CSS).toMatch(/\.ct-page \{[^}]*padding-bottom: 80px/);
+    // The footer no longer floats above an empty band at the bottom: the page
+    // root carries no bottom padding, because the footer is its last child and
+    // the padding showed up as a bare strip of page background under it. The
+    // gap above the footer belongs to .ct-map's own padding.
+    expect(CSS).not.toMatch(/\.ct-page \{[^}]*padding-bottom:/);
     expect(CSS).toContain('@media (prefers-reduced-motion: reduce)');
   });
 
@@ -181,21 +184,30 @@ describe('the contact page', () => {
     expect(CSS).toMatch(/\.ct-directions:focus-visible \{[^}]*outline:/);
   });
 
-  it('keeps the hero copy readable on a veil above the geometry', () => {
+  it('frames the hero copy with a signal row above and below it', () => {
     const { container } = mount();
 
-    // The shapes sit behind the words, and the words sit on their own veil.
+    // The geometry sits behind the words, and the words are bracketed by the
+    // studio signal rows rather than floating in an empty band.
     const shapes = container.querySelector('.ct-hero-shapes');
-    const inner = container.querySelector('.ct-hero-inner');
+    const meta = container.querySelector('.ct-hero-meta');
+    const signal = container.querySelector('.ct-hero-signal');
     expect(shapes).toBeInTheDocument();
-    expect(inner).toBeInTheDocument();
-    expect(shapes.compareDocumentPosition(inner) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(CSS).toMatch(/\.ct-hero-shapes \{[^}]*position: absolute/);
-    expect(CSS).toMatch(/\.ct-hero-inner \{[^}]*z-index: 1/);
-    expect(CSS).toMatch(/\.ct-hero-inner \{[^}]*background: radial-gradient\([^}]*var\(--veil\)/);
-    // Each theme needs its own veil, or the heading loses contrast in one of them.
-    expect(CSS).toMatch(/\.ct-page \{[^}]*--veil: rgba\(10, 7, 16/);
-    expect(CSS).toMatch(/\.ct-page\.theme-light \{[^}]*--veil: rgba\(255, 255, 255/);
+    expect(meta).toBeInTheDocument();
+    expect(signal).toBeInTheDocument();
+    expect(shapes.compareDocumentPosition(meta) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(meta.compareDocumentPosition(signal) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(meta.textContent).toMatch(/FV \/ OPEN CHANNEL/);
+    expect(signal.querySelector('b').textContent).toBe('MESSAGE CHANNEL ONLINE');
+    // The signal line is a gradient rule, so the row is a real control-looking
+    // element rather than a bare word.
+    expect(CSS).toMatch(/\.ct-hero-signal span \{[^}]*linear-gradient/);
+    expect(CSS).toMatch(/\.ct-hero-meta \{[^}]*justify-content: space-between/);
+    // The orbit and the crosshair are what the heading is dressed with.
+    expect(CSS).toMatch(/\.ct-shape\.is-orbit-line \{/);
+    expect(CSS).toMatch(/\.ct-shape\.is-crosshair \{/);
+    expect(container.querySelector('.ct-shape.is-orbit-line')).toBeInTheDocument();
+    expect(container.querySelector('.ct-shape.is-crosshair')).toBeInTheDocument();
   });
 
   it('sets the studio name as one horizontal line instead of a wrapped stack', () => {
@@ -207,9 +219,12 @@ describe('the contact page', () => {
     // instead of breaking into a three-word column.
     expect(CSS).toMatch(/\.ct-hero h1 \{[^}]*white-space: nowrap/);
     expect(CSS).toMatch(/\.ct-hero h1 \{[^}]*font-size: clamp\(/);
-    // The stroke on the outlined half has to scale down with the text, or a 2px
-    // outline swallows the letters at phone sizes.
-    expect(CSS).toMatch(/\.ct-hero h1 em \{[^}]*-webkit-text-stroke: clamp\(/);
+    // The only width where the clamp minimum cannot fit is a phone, so that is
+    // the one breakpoint where the line is allowed to wrap.
+    expect(CSS).toMatch(/@media \(max-width: 720px\) \{[^@]*\.ct-hero h1 \{ white-space: normal; \}/);
+    // The outlined half is stroked rather than filled, which is what separates
+    // FANDOMVERSE from the words before it.
+    expect(CSS).toMatch(/\.ct-hero h1 em \{[^}]*-webkit-text-stroke: 2px var\(--cyan\)/);
   });
 
   it('sends "Back to the beginning" to the top of this page, not to home', () => {

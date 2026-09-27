@@ -11,6 +11,12 @@
   --ink: #f4f0ff;
   --paper: #f4f0ff;
   --muted: #a99cc4;
+  /* The band the shared nav occupies at the very top of the page: 10px of margin
+     plus its 78px height on desktop, and 138px once it wraps to two rows. The
+     hero slides up by exactly this much, and hands the same distance back as
+     top padding, so the nav sits on the aurora instead of on bare page black
+     while the hero copy stays on the line it was already on. */
+  --nx-nav-band: 88px;
   min-height: 100vh;
   color: var(--paper);
   background: #0b0817;
@@ -73,22 +79,29 @@
 .nx-hero {
   position: relative;
   z-index: 1;
-  /* The aurora bleed (inset: -60px -10% 0) and the orbit rings are both wider
+  /* The aurora bleed (inset: 0 -10% 0) and the orbit rings are both wider
      than the stage on purpose, which used to push a horizontal scrollbar across
      the whole page. Clipping the hero contains that decoration. */
   overflow: hidden;
-  /* The 132px top pad was sized for a much larger headline, which left the
-     stage feeling loose. The wordmark is smaller now, so the whole hero is
-     tighter and the copy lands higher. */
-  padding: 104px 24px 36px;
+  /* The nav is a zigzag bar, and every notch cut out of it used to show the bare
+     page behind it — a strip of near-black above the hero with black teeth biting
+     into the gold. So the hero now starts at the very top of the page and runs
+     up behind the nav, and the distance it gives up is handed straight back as
+     top padding. The wordmark, the tagline and everything under them land on
+     exactly the same line as before; only the strip behind the bar changes. */
+  margin-top: calc(-1 * var(--nx-nav-band));
+  /* 104px of air under the nav, plus the band the hero now covers. */
+  padding: calc(104px + var(--nx-nav-band)) 24px 36px;
   text-align: center;
 }
 
 /* A saturated aurora sits behind the wordmark. The stage never washes out to
-   paper white, in either theme, so the opening reads as colour first. */
+   paper white, in either theme, so the opening reads as colour first. The bleed
+   starts at the hero's own top edge now, which is the top of the page, so the
+   wash reaches all the way up behind the nav instead of stopping 60px short. */
 .nx-hero::before {
   position: absolute;
-  inset: -60px -10% 0;
+  inset: 0 -10% 0;
   z-index: -2;
   display: block;
   background:
@@ -446,7 +459,10 @@
 }
 
 @media (max-width: 720px) {
-  .nx-hero { padding: 96px 20px 26px; }
+  /* The nav wraps to two rows here, so the band it takes is taller. The docked
+     filter bar already docks at 138px for the same reason. */
+  .nx-page { --nx-nav-band: 138px; }
+  .nx-hero { padding: calc(96px + var(--nx-nav-band)) 20px 26px; }
   .nx-hero-next { grid-template-columns: 56px minmax(0, 1fr); gap: 12px; padding: 10px 12px; }
   .nx-hero-next-art { width: 56px; }
   .nx-hero-next-clock { grid-column: 1 / -1; }

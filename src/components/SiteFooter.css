@@ -41,6 +41,24 @@
   --foot-accent: var(--accent, #452e02);
 }
 
+/* Same light stage as `.theme-light .site-footer`, but self-themed for the
+   fandom pages, which each name their own light class after themselves rather
+   than putting `theme-light` on an ancestor. */
+.site-footer.theme-light {
+  --foot-ink: #171820;
+  /* The tan light-stage surface is mid-tone, so the muted grey only reached 3.6:1
+     here; this near-black keeps the small print readable. */
+  --foot-muted: #2c2f36;
+  --foot-line: rgba(23, 24, 32, .22);
+  --foot-bg: #b3a494;
+  /* The light-stage accent is a dark bronze, so the ink that sits on top of it
+     has to be light, not the dark chip the dark stage uses. */
+  --foot-on-accent: #f7f1e6;
+  /* A page that supplies its own light-theme accent keeps it; the fallback is a
+     deep bronze, the only gold dark enough to read on the tan surface. */
+  --foot-accent: var(--accent, #452e02);
+}
+
 .footer-main {
   display: grid;
   grid-template-columns: 1.6fr repeat(3, 1fr);

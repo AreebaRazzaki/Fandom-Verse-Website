@@ -8,7 +8,7 @@
       "id": 1,
       "name": "Demon Slayer Infinity Castle Poster",
       "category": "Anime",
-      "image": "/assets/images/anime1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJBFoTKNa9HLlW-lYgxrApYH5577nr2IMni8BYXchUTQ&s=10",
       "price": 9,
       "priceRange": "$9 - $18",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -17,7 +17,7 @@
       "id": 2,
       "name": "Wado Studio Shonen Jump Vol. 1-3 Slipcase",
       "category": "Anime",
-      "image": "/assets/images/anime2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiKumySM3yUwrPg58Yjq0tTor8Ek-4-WbRRuq7r_gzAA&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -26,7 +26,7 @@
       "id": 3,
       "name": "Rengoku Teacup",
       "category": "Anime",
-      "image": "/assets/images/anime3.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiNWqaaXPef7qKG3rhwmor_MiDHS8JSdcpvSVavDmxGg&s=10",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -35,7 +35,7 @@
       "id": 4,
       "name": "Jujutsu Kaisen Yuji Itadori Wall Scroll",
       "category": "Anime",
-      "image": "/assets/images/anime4.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5dP7LTJlE_Cin52hCB8x_4z6Y8LeglmUR5gDSDgFm6Q&s",
       "price": 28,
       "priceRange": "$28 - $42",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -44,7 +44,7 @@
       "id": 5,
       "name": "Attack on Titan Colossal Titan Print",
       "category": "Anime",
-      "image": "/assets/images/anime5.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfgdpbEXtVe9kmvr0cUzYcAlfRE4L_pcJ8r9LUxLH-Aw&s=10",
       "price": 38,
       "priceRange": "$38 - $9",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -53,7 +53,7 @@
       "id": 6,
       "name": "Chainsaw Man Denji Figure",
       "category": "Anime",
-      "image": "/assets/images/anime6.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCQ8AxOOC5F2IHv6iKdzB5hePw1skOSgvWbsh84JFlYQ&s=10",
       "price": 55,
       "priceRange": "$55 - $16",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -62,7 +62,7 @@
       "id": 7,
       "name": "Spy x Family Loid Forger Notebook",
       "category": "Anime",
-      "image": "/assets/images/anime.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuRfVxGa_KuzwjFxKIU2MJ8PsKnAvNY_frwOgTjpEm1g&s=10",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -71,7 +71,7 @@
       "id": 8,
       "name": "Demon Slayer Rengoku Mug",
       "category": "Anime",
-      "image": "/assets/images/anime1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqrxgUam-5Y7JjGeppfosiwSB_zGGjze2IqLdo2yytTg&s=10",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -80,7 +80,7 @@
       "id": 9,
       "name": "Wado Studio Shonen Jump Pin Set",
       "category": "Anime",
-      "image": "/assets/images/anime2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHVrA5mPhvjl1W8oKkTv40AzO3AmhG3i2Qg6PgTouhA&s=10",
       "price": 26,
       "priceRange": "$26 - $38",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -89,7 +89,7 @@
       "id": 10,
       "name": "Jujutsu Kaisen Sukuna Keychain",
       "category": "Anime",
-      "image": "/assets/images/anime3.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf4FX3rqERH2UNn-SJfRmspLj2yU6Lu2W6d_aDtxwCZg&s=10",
       "price": 34,
       "priceRange": "$34 - $55",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -98,7 +98,7 @@
       "id": 11,
       "name": "Attack on Titan Survey Corps Tote",
       "category": "Anime",
-      "image": "/assets/images/anime4.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGwrpXxIxqt0P1QXHA_bwaV0X-gLHnTux1av67-dWaKw&s=10",
       "price": 48,
       "priceRange": "$48 - $14",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -107,7 +107,7 @@
       "id": 12,
       "name": "Chainsaw Man Power Poster",
       "category": "Anime",
-      "image": "/assets/images/anime5.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQybdcwpKID7ZkMMyKd-bisu5hiyU8HWacQmWyX39VoDA&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -116,7 +116,7 @@
       "id": 13,
       "name": "ELDEN RING Erdtree Map Print",
       "category": "Gaming",
-      "image": "/assets/images/game1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJAyFTysUK2dsSKKt9sKFV8mPvaLTKIjRgzn9Wvx0ChA&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -125,7 +125,7 @@
       "id": 14,
       "name": "Nightreign Nightlord Steelbook",
       "category": "Gaming",
-      "image": "/assets/images/game2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW7CVZ5G8yBH73UBPR_mZ163gkrQSCrOFNCCYrCYJ4bQ&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -134,7 +134,7 @@
       "id": 15,
       "name": "Hollow Knight Vessel Desk Mat",
       "category": "Gaming",
-      "image": "/assets/images/gaming.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIH4dj3Zyj_9etMCCgADW-NqjmFZb5-IkI3nr7DnnsPQ&s=10",
       "price": 24,
       "priceRange": "$24 - $34",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -143,7 +143,7 @@
       "id": 16,
       "name": "Cyberpunk 2077 Night City Lanyard",
       "category": "Gaming",
-      "image": "/assets/images/game1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZeFKZzfgvC5qZS7zH6ow-eYc_a0KFCF1UEbDr107bGg&s=10",
       "price": 30,
       "priceRange": "$30 - $48",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -152,7 +152,7 @@
       "id": 17,
       "name": "The Legend of Zelda Hyrule Field Print",
       "category": "Gaming",
-      "image": "/assets/images/game2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJJ7eSdvbTV5FZzFPYEFalZ52Qk-g_LXSiVvUTyxgvBQ&s",
       "price": 42,
       "priceRange": "$42 - $12",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -161,7 +161,7 @@
       "id": 18,
       "name": "God of War Leviathan Axe Replica",
       "category": "Gaming",
-      "image": "/assets/images/gaming.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROb9Zfh4D-EBmusw-7X637tXY8sclx7aUCxvsAMyemNg&s=10",
       "price": 9,
       "priceRange": "$9 - $18",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -170,7 +170,7 @@
       "id": 19,
       "name": "ELDEN RING Roundtable Shield Replica",
       "category": "Gaming",
-      "image": "/assets/images/game1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREy5NKUJTZmdlBjlQFpTMcWIx_fBEgcqC6PWmwKPnnjQ&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -179,7 +179,7 @@
       "id": 20,
       "name": "Hollow Knight Hallownest Pin",
       "category": "Gaming",
-      "image": "/assets/images/game2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1sHbJI_Ijx5hDtye5WhbHl2yB3CnfQSloRfSMINobGg&s",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -188,7 +188,7 @@
       "id": 21,
       "name": "Nightreign Nightreign Hoodie",
       "category": "Gaming",
-      "image": "/assets/images/gaming.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7_n5z4ZVh1WZu2ZQlYBx1nQyJxRWLPB-q2OxMokmG7A&s=10",
       "price": 28,
       "priceRange": "$28 - $42",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -197,7 +197,7 @@
       "id": 22,
       "name": "Stardew Valley Pelican Town Poster",
       "category": "Gaming",
-      "image": "/assets/images/game1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv25SmceEqiK5iH81gcndOiJy4wUKOnClWlW2Q0uPCSA&s=10",
       "price": 38,
       "priceRange": "$38 - $9",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -206,7 +206,7 @@
       "id": 23,
       "name": "ELDEN RING Erdtree Tote",
       "category": "Gaming",
-      "image": "/assets/images/game2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbsH7GaCUAI7sNwj984btn4OGwuvLWWs0aaJLi5s6IZg&s=10",
       "price": 55,
       "priceRange": "$55 - $16",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -215,7 +215,7 @@
       "id": 24,
       "name": "Bloodborne Moonlight Tear Cup",
       "category": "Gaming",
-      "image": "/assets/images/gaming.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnjJn899J8_PKfRu5lunYiVt-s8nPmCTjnvsHXJIEwPg&s=10",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -224,7 +224,7 @@
       "id": 25,
       "name": "Glass Poster",
       "category": "Movies",
-      "image": "/assets/images/poster-glass.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFpFWHQQHmSJxrZc9qnz7Y5XnJK9F-IJwCKYej28LPUQ&s=10",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -233,7 +233,7 @@
       "id": 26,
       "name": "My Trip to the Moon Nostalgia Lightbox",
       "category": "Movies",
-      "image": "/assets/images/glass.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrNfHu4kYfl0XQD0q6vr0mGr-GdzENYOT33ScvpRVQYA&s=10",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -242,7 +242,7 @@
       "id": 27,
       "name": "Joker Poster",
       "category": "Movies",
-      "image": "/assets/images/poster-my-trip.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbckERgYWwSv1ZxGa5KDOOOeU9LC5cHMpbYBXTzz8T7g&s=10",
       "price": 26,
       "priceRange": "$26 - $38",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -251,7 +251,7 @@
       "id": 28,
       "name": "Avengers Model Kit",
       "category": "Movies",
-      "image": "/assets/images/my-trip.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9mH-aEv7WPvjhKF6lN8SM0X0oxOymDhL1Bq_qVzenNw&s=10",
       "price": 34,
       "priceRange": "$34 - $55",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -260,7 +260,7 @@
       "id": 29,
       "name": "Jumanji Gotham Mug",
       "category": "Movies",
-      "image": "/assets/images/poster-joker.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTtGb41K9sNOBqHyIOdvBsI2dasCPJBXAmJNpkfvn7OQ&s=10",
       "price": 48,
       "priceRange": "$48 - $14",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -269,7 +269,7 @@
       "id": 30,
       "name": "Avengers Comic Cover Print",
       "category": "Movies",
-      "image": "/assets/images/joker.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm0_-mSKkD-SqVvwbA4FusfmUdCHp7zQimCoD3etSyNA&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -278,7 +278,7 @@
       "id": 31,
       "name": "Dune House Screenprint",
       "category": "Movies",
-      "image": "/assets/images/poster-avengers.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0B1Ho2It_wu9weT1Kfb4VWNGXR3DUjEd5SFAfo_B5w&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -287,7 +287,7 @@
       "id": 32,
       "name": "Interstellar NASA Tote",
       "category": "Movies",
-      "image": "/assets/images/avengers.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9t3JwSrIF6ejrZn88t9AwXrjqws3nyC1Jng_KBYp66Q&s",
       "price": 24,
       "priceRange": "$24 - $34",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -296,7 +296,7 @@
       "id": 33,
       "name": "Joker Laugh Line Poster",
       "category": "Movies",
-      "image": "/assets/images/poster-jumanji.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlnXm1sj5ByYvUvWwwVy_RXTYw-f91cYFPZbGRLyeftg&s=10",
       "price": 30,
       "priceRange": "$30 - $48",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -305,7 +305,7 @@
       "id": 34,
       "name": "The Grand Budapest Hotel Concierge Pin Set",
       "category": "Movies",
-      "image": "/assets/images/jumanji.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMiXYbmjvYtMNyB5KJ1pTrHXypi_CI5uPy3v06nXgiFA&s=10",
       "price": 42,
       "priceRange": "$42 - $12",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -314,7 +314,7 @@
       "id": 35,
       "name": "Arrival Heptapod Tea towel",
       "category": "Movies",
-      "image": "/assets/images/poster-avengers-2.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWfux0YxfWHJzm4NEEHxGkErylFtVcmQDyKn2rp5VnIw&s",
       "price": 9,
       "priceRange": "$9 - $18",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -323,7 +323,7 @@
       "id": 36,
       "name": "Mad Max Chrome Keychain",
       "category": "Movies",
-      "image": "/assets/images/avengers-2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStLmgJVEmOg2STq-0897JFxcOPTkZdZIQ8M8gInuI2EQ&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -332,7 +332,7 @@
       "id": 37,
       "name": "Peaky Blinders Poster",
       "category": "TV",
-      "image": "/assets/images/poster-peaky-blinders.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMxpXGlLhwfO6sl_iGCj_Yo3n0IRx7o1oPVLGRZoSAaA&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -341,7 +341,7 @@
       "id": 38,
       "name": "Harry Potter Box Set",
       "category": "TV",
-      "image": "/assets/images/poster-harry-potter.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5tN4mHFRdUys8-JlnHxe1CkhtKoc0GU7bG5czhrNJPw&s=10",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -350,7 +350,7 @@
       "id": 39,
       "name": "La Casa de Papel Poster",
       "category": "TV",
-      "image": "/assets/images/poster-la-casa-de-papel.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJHZLmeIIS4nI-FWC0gYsxxwzLBd59LUd4gu1Kb8l7aA&s=10",
       "price": 28,
       "priceRange": "$28 - $42",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -359,7 +359,7 @@
       "id": 40,
       "name": "The Last of Us Firefly Print",
       "category": "TV",
-      "image": "/assets/images/tv shows.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPphCUzA_wJCispuG8bJVKUnkv1mlRPQPEs17JppTk6Q&s=10",
       "price": 38,
       "priceRange": "$38 - $9",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -368,7 +368,7 @@
       "id": 41,
       "name": "Stranger Things Upside Down Mug",
       "category": "TV",
-      "image": "/assets/images/tv show 1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiksdttX71Orfkt-p5kEhaEWezrFDyH0evWB99tqRYpYDvv-JJGrB_YBo&s=10",
       "price": 55,
       "priceRange": "$55 - $16",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -377,7 +377,7 @@
       "id": 42,
       "name": "Game of Thrones Westeros Map Print",
       "category": "TV",
-      "image": "/assets/images/tv show 2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR8b5TiIIKka7cTcFQqd1AwGSPYNJv_uzISvSnrBXBNA&s=10",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -386,7 +386,7 @@
       "id": 43,
       "name": "Peaky Blinders Thomas Shelby Cap",
       "category": "TV",
-      "image": "/assets/images/tv show 3.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWqMhz35spn5oLPiqaP6rkllku_3pxXNnJQSxqDfEqDQ&s=10",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -395,7 +395,7 @@
       "id": 44,
       "name": "Harry Potter Hogwarts Tote",
       "category": "TV",
-      "image": "/assets/images/tv show 4.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlBKpgmvcDnyJSqc0dQDjV4QdLcHK437gO6PDha-zntQ&s=10",
       "price": 26,
       "priceRange": "$26 - $38",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -404,7 +404,7 @@
       "id": 45,
       "name": "undefined Shabby Whiskey Set",
       "category": "TV",
-      "image": "/assets/images/poster-peaky-blinders.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK-iV7ufopXxU9TOvx3asKq8kbJliZx1ztDkXXxOiFvQ&s=10",
       "price": 34,
       "priceRange": "$34 - $55",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -413,7 +413,7 @@
       "id": 46,
       "name": "undefined Dobby Figurine",
       "category": "TV",
-      "image": "/assets/images/poster-harry-potter.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbtp3P0HR392g_fVKJU17Hop_Lh_eAX2YXhUofD927jg&s=10",
       "price": 48,
       "priceRange": "$48 - $14",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -422,7 +422,7 @@
       "id": 47,
       "name": "undefined Bauhaus Wall Clock",
       "category": "TV",
-      "image": "/assets/images/poster-la-casa-de-papel.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv2GaH36LIqVidbYlyxh4B0z3ALlDvIZUlJvB9pTHPZw&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -431,7 +431,7 @@
       "id": 48,
       "name": "undefined Dossier Notebook",
       "category": "TV",
-      "image": "/assets/images/tv shows.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-p-QD4EN3wT244dsXARoj-BSvQT236RwJ31hsea_CQ&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -440,7 +440,7 @@
       "id": 49,
       "name": "Stray Kids Photocard Set",
       "category": "K-Pop",
-      "image": "/assets/images/kpop1.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5s_dQLIs8oblh9Lt1yyDj475FAeLfoF03NDgADZKV9Q&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -449,7 +449,7 @@
       "id": 50,
       "name": "aespa Lightstick",
       "category": "K-Pop",
-      "image": "/assets/images/kpop2.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPF09wtkBsy02i_OcP606y6zOF7z0NQq1LTvq2gM2XmA&s=10",
       "price": 24,
       "priceRange": "$24 - $34",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -458,7 +458,7 @@
       "id": 51,
       "name": "BLACKPINK Photobook",
       "category": "K-Pop",
-      "image": "/assets/images/k-pop.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm8L3Awxd3Gll-Gx-4sOKjvnFq4bR2bzszIL03k8OdNQ&s=10",
       "price": 30,
       "priceRange": "$30 - $48",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -467,7 +467,7 @@
       "id": 52,
       "name": "Stray Kids Tour Tee",
       "category": "K-Pop",
-      "image": "/assets/images/kpop1.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkWQkzamhMljYhA0_6DVot7N1KJoTzdsiNz7zIQGVrnw&s=10",
       "price": 42,
       "priceRange": "$42 - $12",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -476,7 +476,7 @@
       "id": 53,
       "name": "aespa Concert Poster",
       "category": "K-Pop",
-      "image": "/assets/images/kpop2.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfqs1QLm05UvrxeWXjaiY41EsXQBqSiV3zNn7VMpr4zw&s=10",
       "price": 9,
       "priceRange": "$9 - $18",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -485,7 +485,7 @@
       "id": 54,
       "name": "BLACKPINK Photocard Set",
       "category": "K-Pop",
-      "image": "/assets/images/k-pop.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJfNvcXO_XrAew2eM4-opw727XtGHd9KhbVlMbDfPAAQ&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -494,7 +494,7 @@
       "id": 55,
       "name": "NewJeans Lightstick",
       "category": "K-Pop",
-      "image": "/assets/images/kpop1.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNSwki3f5m4DSYMO9iApy4Pz7z5Z7vqrSlq7xI5kV9GA&s=10",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -503,7 +503,7 @@
       "id": 56,
       "name": "Stray Kids Photobook",
       "category": "K-Pop",
-      "image": "/assets/images/kpop2.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtIOpEftry9UD0RSfl7en88BQKWt9nzGzqMI7LnPSo3w&s=10",
       "price": 28,
       "priceRange": "$28 - $42",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -512,7 +512,7 @@
       "id": 57,
       "name": "aespa Tour Tee",
       "category": "K-Pop",
-      "image": "/assets/images/k-pop.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtep70O10UcRdziT43-ntzvJaOYUYyIpp3dcBm6DBoWg&s=10",
       "price": 38,
       "priceRange": "$38 - $9",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -521,7 +521,7 @@
       "id": 58,
       "name": "BLACKPINK Concert Poster",
       "category": "K-Pop",
-      "image": "/assets/images/kpop1.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNO9iBx-XLORoiPRQG5uZ9imhHwzpSsO3HI8pscWefxA&s=10",
       "price": 55,
       "priceRange": "$55 - $16",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -530,7 +530,7 @@
       "id": 59,
       "name": "SEVENTEEN Get Up Poster",
       "category": "K-Pop",
-      "image": "/assets/images/kpop2.jpg",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTweD7znvzhTDtIELTnUBsXMNNngLcNTTPCCK1K9vPZ9w&s",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -539,7 +539,7 @@
       "id": 60,
       "name": "NewJeans Debut Poster",
       "category": "K-Pop",
-      "image": "/assets/images/k-pop.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5mqj6rr80j855two71VELgIkocVKhAwqE5bulBZqIcg&s",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -548,7 +548,7 @@
       "id": 61,
       "name": "Superman Trade Paperback",
       "category": "Comics",
-      "image": "/assets/images/comics1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT63yAVO7sMMKbaQAD8jfPYLe-JBOGFKhoSEoFC6QAnKg&s=10",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -557,7 +557,7 @@
       "id": 62,
       "name": "Spider-Man Deluxe Edition",
       "category": "Comics",
-      "image": "/assets/images/comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgDTnqaA_PzDyWjUXqsHY9pHRoTL1N-3PrjYpzgNMC8A&s=10",
       "price": 26,
       "priceRange": "$26 - $38",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -566,7 +566,7 @@
       "id": 63,
       "name": "Batman Canvas Tote",
       "category": "Comics",
-      "image": "/assets/images/bg comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCI1zJpqgXSyAXFoEQKj4fsEQoY8y7oZwRCsSKxM-VFA&s=10",
       "price": 34,
       "priceRange": "$34 - $55",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -575,7 +575,7 @@
       "id": 64,
       "name": "Superman Pin Set",
       "category": "Comics",
-      "image": "/assets/images/comics1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmnX8XPLzz3YQWvQupG5T3W1IMJJmybG76cd66pRw1lg&s",
       "price": 48,
       "priceRange": "$48 - $14",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -584,7 +584,7 @@
       "id": 65,
       "name": "Spider-Man Variant Cover Print",
       "category": "Comics",
-      "image": "/assets/images/comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgN0ufvVeIj7afeWRdKatCtMOdz-TYJdj9ODuN5BCaFQ&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -593,7 +593,7 @@
       "id": 66,
       "name": "Batman Art Book",
       "category": "Comics",
-      "image": "/assets/images/bg comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgq_26z_onTs49DM54U7UAu9lpMKVD6BpMNMetq0lFzQ&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -602,7 +602,7 @@
       "id": 67,
       "name": "Wonder Woman Trade Paperback",
       "category": "Comics",
-      "image": "/assets/images/comics1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6DdA-nt8CRfi7wnIttkCQxHdTEaTdDKJSL2DN4fuAcQ&s=10",
       "price": 24,
       "priceRange": "$24 - $34",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -611,7 +611,7 @@
       "id": 68,
       "name": "Superman Deluxe Edition",
       "category": "Comics",
-      "image": "/assets/images/comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTqBOe_ISLIHQRO6o6Gjd9c3mWhmdBAoSg7LocnVaLww&s=10",
       "price": 30,
       "priceRange": "$30 - $48",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -620,7 +620,7 @@
       "id": 69,
       "name": "Spider-Man Canvas Tote",
       "category": "Comics",
-      "image": "/assets/images/bg comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC8D1O6b07L-Cm5q8qpZVPoQ60Wj7pbtLsVlEHcJBtYQ&s=10",
       "price": 42,
       "priceRange": "$42 - $12",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -629,7 +629,7 @@
       "id": 70,
       "name": "Batman Pin Set",
       "category": "Comics",
-      "image": "/assets/images/comics1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd5kkj6EoV5SbZzf69X5CbdPILwbFLauKBZAU2XKLdpA&s=10",
       "price": 9,
       "priceRange": "$9 - $18",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -638,7 +638,7 @@
       "id": 71,
       "name": "X-Men Variant Cover Print",
       "category": "Comics",
-      "image": "/assets/images/comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcsr56atnK13vxIf8pPuspjfh4Cq8Svlb-mBuuZQq70A&s=10",
       "price": 16,
       "priceRange": "$16 - $24",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -647,7 +647,7 @@
       "id": 72,
       "name": "The Flash Art Book",
       "category": "Comics",
-      "image": "/assets/images/bg comics.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSA0hF5mtJEnAer6jQb2gyfIdFbXYTuQ0V6PASrh2JiQ&s=10",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -656,7 +656,7 @@
       "id": 73,
       "name": "Jujutsu Kaisen Vol. 1-3 Slipcase",
       "category": "Manga",
-      "image": "/assets/images/manga1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUHblOdx0gp9ybgU5TuELHdC_I-YjEHjAfREQwAv44dw&s=10",
       "price": 22,
       "priceRange": "$22 - $30",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -665,7 +665,7 @@
       "id": 74,
       "name": "One Piece Vol. 4-6 Slipcase",
       "category": "Manga",
-      "image": "/assets/images/manga2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsOZQEd0awTP-7INHrh_fEngON4tBs4IRy_IDnrgxGxw&s=10",
       "price": 28,
       "priceRange": "$28 - $42",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -674,7 +674,7 @@
       "id": 75,
       "name": "Attack on Titan Colossal Print",
       "category": "Manga",
-      "image": "/assets/images/manga.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMLYqD-JLHdbDm6rFBOn8MzsMieL7UnQ67l9opp5O2NQ&s=10",
       "price": 38,
       "priceRange": "$38 - $9",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -683,7 +683,7 @@
       "id": 76,
       "name": "Chainsaw Man Power Figure",
       "category": "Manga",
-      "image": "/assets/images/manga1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZXsWGJaYGUsJ0DI6HgSDuh-YiY9i65ZN52XKHfF_bbw&s=10",
       "price": 55,
       "priceRange": "$55 - $16",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."
@@ -692,7 +692,7 @@
       "id": 77,
       "name": "Demon Slayer Infinity Castle Print",
       "category": "Manga",
-      "image": "/assets/images/manga2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAl_zRS4iiHQBZ0h4-NqlK6-S9_HcVgKCKY_72AQtW1A&s=10",
       "price": 14,
       "priceRange": "$14 - $22",
       "description": "Hand finished, so no two pieces carry exactly the same grain, glaze or fade."
@@ -701,7 +701,7 @@
       "id": 78,
       "name": "Jujutsu Kaisen Vol. 7-9 Slipcase",
       "category": "Manga",
-      "image": "/assets/images/manga.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA0knPIYYlT1hmAVRMSnwQYmmrYKgWOYnaguf0G_qUYA&s=10",
       "price": 19,
       "priceRange": "$19 - $28",
       "description": "Small batch, made to order. Once the run is gone it does not come back to the vault."
@@ -710,7 +710,7 @@
       "id": 79,
       "name": "One Piece Vol. 10-12 Slipcase",
       "category": "Manga",
-      "image": "/assets/images/manga1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMcyN_WcVNPHUzRxsnz2BUphgliDw063jB1ctw1Yf6JA&s=10",
       "price": 26,
       "priceRange": "$26 - $38",
       "description": "A collector shelf piece with a weighted base, so it stands up without leaning on anything."
@@ -719,7 +719,7 @@
       "id": 80,
       "name": "Attack on Titan Wado Mug",
       "category": "Manga",
-      "image": "/assets/images/manga2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYNqhVJPr50zyrwIG_f4bgu2h0CueQr3CDzfqllGv1A&s=10",
       "price": 34,
       "priceRange": "$34 - $55",
       "description": "Foil-blocked slipcase with a clear belly band and an acrylic standee inside."
@@ -728,7 +728,7 @@
       "id": 81,
       "name": "Chainsaw Man Demon Slayer Poster",
       "category": "Manga",
-      "image": "/assets/images/manga.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1w3_pvu6_7NG2Rhih4UrKhjoyV9ulFkDFS1ed-oirwA&s=10",
       "price": 48,
       "priceRange": "$48 - $14",
       "description": "Ships flat in a board-backed envelope with a corner guard on every side."
@@ -737,7 +737,7 @@
       "id": 82,
       "name": "Demon Slayer Vinland Saga Print",
       "category": "Manga",
-      "image": "/assets/images/manga1.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ8L0D1rpzr32zKGz-Jyu_uEVjzT_XqxX9Ceg6gL31Rw&s=10",
       "price": 12,
       "priceRange": "$12 - $19",
       "description": "Numbered first print, packed with a letterpress card about the scene it was drawn from."
@@ -746,7 +746,7 @@
       "id": 83,
       "name": "Vinland Saga Quanxi Panel Print",
       "category": "Manga",
-      "image": "/assets/images/manga2.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCxupStYNdFkJ4IeUod4iXTxGyZa4PfucA97OMmfyZsQ&s=10",
       "price": 18,
       "priceRange": "$18 - $26",
       "description": "A1 giclée print on heavyweight matte stock, numbered on the back and shipped in a rigid tube."
@@ -755,7 +755,7 @@
       "id": 84,
       "name": "Jujutsu Kaisen Anime Desk Clock",
       "category": "Manga",
-      "image": "/assets/images/manga.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6fQAmJ8h5Q9hoE4MQznZ8hCE_dW_9qZuMA8q_e--vkQ&s=10",
       "price": 24,
       "priceRange": "$24 - $34",
       "description": "Colour graded against a reference reel, then checked under daylight before it ships."

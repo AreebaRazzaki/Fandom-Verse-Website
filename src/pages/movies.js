@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
+import { paletteFor } from '../components/fandomConfig';
+import CharacterCodex from '../components/CharacterCodex';
+import FandomMediaWall from '../components/FandomMediaWall';
+import FandomDoors from '../components/FandomDoors';
 import './movies.css';
 
 const movies = [
@@ -147,52 +152,74 @@ function Movies() {
   const previousMovie = () => setActiveIndex((activeIndex - 1 + movies.length) % movies.length);
 
   return (
+    <>
     <main className={`movies-page ${theme === 'light' ? 'movies-theme-light' : 'movies-theme-dark'}`}>
       <SiteNav theme={theme} setTheme={setTheme} active="movies" variant="movies" />
       <section className="movies-stage" aria-label="Movies spotlight">
-        <div className="movies-crystal" aria-hidden="true" />
-        <div className="movies-frame">
-          <div className="movies-hero-slides" aria-live="polite">
-            {movies.map((movie, index) => (
-              <div className={`movies-hero-slide ${index === activeIndex ? 'is-active' : ''}`} key={movie.id} aria-hidden={index !== activeIndex}>
-                <img src={movie.hero} alt={`${movie.title} hero visual`} />
-              </div>
-            ))}
-          </div>
-          <div className="movies-hero-overlay" aria-hidden="true" />
-          <div className="movies-masthead"><i>SPOTLIGHT ARCHIVE</i></div>
-
-          <div className="movies-copy" key={activeMovie.id}>
-            <div className="movies-badge"><span>FILM / {activeMovie.match} MATCH</span><b>{activeMovie.label}</b></div>
-            <p className="movies-kicker">{activeMovie.genres} <b>—</b> {activeMovie.year}</p>
-            <h1>{activeMovie.title}</h1>
-            <h2>{activeMovie.subtitle}</h2>
-            <p className="movies-description">{activeMovie.description}</p>
-            <div className="movies-actions">
-              <button type="button" className="movies-play" onClick={() => window.alert(`Now streaming: ${activeMovie.title}`)}>Play now <span>▶</span></button>
-              <button type="button" className={`movies-save ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((currentSaved) => !currentSaved)} aria-label={saved ? 'Remove from saved movies' : 'Save movie'} aria-pressed={saved}>{saved ? '♥' : '♡'}</button>
+        <div className="movies-backdrop" aria-hidden="true">
+          <div className="movies-crystal" />
+        </div>
+        <div className="movies-panel">
+          <div className="movies-frame">
+            <div className="movies-hero-slides" aria-live="polite">
+              {movies.map((movie, index) => (
+                <div className={`movies-hero-slide ${index === activeIndex ? 'is-active' : ''}`} key={movie.id} aria-hidden={index !== activeIndex}>
+                  <img src={movie.hero} alt={`${movie.title} hero visual`} />
+                </div>
+              ))}
             </div>
-          </div>
+            <div className="movies-hero-overlay" aria-hidden="true" />
+            <div className="movies-masthead"><i>SPOTLIGHT ARCHIVE</i></div>
 
-          <div className="movies-side-code" aria-hidden="true"><span>SAGE / TEAL / FRAME</span><b>01—10</b></div>
-          <section className="movies-shelf" aria-label="Featured movie posters">
-            <div className="movies-shelf-heading"><h2>Featured spotlight</h2><span><i /> Auto rotating</span></div>
-            <div className="movies-shelf-row">
-              <button type="button" className="movies-shelf-arrow" onClick={previousMovie} aria-label="Previous movie">‹</button>
-              <div className="movies-cards">
-                {movies.map((movie, index) => (
-                  <button type="button" className={`movies-card ${index === activeIndex ? 'is-active' : ''}`} onClick={() => selectMovie(index)} key={movie.id} aria-label={`Select ${movie.title}`} aria-pressed={index === activeIndex}>
-                    <img src={movie.poster} alt="" aria-hidden="true" />
-                    <span className="movies-card-overlay"><b>{movie.title}</b><small>{movie.match} match</small></span>
-                  </button>
-                ))}
+            <div className="movies-copy" key={activeMovie.id}>
+              <div className="movies-badge"><span>FILM / {activeMovie.match} MATCH</span><b>{activeMovie.label}</b></div>
+              <p className="movies-kicker">{activeMovie.genres} <b>—</b> {activeMovie.year}</p>
+              <h1>{activeMovie.title}</h1>
+              <h2>{activeMovie.subtitle}</h2>
+              <p className="movies-description">{activeMovie.description}</p>
+              <div className="movies-actions">
+                <button type="button" className="movies-play" onClick={() => window.alert(`Now streaming: ${activeMovie.title}`)}>Play now <span>▶</span></button>
+                <button type="button" className={`movies-save ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((currentSaved) => !currentSaved)} aria-label={saved ? 'Remove from saved movies' : 'Save movie'} aria-pressed={saved}>{saved ? '♥' : '♡'}</button>
               </div>
-              <button type="button" className="movies-shelf-arrow" onClick={nextMovie} aria-label="Next movie">›</button>
+              <a className="movies-cast-link" href="#movies-character-profiles">Enter the film codex <span>↗</span></a>
             </div>
-          </section>
+
+            <div className="movies-side-code" aria-hidden="true"><span>SAGE / TEAL / FRAME</span><b>01—10</b></div>
+            <section className="movies-shelf" aria-label="Featured movie posters">
+              <div className="movies-shelf-heading"><h2>Featured spotlight</h2><span><i /> Auto rotating</span></div>
+              <div className="movies-shelf-row">
+                <button type="button" className="movies-shelf-arrow" onClick={previousMovie} aria-label="Previous movie">‹</button>
+                <div className="movies-cards">
+                  {movies.map((movie, index) => (
+                    <button type="button" className={`movies-card ${index === activeIndex ? 'is-active' : ''}`} onClick={() => selectMovie(index)} key={movie.id} aria-label={`Select ${movie.title}`} aria-pressed={index === activeIndex}>
+                      <img src={movie.poster} alt="" aria-hidden="true" />
+                      <span className="movies-card-overlay"><b>{movie.title}</b><small>{movie.match} match</small></span>
+                    </button>
+                  ))}
+                </div>
+                <button type="button" className="movies-shelf-arrow" onClick={nextMovie} aria-label="Next movie">›</button>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
+      {/* The hero links down to the codex, so the cast of the spotlight films
+          sits directly under it — same section, same book, the cinema skin. */}
+      <CharacterCodex fandom="movies" variant="cinema" theme={theme} sectionNumber="02" />
+
+      {/* The same two sections the anime page closes on, in the same order and
+          for the same reason: the wall shows the fandom, the doors are the way
+          out of it. Neither carries a number, so the codex stays 02 and the
+          visible run keeps no gap. The gallery and the desk are gone from this
+          page — the codex, the wall and the doors are the whole cinema room. */}
+      <FandomMediaWall fandom="movies" theme={theme} />
+
+      <FandomDoors fandom="movies" theme={theme} />
     </main>
+
+    {/* The last thing on the page, themed to match the fandom it closes. */}
+    <SiteFooter theme={theme} accent={paletteFor('movies', theme).accent} />
+    </>
   );
 }
 

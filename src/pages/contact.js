@@ -94,29 +94,24 @@ function Contact() {
 
       <header className="ct-hero">
         {/* Decorative geometry dresses the heading and the right-hand field, so
-            the top of the page is not an empty band. Everything sits behind the
-            copy and clear of the middle, where the words have to stay readable. */}
+            the top of the page is not an empty band. */}
         <div className="ct-hero-shapes" aria-hidden="true">
-          <span className="ct-shape is-halo" />
           <span className="ct-shape is-ring" />
-          <span className="ct-shape is-ring is-ring-outer" />
           <span className="ct-shape is-disc" />
-          <span className="ct-shape is-blob" />
           <span className="ct-shape is-shard" />
           <span className="ct-shape is-bar" />
-          <span className="ct-shape is-bar is-bar-two" />
           <span className="ct-shape is-dot" />
-          <span className="ct-shape is-grid" />
+          <span className="ct-shape is-orbit-line" />
+          <span className="ct-shape is-crosshair" />
         </div>
-
-        <div className="ct-hero-inner">
-          <p className="ct-kicker">Contact</p>
-          <h1>TALK TO THE <em>FANDOMVERSE</em></h1>
-          <p className="ct-lede">
-            Questions, corrections, a shelf you want stocked, or just want to say hi — send it over and one of
-            the seven of us will pick it up.
-          </p>
-        </div>
+        <div className="ct-hero-meta" aria-hidden="true"><span>FV / OPEN CHANNEL</span><span>07.24 — STUDIO SIGNAL</span></div>
+        <p className="ct-kicker">Contact</p>
+        <h1>TALK TO THE <em>FANDOMVERSE</em></h1>
+        <p className="ct-lede">
+          Questions, corrections, a shelf you want stocked, or just want to say hi — send it over and one of
+          the seven of us will pick it up.
+        </p>
+        <div className="ct-hero-signal" aria-hidden="true"><span /><b>MESSAGE CHANNEL ONLINE</b><i>●</i></div>
       </header>
 
       <div className="ct-split">

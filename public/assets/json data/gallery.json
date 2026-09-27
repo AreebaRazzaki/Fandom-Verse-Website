@@ -1,0 +1,150 @@
+{
+  "issue": "FV-GAL-01",
+  "volume": "Vol. 01",
+  "sectionTitle": "The Fandom Gallery",
+  "note": "Every fandom owns its own gallery. Images dominate; video and audio are kept to one or two per fandom so the wall still reads as artwork. `shape` drives the mosaic layout, `cutout` marks transparent character plates that need a mat instead of a photo frame, and `cover` promotes the first tile to a double-width feature plate.",
+  "fandoms": [
+    {
+      "id": "anime",
+      "label": "Anime",
+      "tagline": "Sakuga, screens and stills from a world that keeps drawing itself.",
+      "blurb": "Key art, broadcast frames and character plates pulled straight out of the anime archive.",
+      "filters": ["artwork", "character", "scene", "trailer"],
+      "media": [
+        { "id": "anime-01", "fandom": "anime", "type": "image", "kind": "artwork", "cover": true, "shape": "square", "src": "/assets/images/anime1.png", "alt": "Anime key visual artwork", "title": "Opening frame", "caption": "The first frame fans argue about for years.", "credit": "Anime archive / key art" },
+        { "id": "anime-02", "fandom": "anime", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/anime2.png", "alt": "Anime scene artwork", "title": "Quiet before the storm", "caption": "Every hero gets one scene where nothing moves.", "credit": "Anime archive / still" },
+        { "id": "anime-03", "fandom": "anime", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/anime3.png", "alt": "Anime battle scene artwork", "title": "The price of power", "caption": "Power is cheap right up until the invoice arrives.", "credit": "Anime archive / still" },
+        { "id": "anime-04", "fandom": "anime", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/anime4.png", "alt": "Anime shadow scene artwork", "title": "Every shadow has a story", "caption": "Shadows are cast by characters we have not met yet.", "credit": "Anime archive / still" },
+        { "id": "anime-05", "fandom": "anime", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/anime5.png", "alt": "Anime magic scene artwork", "title": "Magic between chapters", "caption": "The good magic always lands in the chapter nobody expects.", "credit": "Anime archive / still" },
+        { "id": "anime-06", "fandom": "anime", "type": "image", "kind": "scene", "shape": "square", "src": "/assets/images/anime6.png", "alt": "Anime dark scene artwork", "title": "The dark answers back", "caption": "Night falls differently when you are the strongest one in the room.", "credit": "Anime archive / still" },
+        { "id": "anime-07", "fandom": "anime", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Naruto_Uzumak%20(anime%201).png", "alt": "Naruto Uzumaki character plate", "title": "Naruto Uzumaki", "caption": "Loud, late, and impossible to write off.", "credit": "Character plate / transparent" },
+        { "id": "anime-08", "fandom": "anime", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Monkey_D_Luffy%20(anime%202).png", "alt": "Monkey D. Luffy character plate", "title": "Monkey D. Luffy", "caption": "A rubber body and a completely straight plan.", "credit": "Character plate / transparent" },
+        { "id": "anime-09", "fandom": "anime", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Goku_character%20(anime%203).png", "alt": "Goku character plate", "title": "Goku", "caption": "Trained past the point where training makes sense.", "credit": "Character plate / transparent" },
+        { "id": "anime-10", "fandom": "anime", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Gojo_Satoru%20(anime%204).png", "alt": "Gojo Satoru character plate", "title": "Gojo Satoru", "caption": "The strongest, and the only one who knows it.", "credit": "Character plate / transparent" },
+        { "id": "anime-11", "fandom": "anime", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Tanjiro_Kamado__(anime_5).png", "alt": "Tanjiro Kamado character plate", "title": "Tanjiro Kamado", "caption": "Kind in a genre built on how badly it can hurt you.", "credit": "Character plate / transparent" },
+        { "id": "anime-12", "fandom": "anime", "type": "image", "kind": "artwork", "shape": "tall", "src": "/assets/images/anime.png", "alt": "Anime category key visual", "title": "Anime key visual", "caption": "The plate that has introduced the category since day one.", "credit": "Anime archive / key art" },
+        { "id": "anime-13", "fandom": "anime", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "ztO4Bk0ALGI", "poster": "/assets/images/anime4.png", "alt": "Jujutsu Kaisen Sendai Colony trailer thumbnail", "title": "Jujutsu Kaisen — Sendai Colony", "caption": "The one trailer the whole fandom watched in the same hour.", "credit": "Crunchyroll · 1:31", "runtime": "1:31" }
+      ]
+    },
+    {
+      "id": "gaming",
+      "label": "Gaming",
+      "tagline": "Environments, boss rooms and the characters who refuse to respawn.",
+      "blurb": "World art, playable-looking key art and character plates from the games we lose hours to.",
+      "filters": ["artwork", "character", "scene", "trailer"],
+      "media": [
+        { "id": "gaming-01", "fandom": "gaming", "type": "image", "kind": "artwork", "cover": true, "shape": "tall", "src": "/assets/images/game1.png", "alt": "Gaming key artwork", "title": "World one", "caption": "The level you remember the light of.", "credit": "Game archive / key art" },
+        { "id": "gaming-02", "fandom": "gaming", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/game2.png", "alt": "Gaming environment artwork", "title": "World two", "caption": "Every good map has one corridor you refuse to run back through.", "credit": "Game archive / in-engine still" },
+        { "id": "gaming-03", "fandom": "gaming", "type": "image", "kind": "artwork", "shape": "square", "src": "/assets/images/gaming.png", "alt": "Gaming category key visual", "title": "Gaming key visual", "caption": "The cover plate for the whole category.", "credit": "Game archive / key art" },
+        { "id": "gaming-04", "fandom": "gaming", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Mario__(game_1).png", "alt": "Mario character plate", "title": "Mario", "caption": "Runs, jumps, saves the world before lunch.", "credit": "Character plate / transparent" },
+        { "id": "gaming-05", "fandom": "gaming", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Link_Zelda__(game_2).png", "alt": "Link character plate", "title": "Link", "caption": "Answers to nobody, rescues everybody.", "credit": "Character plate / transparent" },
+        { "id": "gaming-06", "fandom": "gaming", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Lara_Croft__(game_3).png", "alt": "Lara Croft character plate", "title": "Lara Croft", "caption": "Tomb, torch, terrible odds.", "credit": "Character plate / transparent" },
+        { "id": "gaming-07", "fandom": "gaming", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Kratos__(game_4).png", "alt": "Kratos character plate", "title": "Kratos", "caption": "Carries the conversation quietly.", "credit": "Character plate / transparent" },
+        { "id": "gaming-08", "fandom": "gaming", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Sonic__(game_5).png", "alt": "Sonic character plate", "title": "Sonic", "caption": "Faster than the plot, annoyingly cheerful about it.", "credit": "Character plate / transparent" },
+        { "id": "gaming-09", "fandom": "gaming", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "M-Xh4vbs6go", "poster": "/assets/images/gaming.png", "alt": "ELDEN RING Shadow of the Erdtree thumbnail", "title": "ELDEN RING — Shadow of the Erdtree", "caption": "Three minutes of people explaining a boss fight to each other.", "credit": "Bandai Namco · 3:19", "runtime": "3:19" }
+      ]
+    },
+    {
+      "id": "movies",
+      "label": "Movies",
+      "tagline": "One frame, one poster, one night where the projector held everyone quiet.",
+      "blurb": "Movie posters, widescreen stills and character plates from the biggest nights out in film.",
+      "filters": ["artwork", "poster", "scene", "character", "trailer"],
+      "media": [
+        { "id": "movies-01", "fandom": "movies", "type": "image", "kind": "scene", "cover": true, "shape": "wide", "src": "/assets/images/harry-potter.jpg", "alt": "Harry Potter widescreen still", "title": "Harry Potter", "caption": "The frame that taught a generation what a castle could be.", "credit": "Film still / widescreen" },
+        { "id": "movies-02", "fandom": "movies", "type": "image", "kind": "poster", "shape": "tall", "src": "/assets/images/poster-harry-potter.jpg", "alt": "Harry Potter poster", "title": "Harry Potter — poster", "caption": "Half the poster is a castle. The other half is a rumour.", "credit": "One-sheet poster" },
+        { "id": "movies-03", "fandom": "movies", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/glass.jpg", "alt": "Glass widescreen still", "title": "Glass", "caption": "Superheroes, split down the middle.", "credit": "Film still / widescreen" },
+        { "id": "movies-04", "fandom": "movies", "type": "image", "kind": "poster", "shape": "tall", "src": "/assets/images/poster-glass.jpg", "alt": "Glass poster", "title": "Glass — poster", "caption": "Three faces, one crack.", "credit": "One-sheet poster" },
+        { "id": "movies-05", "fandom": "movies", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/jumanji.jpg", "alt": "Jumanji film still", "title": "Jumanji", "caption": "The board game that ruined several sleepovers.", "credit": "Film still / tall crop" },
+        { "id": "movies-06", "fandom": "movies", "type": "image", "kind": "poster", "shape": "square", "src": "/assets/images/poster-jumanji.jpg", "alt": "Jumanji poster", "title": "Jumanji — poster", "caption": "You roll, you move, you regret it.", "credit": "One-sheet poster" },
+        { "id": "movies-07", "fandom": "movies", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/joker.jpg", "alt": "Joker widescreen still", "title": "Joker", "caption": "A staircase, a song, and the end of a polite city.", "credit": "Film still / widescreen" },
+        { "id": "movies-08", "fandom": "movies", "type": "image", "kind": "poster", "shape": "tall", "src": "/assets/images/poster-joker.jpg", "alt": "Joker poster", "title": "Joker — poster", "caption": "Printed in two colours. Both of them expensive.", "credit": "One-sheet poster" },
+        { "id": "movies-09", "fandom": "movies", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Harry_Potter__(movie_1).png", "alt": "Harry Potter character plate", "title": "Harry Potter", "caption": "Round glasses, scar, seventeen years of homework.", "credit": "Character plate / transparent" },
+        { "id": "movies-10", "fandom": "movies", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Neo_Matrix__(movie_3).png", "alt": "Neo from The Matrix character plate", "title": "Neo", "caption": "Follow the white rabbit, then question the rabbit.", "credit": "Character plate / transparent" },
+        { "id": "movies-11", "fandom": "movies", "type": "image", "kind": "poster", "shape": "tall", "src": "/assets/images/poster-avengers.jpg", "alt": "Avengers poster", "title": "Avengers — poster", "caption": "Everyone in one frame, arguing about the poster.", "credit": "One-sheet poster" },
+        { "id": "movies-12", "fandom": "movies", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "Way9Dexny3w", "poster": "/assets/images/poster-dhool-dhandar.jpg", "alt": "Dune: Part Two trailer thumbnail", "title": "Dune: Part Two", "caption": "Two hours and change of desert, and not one wasted shot.", "credit": "Warner Bros. · 2:46", "runtime": "2:46" }
+      ]
+    },
+    {
+      "id": "tv",
+      "label": "TV Shows",
+      "tagline": "Scenes people quote at each other years later without saying where they are from.",
+      "blurb": "Iconic series stills, title-card frames and the character plates everyone recognises mid-sentence.",
+      "filters": ["artwork", "scene", "character", "trailer"],
+      "media": [
+        { "id": "tv-01", "fandom": "tv", "type": "image", "kind": "scene", "cover": true, "shape": "wide", "src": "/assets/images/tv%20show%201.png", "alt": "Stranger Things widescreen still", "title": "Stranger Things", "caption": "Nothing that happened in Hawkins ever stayed buried.", "credit": "Series still / widescreen" },
+        { "id": "tv-02", "fandom": "tv", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/tv%20show%202.png", "alt": "Peaky Blinders widescreen still", "title": "Peaky Blinders", "caption": "Sharp suits, worse intentions.", "credit": "Series still / widescreen" },
+        { "id": "tv-03", "fandom": "tv", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/tv%20show%203.png", "alt": "La Casa de Papel widescreen still", "title": "La Casa de Papel", "caption": "The job that was never about the money.", "credit": "Series still / widescreen" },
+        { "id": "tv-04", "fandom": "tv", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/tv%20show%204.png", "alt": "Game of Thrones widescreen still", "title": "Game of Thrones", "caption": "A winter everyone was promised and nobody enjoyed.", "credit": "Series still / widescreen" },
+        { "id": "tv-05", "fandom": "tv", "type": "image", "kind": "artwork", "shape": "tall", "src": "/assets/images/tv%20shows.png", "alt": "TV shows category key visual", "title": "TV key visual", "caption": "The plate that has introduced the category since day one.", "credit": "Series archive / key art" },
+        { "id": "tv-06", "fandom": "tv", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Wednesday_Addams__(tv_show_1).png", "alt": "Wednesday Addams character plate", "title": "Wednesday Addams", "caption": "Monotone to a degree the writing had to work around.", "credit": "Character plate / transparent" },
+        { "id": "tv-07", "fandom": "tv", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Eleven_Stranger__(tv_show_2).png", "alt": "Eleven from Stranger Things character plate", "title": "Eleven", "caption": "Can do almost anything, says almost nothing.", "credit": "Character plate / transparent" },
+        { "id": "tv-08", "fandom": "tv", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Sherlock_Holmes__(tv_show_3).png", "alt": "Sherlock Holmes character plate", "title": "Sherlock Holmes", "caption": "Observant, exhausting, always right.", "credit": "Character plate / transparent" },
+        { "id": "tv-09", "fandom": "tv", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Walter_White_(tv_show_4).png", "alt": "Walter White character plate", "title": "Walter White", "caption": "Gentle until the chemistry changes.", "credit": "Character plate / transparent" },
+        { "id": "tv-10", "fandom": "tv", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Daenerys_Targaryen__(tv_shows_5).png", "alt": "Daenerys Targaryen character plate", "title": "Daenerys Targaryen", "caption": "Three dragons and one very long plan.", "credit": "Character plate / transparent" },
+        { "id": "tv-11", "fandom": "tv", "type": "image", "kind": "scene", "shape": "wide", "src": "/assets/images/peaky-blinders.jpg", "alt": "Peaky Blinders still", "title": "Peaky Blinders — still", "caption": "Birmingham, at the hour it stops pretending.", "credit": "Series still / banner crop" },
+        { "id": "tv-12", "fandom": "tv", "type": "image", "kind": "scene", "shape": "tall", "src": "/assets/images/la-casa-de-papel.jpg", "alt": "La Casa de Papel still", "title": "La Casa de Papel — still", "caption": "Everyone wore a mask. Nobody enjoyed the ending.", "credit": "Series still / tall crop" },
+        { "id": "tv-13", "fandom": "tv", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "rlR4PJn8b8I", "poster": "/assets/images/tv%20show%204.png", "alt": "Game of Thrones season 8 trailer thumbnail", "title": "Game of Thrones — Season 8", "caption": "The last one. Watch the reviews instead of the finale.", "credit": "HBO · 1:44", "runtime": "1:44" }
+      ]
+    },
+    {
+      "id": "kpop",
+      "label": "K-Pop",
+      "tagline": "Comeback stages, concept photos and the choreography nobody learned.",
+      "blurb": "Stage visuals, concept plates and the member portraits that get screenshotted into oblivion.",
+      "filters": ["stage", "concept", "character", "trailer", "track"],
+      "media": [
+        { "id": "kpop-01", "fandom": "kpop", "type": "image", "kind": "stage", "cover": true, "shape": "wide", "src": "/assets/images/kpop1.jpg", "alt": "K-Pop concert stage visual", "title": "Main stage", "caption": "The lighting rig did all the work and got no credit.", "credit": "Stage archive / wide" },
+        { "id": "kpop-02", "fandom": "kpop", "type": "image", "kind": "concept", "shape": "square", "src": "/assets/images/kpop2.jpg", "alt": "K-Pop concept portrait", "title": "Concept portrait", "caption": "Soft noise, hard lighting.", "credit": "Concept photo / square crop" },
+        { "id": "kpop-03", "fandom": "kpop", "type": "image", "kind": "artwork", "shape": "tall", "src": "/assets/images/k-pop.png", "alt": "K-Pop category key visual", "title": "K-Pop key visual", "caption": "The plate that has introduced the category since day one.", "credit": "Stage archive / key art" },
+        { "id": "kpop-04", "fandom": "kpop", "type": "image", "kind": "concept", "shape": "wide", "src": "/pattern%201.jpg", "alt": "K-Pop era pattern artwork", "title": "Era pattern", "caption": "Every era gets a pattern. Every pattern outlives the era.", "credit": "Concept plate / wide" },
+        { "id": "kpop-05", "fandom": "kpop", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/RM__(k-pop_1).png", "alt": "RM member portrait plate", "title": "RM", "caption": "Writes the verse, then pretends he did not.", "credit": "Member plate / transparent" },
+        { "id": "kpop-06", "fandom": "kpop", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Jimin__(k-pop_2).png", "alt": "Jimin member portrait plate", "title": "Jimin", "caption": "The choreography everyone copies badly.", "credit": "Member plate / transparent" },
+        { "id": "kpop-07", "fandom": "kpop", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Jungkook__(k-pop_3).png", "alt": "Jungkook member portrait plate", "title": "Jungkook", "caption": "Records quietly, mentions it once a year.", "credit": "Member plate / transparent" },
+        { "id": "kpop-08", "fandom": "kpop", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Lisa__(k-pop_4).png", "alt": "Lisa member portrait plate", "title": "Lisa", "caption": "The break that reorganised the whole fandom.", "credit": "Member plate / transparent" },
+        { "id": "kpop-09", "fandom": "kpop", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Jennie__(k-pop_5).png", "alt": "Jennie member portrait plate", "title": "Jennie", "caption": "Two names, one stage, zero wasted second.", "credit": "Member plate / transparent" },
+        { "id": "kpop-10", "fandom": "kpop", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "v21LftxXj4s", "poster": "/assets/images/kpop1.jpg", "alt": "BLACKPINK HEAVENS GATE thumbnail", "title": "BLACKPINK — 'HEAVENS GATE'", "caption": "A comeback that cleared the entire schedule.", "credit": "BLACKPINK · 3:40", "runtime": "3:40" },
+        { "id": "kpop-11", "fandom": "kpop", "type": "audio", "kind": "track", "shape": "square", "youtubeId": "2GJfWMYCWY0", "poster": "/assets/images/kpop2.jpg", "alt": "BLACKPINK GO album art", "title": "BLACKPINK — 'GO'", "caption": "On repeat for the entire album cycle.", "credit": "BLACKPINK · 2:49", "runtime": "2:49" },
+        { "id": "kpop-12", "fandom": "kpop", "type": "audio", "kind": "track", "shape": "square", "youtubeId": "4TWR90KJl84", "poster": "/pattern%201.jpg", "alt": "aespa Next Level album art", "title": "aespa — 'Next Level'", "caption": "The song that ruined every other song for a month.", "credit": "SM Entertainment · 3:14", "runtime": "3:14" }
+      ]
+    },
+    {
+      "id": "comics",
+      "label": "Comics",
+      "tagline": "Sequential art, panel by panel, in the order the writer decided to print it.",
+      "blurb": "Comic artwork, splash pages and the character plates that got the covers for decades.",
+      "filters": ["artwork", "panel", "character", "trailer"],
+      "media": [
+        { "id": "comics-01", "fandom": "comics", "type": "image", "kind": "panel", "cover": true, "shape": "wide", "src": "/assets/images/comics1.png", "alt": "Comic panel artwork", "title": "Panel one", "caption": "The serve that started the whole arc.", "credit": "Comic archive / panel" },
+        { "id": "comics-02", "fandom": "comics", "type": "image", "kind": "artwork", "shape": "wide", "src": "/assets/images/bg%20comics.png", "alt": "Comics category background artwork", "title": "Splash page", "caption": "Full-bleed artwork, no gutters, no mercy.", "credit": "Comic archive / splash" },
+        { "id": "comics-03", "fandom": "comics", "type": "image", "kind": "artwork", "shape": "tall", "src": "/assets/images/comics.png", "alt": "Comics category key visual", "title": "Comics key visual", "caption": "The plate that has introduced the category since day one.", "credit": "Comic archive / key art" },
+        { "id": "comics-04", "fandom": "comics", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Batman__(comic_1).png", "alt": "Batman character plate", "title": "Batman", "caption": "Nine decades of never being wrong.", "credit": "Character plate / transparent" },
+        { "id": "comics-05", "fandom": "comics", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Superman__(comic_2).png", "alt": "Superman character plate", "title": "Superman", "caption": "The cover that made the format itself.", "credit": "Character plate / transparent" },
+        { "id": "comics-06", "fandom": "comics", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Spider_Man__(comic_3).png", "alt": "Spider-Man character plate", "title": "Spider-Man", "caption": "Great responsibility, questionable punctuality.", "credit": "Character plate / transparent" },
+        { "id": "comics-07", "fandom": "comics", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Iron_Man__(comic_4).png", "alt": "Iron Man character plate", "title": "Iron Man", "caption": "Built in a cave, out of spite and money.", "credit": "Character plate / transparent" },
+        { "id": "comics-08", "fandom": "comics", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Wonder_Woman__(comic_5).png", "alt": "Wonder Woman character plate", "title": "Wonder Woman", "caption": "Truth, lasso, and a very long runway.", "credit": "Character plate / transparent" },
+        { "id": "comics-09", "fandom": "comics", "type": "image", "kind": "panel", "shape": "wide", "src": "/assets/images/avengers.jpg", "alt": "Avengers comic artwork", "title": "The ensemble", "caption": "Twenty heroes and one very crowded panel.", "credit": "Comic archive / wide" },
+        { "id": "comics-10", "fandom": "comics", "type": "image", "kind": "panel", "shape": "wide", "src": "/assets/images/avengers-2.png", "alt": "Avengers comic artwork second panel", "title": "The aftermath", "caption": "And then the next issue did it again.", "credit": "Comic archive / wide" },
+        { "id": "comics-11", "fandom": "comics", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "ZYzbalQ6Lg8", "poster": "/assets/images/avengers.jpg", "alt": "Spider-Man No Way Home trailer thumbnail", "title": "Spider-Man: No Way Home", "caption": "Three generations in one frame and nobody blinks.", "credit": "Sony Pictures · 2:29", "runtime": "2:29" }
+      ]
+    },
+    {
+      "id": "manga",
+      "label": "Manga",
+      "tagline": "Panel by panel, right to left, in the order the author drew it.",
+      "blurb": "Manga panels, chapter art and the character plates drawn by hand, not assembled.",
+      "filters": ["artwork", "panel", "character", "trailer"],
+      "media": [
+        { "id": "manga-01", "fandom": "manga", "type": "image", "kind": "panel", "cover": true, "shape": "wide", "src": "/assets/images/manga1.png", "alt": "Manga chapter artwork", "title": "Chapter one", "caption": "A quiet heroine and a secret panel.", "credit": "Manga archive / chapter art" },
+        { "id": "manga-02", "fandom": "manga", "type": "image", "kind": "panel", "shape": "wide", "src": "/assets/images/manga2.png", "alt": "Manga chapter artwork second spread", "title": "Chapter two", "caption": "The blank panel that is definitely a clue.", "credit": "Manga archive / chapter art" },
+        { "id": "manga-03", "fandom": "manga", "type": "image", "kind": "artwork", "shape": "tall", "src": "/assets/images/manga.png", "alt": "Manga category key visual", "title": "Manga key visual", "caption": "The plate that has introduced the category since day one.", "credit": "Manga archive / key art" },
+        { "id": "manga-04", "fandom": "manga", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Light_Yagami__(manga_1).png", "alt": "Light Yagami character plate", "title": "Light Yagami", "caption": "Wins every argument, including the one with the law.", "credit": "Character plate / transparent" },
+        { "id": "manga-05", "fandom": "manga", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Eren_Yeager__(manga_2).png", "alt": "Eren Yeager character plate", "title": "Eren Yeager", "caption": "Every side of the argument is him.", "credit": "Character plate / transparent" },
+        { "id": "manga-06", "fandom": "manga", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Ichigo_Kurosaki__(manga_3).png", "alt": "Ichigo Kurosaki character plate", "title": "Ichigo Kurosaki", "caption": "A substitute soul who stopped substituting.", "credit": "Character plate / transparent" },
+        { "id": "manga-07", "fandom": "manga", "type": "image", "kind": "character", "cutout": true, "shape": "tall", "src": "/assets/images/Edward_Elric__(manga_4).png", "alt": "Edward Elric character plate", "title": "Edward Elric", "caption": "Two automail arms and a very short temper.", "credit": "Character plate / transparent" },
+        { "id": "manga-08", "fandom": "manga", "type": "image", "kind": "character", "cutout": true, "shape": "square", "src": "/assets/images/Mikasa_Ackerman_(_manga_5).png", "alt": "Mikasa Ackerman character plate", "title": "Mikasa Ackerman", "caption": "The scarf does more work than the dialogue.", "credit": "Character plate / transparent" },
+        { "id": "manga-09", "fandom": "manga", "type": "video", "kind": "trailer", "shape": "wide", "youtubeId": "89JWRYEIG-s", "poster": "/assets/images/manga2.png", "alt": "One Piece Film Red trailer thumbnail", "title": "ONE PIECE FILM RED", "caption": "One song, one island, one very loud fight.", "credit": "Toei Animation · 1:29", "runtime": "1:29" }
+      ]
+    }
+  ]
+}

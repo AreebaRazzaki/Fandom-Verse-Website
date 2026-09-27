@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
+import { paletteFor } from '../components/fandomConfig';
+import CharacterCodex from '../components/CharacterCodex';
+import FandomMediaWall from '../components/FandomMediaWall';
+import FandomDoors from '../components/FandomDoors';
 import './tvshows.css';
 
 const tvShows = [
@@ -70,39 +75,58 @@ function TvShows() {
   const nextShow = () => setActiveIndex((activeIndex + 1) % tvShows.length);
 
   return (
+    <>
     <main className={`tvshows-page ${theme === 'light' ? 'tvshows-theme-light' : 'tvshows-theme-dark'}`}>
       <SiteNav theme={theme} setTheme={setTheme} active="tv-shows" variant="tvshows" />
       <section className="tvshows-hero" aria-label="TV Shows carousel">
-        <div className="tvshows-crystal" aria-hidden="true" />
-        <div className="tvshows-frame">
-          <div className="tvshows-masthead"><span>FANDOMVERSE / TV SHOWS</span><b>ON AIR / 04</b><i>SEASONAL SIGNAL</i></div>
-          <div className="tvshows-slides" aria-live="polite">
-            {tvShows.map((show, index) => (
-              <div className={`tvshows-slide ${index === activeIndex ? 'is-active' : ''}`} key={show.image} aria-hidden={index !== activeIndex}>
-                <img src={show.image} alt={`${show.title} visual`} />
-              </div>
-            ))}
+        <div className="tvshows-backdrop" aria-hidden="true">
+          <div className="tvshows-crystal" />
+        </div>
+        <div className="tvshows-stage">
+          <div className="tvshows-frame">
+            <div className="tvshows-masthead"><b>ON AIR / 04</b><i>SEASONAL SIGNAL</i></div>
+            <div className="tvshows-slides" aria-live="polite">
+              {tvShows.map((show, index) => (
+                <div className={`tvshows-slide ${index === activeIndex ? 'is-active' : ''}`} key={show.image} aria-hidden={index !== activeIndex}>
+                  <img src={show.image} alt={`${show.title} visual`} />
+                </div>
+              ))}
+            </div>
+            <div className="tvshows-slide-wash" aria-hidden="true" />
+            <div className="tvshows-copy" key={activeShow.image}>
+              <p className="tvshows-kicker"><span /> FEATURED SERIES / {activeShow.index}</p>
+              <p className="tvshows-index">{activeShow.genre} <b>—</b> {activeShow.year}</p>
+              <h1>{activeShow.title}</h1>
+              <p className="tvshows-tagline">{activeShow.tagline}</p>
+              <p className="tvshows-description">{activeShow.description}</p>
+              <div className="tvshows-info"><span><b>CAST</b>{activeShow.cast}</span><span><b>KEY PLAYERS</b>{activeShow.characters}</span></div>
+              <a className="tvshows-cta" href="#tvshows-character-profiles">View series <span>↗</span></a>
+            </div>
+            <div className="tvshows-side-code" aria-hidden="true"><span>RED / BLACK / GREY</span><b>FRAME {activeShow.index}</b></div>
+            <div className="tvshows-controls">
+              <button type="button" onClick={previousShow} aria-label="Previous TV show">←</button>
+              <div className="tvshows-dots">{tvShows.map((show, index) => <button type="button" className={index === activeIndex ? 'is-active' : ''} onClick={() => selectShow(index)} key={show.index} aria-label={`Show ${index + 1}: ${show.title}`} />)}</div>
+              <button type="button" onClick={nextShow} aria-label="Next TV show">→</button>
+            </div>
+            <div className="tvshows-footer"><span>SCROLL TO DISCOVER ↓</span></div>
           </div>
-          <div className="tvshows-slide-wash" aria-hidden="true" />
-          <div className="tvshows-copy" key={activeShow.image}>
-            <p className="tvshows-kicker"><span /> FEATURED SERIES / {activeShow.index}</p>
-            <p className="tvshows-index">{activeShow.genre} <b>—</b> {activeShow.year}</p>
-            <h1>{activeShow.title}</h1>
-            <p className="tvshows-tagline">{activeShow.tagline}</p>
-            <p className="tvshows-description">{activeShow.description}</p>
-            <div className="tvshows-info"><span><b>CAST</b>{activeShow.cast}</span><span><b>KEY PLAYERS</b>{activeShow.characters}</span></div>
-            <a className="tvshows-cta" href="#tv-shows-details">View series <span>↗</span></a>
-          </div>
-          <div className="tvshows-side-code" aria-hidden="true"><span>RED / BLACK / GREY</span><b>FRAME {activeShow.index}</b></div>
-          <div className="tvshows-controls">
-            <button type="button" onClick={previousShow} aria-label="Previous TV show">←</button>
-            <div className="tvshows-dots">{tvShows.map((show, index) => <button type="button" className={index === activeIndex ? 'is-active' : ''} onClick={() => selectShow(index)} key={show.index} aria-label={`Show ${index + 1}: ${show.title}`} />)}</div>
-            <button type="button" onClick={nextShow} aria-label="Next TV show">→</button>
-          </div>
-          <div className="tvshows-footer"><span>WATCH THE FRAME / FOLLOW THE STORY</span><span>SCROLL TO DISCOVER ↓</span></div>
         </div>
       </section>
+
+      {/* The same three sections the anime page closes on, in the same order and
+          for the same reason: the codex holds the cast, the wall shows the
+          fandom, and the doors are the way out of it. Only the codex carries a
+          number, so the visible run on the page stays unbroken. */}
+      <CharacterCodex fandom="tvshows" theme={theme} sectionNumber="02" />
+
+      <FandomMediaWall fandom="tvshows" theme={theme} />
+
+      <FandomDoors fandom="tvshows" theme={theme} />
     </main>
+
+    {/* The last thing on the page, themed to match the fandom it closes. */}
+    <SiteFooter theme={theme} accent={paletteFor('tvshows', theme).accent} />
+    </>
   );
 }
 

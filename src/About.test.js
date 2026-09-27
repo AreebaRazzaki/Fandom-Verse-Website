@@ -11,7 +11,7 @@ const FANDOMS = ['Anime', 'Gaming', 'Movies', 'TV Shows', 'K-Pop', 'Comics', 'Ma
 
 const mount = () => render(<About />);
 const nodes = (container) => [...container.querySelectorAll('.ab-node')];
-const detail = (container) => container.querySelector('.ab-map-detail');
+const detail = (container) => container.querySelector('.ab-chapter-detail');
 
 beforeEach(() => { window.localStorage.clear(); });
 
@@ -26,52 +26,90 @@ describe('the about page', () => {
     expect(container.querySelector('.universal-nav-about')).toBeInTheDocument();
   });
 
+  it('sets the story heading as one line, in its own ink', () => {
+    const { container } = mount();
+    const h1 = container.querySelector('.ab-hero h1');
+
+    expect(h1.textContent.replace(/\s+/g, ' ').trim()).toBe('THE STORY BEHIND FANDOMVERSE');
+    // Another page ships a bare `h1` rule and puts --paper on :root, so an
+    // unwritten `color` here would resolve to a cream that vanishes on the pale
+    // light canvas.
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*color: var\(--ink\)/);
+    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*font-size: clamp\(/);
+    // The outline has to scale with the text or a 2px stroke swallows it.
+    expect(CSS).toMatch(/\.ab-hero h1 em \{[^}]*-webkit-text-stroke: 2px var\(--gold\)/);
+    expect(CSS).toMatch(/\.theme-light \.ab-hero h1/);
+  });
+
+  it('opens with a story plate beside the copy, so the hero is not empty space', () => {
+    const { container } = mount();
+    const hero = container.querySelector('.ab-hero');
+
+    // The layout pairs an illustrated plate with the copy, not a bare heading.
+    expect(hero.querySelector('.ab-hero-layout')).toBeInTheDocument();
+    expect(hero.querySelector('.ab-story-card')).toBeInTheDocument();
+    expect(hero.querySelector('.ab-hero-copy')).toBeInTheDocument();
+    expect(hero.querySelector('.ab-story-card img')).toBeInTheDocument();
+    expect(hero.querySelector('.ab-kicker')).toBeInTheDocument();
+    // Three stats under the lede.
+    expect(hero.querySelectorAll('.ab-hero-stats > div')).toHaveLength(3);
+    // Soft geometry dresses the opening, and the copy sits above it.
+    expect(CSS).toMatch(/\.ab-hero-shapes \{[^}]*position: absolute/);
+    expect(CSS).toMatch(/\.ab-shape\.is-ring \{/);
+    expect(CSS).toMatch(/\.ab-shape\.is-shard \{/);
+    expect(hero.querySelector('.ab-shape.is-dot')).toBeInTheDocument();
+    expect(hero.querySelector('.ab-shape.is-ring')).toBeInTheDocument();
+    expect(CSS).toMatch(/\.ab-hero-copy \{[^}]*z-index: 2/);
+  });
+
   it('keeps every section the page is meant to have', () => {
     const { container } = mount();
-    const headings = [...container.querySelectorAll('h2')].map((node) => node.textContent);
+    const headings = [...container.querySelectorAll('h2')].map((node) => node.textContent.replace(/\s+/g, ' ').trim());
 
     expect(headings).toEqual(expect.arrayContaining([
       'WHY FANDOMVERSE',
-      'FANDOM UNIVERSE MAP',
+      'TURN THE PAGE.FIND YOUR WORLD.',
       'THE PEOPLE BEHIND IT',
-      'OUR MISSION',
+      'KEEP THEFEELING ALIVE.',
     ]));
     expect(container.querySelectorAll('.ab-why-card')).toHaveLength(3);
     expect(container.querySelectorAll('.ab-member')).toHaveLength(4);
   });
 
-  it('connects the seven fandoms in one universe map', () => {
+  it('lays out seven chapters on a numbered rail', () => {
     const { container } = mount();
-    const map = container.querySelector('.ab-map');
+    const rail = container.querySelector('.ab-chapter-rail');
 
-    expect(nodes(container).map((node) => node.textContent)).toEqual(FANDOMS);
-    // One hub with every fandom orbiting it, so the map reads as a system.
-    expect(map.querySelector('.ab-hub-core').textContent).toBe('FANDOMVERSE');
-    expect(map.querySelectorAll('.ab-satellite')).toHaveLength(7);
-    FANDOMS.forEach((fandom) => {
-      expect(map.querySelector(`.ab-satellite`).textContent).toBe('Anime');
-      expect([...map.querySelectorAll('.ab-satellite')].some((node) => node.textContent === fandom)).toBe(true);
-    });
-    expect(detail(container).textContent).toContain('Anime');
+    // The rail carries a number, a name and a cue on every row, so it reads as
+    // a table of contents rather than a row of anonymous tabs.
+    expect(rail.querySelectorAll('.ab-node')).toHaveLength(7);
+    expect(nodes(container).map((node) => node.querySelector('span').textContent)).toEqual(FANDOMS);
+    expect(nodes(container).map((node) => node.querySelector('small').textContent))
+      .toEqual(['01', '02', '03', '04', '05', '06', '07']);
+    nodes(container).forEach((node) => { expect(node.querySelector('b')).toBeInTheDocument(); });
   });
 
-  it('redraws the map when a different fandom is chosen', () => {
+  it('repaints the chapter panel when a different fandom is chosen', () => {
     const { container } = mount();
 
-    fireEvent.click(nodes(container).find((node) => node.textContent === 'K-Pop'));
-    expect(detail(container).textContent).toContain('K-Pop');
+    expect(detail(container).querySelector('h3').textContent).toBe('Anime');
+    expect(detail(container).querySelector('.ab-chapter-label').textContent).toBe('NOW READING');
+    expect(detail(container).querySelector('.ab-chapter-image img')).toBeInTheDocument();
+
+    fireEvent.click(nodes(container).find((node) => node.querySelector('span').textContent === 'K-Pop'));
     expect(detail(container).querySelector('h3').textContent).toBe('K-Pop');
-    expect(nodes(container).find((node) => node.textContent === 'K-Pop').getAttribute('aria-selected')).toBe('true');
-    expect(nodes(container).find((node) => node.textContent === 'Anime').getAttribute('aria-selected')).toBe('false');
-    // Only the chosen node lights up on the ring.
-    expect(container.querySelectorAll('.ab-satellite.is-active')).toHaveLength(1);
+    expect(detail(container).textContent).toContain('K-Pop');
+    const chosen = nodes(container).find((node) => node.querySelector('span').textContent === 'K-Pop');
+    const other = nodes(container).find((node) => node.querySelector('span').textContent === 'Anime');
+    expect(chosen.getAttribute('aria-selected')).toBe('true');
+    expect(other.getAttribute('aria-selected')).toBe('false');
   });
 
-  it('marks the map up as a tab set for keyboard and screen readers', () => {
+  it('marks the chapters up as a tab set for keyboard and screen readers', () => {
     const { container } = mount();
-    const map = container.querySelector('.ab-map');
+    const rail = container.querySelector('.ab-chapter-rail');
 
-    expect(map.querySelector('[role="tablist"]')).toBeInTheDocument();
+    expect(rail.getAttribute('role')).toBe('tablist');
     nodes(container).forEach((node) => {
       expect(node.getAttribute('role')).toBe('tab');
       expect(node.getAttribute('aria-controls')).toBe('ab-map-detail');
@@ -93,67 +131,24 @@ describe('the about page', () => {
     expect(window.localStorage.getItem('about-theme')).toBe('light');
 
     // Every ink colour flips with the theme, so nothing stays unreadable. The
-    // light stage is a deep lavender, not near-white, and it carries a pattern.
+    // light stage is a pale lavender, not near-white, and it carries a pattern.
     expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--ink: #1a1030/);
     expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--muted: #6a5d84/);
-    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*#e7dcff/);
     expect(CSS).toMatch(/\.theme-light \.ab-page::after \{[^}]*repeating-linear-gradient/);
-    // The hero is dressed with geometry and a stat strip instead of empty space.
-    expect(CSS).toMatch(/\.ab-hero-shapes \{[^}]*position: absolute/);
-    expect(CSS).toMatch(/\.ab-shape\.is-ring \{/);
-    expect(CSS).toMatch(/\.ab-shape\.is-shard \{/);
-    expect(CSS).toMatch(/\.ab-hero-stats \{[^}]*grid-template-columns: repeat\(3/);
-    expect(container.querySelectorAll('.ab-shape').length).toBeGreaterThanOrEqual(6);
-    expect(container.querySelector('.ab-shape.is-dot')).toBeInTheDocument();
-    // The footer no longer floats above an empty band at the bottom.
-    expect(CSS).toMatch(/\.ab-page \{[^}]*padding-bottom: 80px/);
+    // The pale canvas cannot carry the bright dark-stage accents, so the light
+    // theme steps gold and cyan down for text-sized use.
+    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--gold: #a9760a/);
+    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--cyan: #0d7f95/);
+    // The story plate keeps dark ink on its own paper surface in both themes.
+    expect(CSS).toMatch(/\.ab-story-card \{[^}]*color: #24152b/);
+    expect(CSS).toMatch(/\.theme-light \.ab-story-card \{[^}]*color: #24152b/);
+    // The footer no longer floats above an empty band at the bottom: the page
+    // root carries no bottom padding, because the footer is its last child and
+    // the padding showed up as a bare strip of page background under it. The
+    // breathing room before the footer moved into the last block instead.
+    expect(CSS).not.toMatch(/\.ab-page \{[^}]*padding-bottom:/);
+    expect(CSS).toMatch(/\.ab-mission \{[^}]*padding: 112px 24px 80px/);
     expect(CSS).toContain('@media (prefers-reduced-motion: reduce)');
-  });
-
-  it('sets the story heading as one horizontal line on a readable veil', () => {
-    const { container } = mount();
-    const h1 = container.querySelector('.ab-hero h1');
-
-    expect(h1.textContent.replace(/\s+/g, ' ').trim()).toBe('THE STORY BEHIND FANDOMVERSE');
-    // A long name set in a viewport-scaled size stays on one line instead of
-    // breaking into a three-word column.
-    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*white-space: nowrap/);
-    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*font-size: clamp\(/);
-    // The outline has to scale with the text or a 2px stroke swallows it.
-    expect(CSS).toMatch(/\.ab-hero h1 em \{[^}]*-webkit-text-stroke: clamp\(/);
-    // The copy sits on its own veil, above the geometry, in both themes.
-    expect(container.querySelector('.ab-hero-inner')).toBeInTheDocument();
-    expect(CSS).toMatch(/\.ab-hero-inner \{[^}]*z-index: 1/);
-    expect(CSS).toMatch(/\.ab-page \{[^}]*--veil: rgba\(10, 7, 16/);
-    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--veil: rgba\(255, 255, 255/);
-  });
-
-  it('states its own ink and measure, so no other page can repaint the heading', () => {
-    mount();
-    // Another page ships a bare `h1` rule and puts --paper on :root, so an
-    // unwritten `color` here resolves to a cream that vanishes on the pale
-    // light canvas. The heading also has to drop the inherited max-width, or
-    // `nowrap` overflows the measure it was given.
-    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*color: var\(--ink\)/);
-    expect(CSS).toMatch(/\.ab-hero h1 \{[^}]*max-width: none/);
-    expect(CSS).toMatch(/\.theme-light \.ab-hero h1 \{[^}]*color:/);
-  });
-
-  it('keeps the light stage readable rather than reusing the dark inks', () => {
-    mount();
-    // The pale lavender canvas cannot carry the bright dark-stage accents, so
-    // the light theme steps gold and cyan down for text-sized use.
-    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--gold: #7a5104/);
-    expect(CSS).toMatch(/\.ab-page\.theme-light \{[^}]*--cyan: #0a6b7e/);
-    // Surfaces that paint dark ink on top of gold keep the light fill, so the
-    // gold text token can stay dark.
-    expect(CSS).toMatch(/\.ab-page \{[^}]*--gold-fill: /);
-    expect(CSS).toMatch(/\.ab-cta \{[^}]*background: var\(--gold-fill\)/);
-    expect(CSS).toMatch(/\.ab-hub-core \{[^}]*var\(--gold-fill\)/);
-    // A solid cyan node needs dark ink on the dark stage; the deep light-stage
-    // cyan flips it back to white.
-    expect(CSS).toMatch(/\.ab-node\.is-active \{[^}]*color: #1a0b16/);
-    expect(CSS).toMatch(/\.theme-light \.ab-node\.is-active \{[^}]*color: #fff/);
   });
 
   it('lets the sticky nav reach the viewport instead of trapping it', () => {
@@ -177,18 +172,6 @@ describe('the about page', () => {
     expect(FOOTER_CSS).toMatch(/--foot-accent: var\(--accent, /);
     expect(FOOTER_CSS).not.toMatch(/color[^;]*var\(--accent\)/);
     expect(FOOTER_CSS).toMatch(/--foot-on-accent: #f7f1e6/);
-  });
-
-  it('numbers each band so the page reads as an ordered story', () => {
-    const { container } = mount();
-    const eyebrows = [...container.querySelectorAll('.ab-eyebrow')];
-
-    expect(eyebrows).toHaveLength(4);
-    expect(eyebrows.map((node) => node.querySelector('b').textContent)).toEqual(['01', '02', '03', '04']);
-    // Every eyebrow sits inside the band it labels.
-    ['.ab-why', '.ab-map', '.ab-team', '.ab-mission'].forEach((section) => {
-      expect(container.querySelector(`${section} .ab-eyebrow`)).toBeInTheDocument();
-    });
   });
 
   it('offers a theme switch that reads as a control in the nav', () => {
@@ -235,7 +218,7 @@ describe('the about page', () => {
     const { container } = mount();
     const copy = container.textContent;
 
-    expect(copy.length).toBeLessThan(2600);
+    expect(copy.length).toBeLessThan(3200);
     expect(container.querySelector('.ab-cta').getAttribute('href')).toBe('#shop');
     expect(screen.getAllByRole('link', { name: /talk to us/i })[0].getAttribute('href')).toBe('#contact');
   });

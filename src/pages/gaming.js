@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
+import { paletteFor } from '../components/fandomConfig';
+import CharacterCodex from '../components/CharacterCodex';
+import FandomMediaWall from '../components/FandomMediaWall';
+import FandomDoors from '../components/FandomDoors';
 import './gaming.css';
 
 const gameSlides = ['/assets/images/game1.png', '/assets/images/game2.png'];
@@ -50,6 +55,7 @@ function Gaming() {
   }, [theme]);
 
   return (
+    <>
     <main className={`gaming-page ${theme === 'light' ? 'gaming-theme-light' : ''} ${isBooted ? 'gaming-booted' : ''} ${isScanning ? 'gaming-scanning' : ''}`}>
       <SiteNav theme={theme} setTheme={setTheme} active="gaming" variant="gaming" />
 
@@ -64,7 +70,7 @@ function Gaming() {
           <div className="gaming-copy-signal"><span>READY TO PLAY</span><i><b /></i><strong>98%</strong></div>
           <div className="gaming-copy-stats"><span><b>07</b> worlds</span><span><b>24</b> quests</span><span><b>∞</b> plays</span></div>
           <div className="gaming-copy-badges"><span><b>LEVEL 01</b><small>FIRST RUN</small></span><span><b>ONLINE</b><small>READY / 2048</small></span><i>SELECT YOUR WORLD <strong>→</strong></i></div>
-          <a className="gaming-enter-link" href="#gaming-content">Press enter <span>↗</span></a>
+          <a className="gaming-enter-link" href="#gaming-character-profiles">Press enter <span>↗</span></a>
         </div>
         <div className="gaming-left-decor" aria-hidden="true"><i className="gaming-left-cube gaming-left-cube-one" /><i className="gaming-left-cube gaming-left-cube-two" /><i className="gaming-left-cube gaming-left-cube-three" /><span>+</span><span>◈</span><span>01 / 03</span></div>
 
@@ -103,7 +109,26 @@ function Gaming() {
           <a className="gaming-bottom-prompt" id="gaming-content" href="#gaming-content"><span>PRESS ENTER</span><i>→</i><b>EXPLORE GAMING</b></a>
         </div>
       </section>
+
+      {/* The hero links to the codex, so the roster of playable characters sits
+          directly under it — same section, same book, just the game skin. */}
+      <CharacterCodex fandom="gaming" variant="game" theme={theme} sectionNumber="02" />
+
+      {/* The same two sections the anime page closes on, in the same order and
+          for the same reason: the wall shows the fandom, the doors are the way
+          out of it. Both read their colours off the gaming palette, so the
+          shelves, the trailer plates and the two doorways stay in this page's
+          pink-and-cyan skin, and their copy comes from the gaming rows of the
+          gallery, trailers, articles and events data. Neither carries a number —
+          the codex is the only numbered section left, so the run has no gap. */}
+      <FandomMediaWall fandom="gaming" theme={theme} />
+
+      <FandomDoors fandom="gaming" theme={theme} />
     </main>
+
+    {/* The last thing on the page, themed to match the fandom it closes. */}
+    <SiteFooter theme={theme} accent={paletteFor('gaming', theme).accent} />
+    </>
   );
 }
 

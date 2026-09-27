@@ -8,11 +8,12 @@
   --cyan: #35e2f2;
   --panel: rgba(255, 255, 255, .05);
   --danger: #ff6b6b;
-  --veil: rgba(10, 7, 16, .88);
-  --veil-fade: rgba(10, 7, 16, .5);
   position: relative;
   min-height: 100vh;
-  padding-bottom: 80px;
+  /* No bottom padding on the page root: the footer is its last child, so this
+     padding rendered as a bare strip of page background underneath the footer.
+     The gap between the map and the footer already lives in .ct-map's own
+     padding-bottom, which is where it belongs. */
   overflow: hidden;
   color: var(--ink);
   background: #0a0710;
@@ -50,8 +51,6 @@
   --cyan: #0d7f95;
   --panel: rgba(255, 255, 255, .8);
   --danger: #b3261e;
-  --veil: rgba(255, 255, 255, .9);
-  --veil-fade: rgba(255, 255, 255, .58);
   background: radial-gradient(circle at 12% 10%, #f2ecff 0%, #e7dcff 42%, #f4f0ff 72%, #fbf8ff 100%);
 }
 
@@ -66,82 +65,38 @@
    it and the Fandoms/Discover dropdowns stop being clickable. */
 .ct-page > *:not(.ct-glow):not(.universal-nav) { position: relative; z-index: 1; }
 
-.ct-hero { position: relative; max-width: 900px; margin: 0 auto; padding: 132px 24px 44px; text-align: center; }
+/* The nav is sticky, so the hero keeps a top gap that clears its 78px bar plus
+   the breathing room the rest of the section rhythm expects. */
+.ct-hero { position: relative; max-width: 1180px; margin: 0 auto; padding: 112px 30px 54px; text-align: center; }
 .ct-hero-shapes { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .ct-shape { position: absolute; display: block; }
 
-/* The copy sits on a soft veil so the geometry never competes with the words.
-   Without it the rings and blobs cut straight through the heading. */
-.ct-hero-inner {
-  position: relative;
-  z-index: 1;
-  padding: 28px 24px 32px;
-  border-radius: 40px 14px 40px 14px;
-  background: radial-gradient(ellipse 80% 58% at 50% 48%, var(--veil) 0%, var(--veil-fade) 64%, transparent 100%);
-}
-
 /* ---------- hero shapes ---------- */
 
-.ct-shape.is-halo {
-  top: 50%; left: 50%;
-  width: min(620px, 96%);
-  aspect-ratio: 1.5;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(53, 226, 242, .2), transparent 68%);
-  filter: blur(28px);
-}
-.theme-light .ct-shape.is-halo { background: radial-gradient(ellipse at center, rgba(142, 120, 226, .28), transparent 68%); }
-
 .ct-shape.is-ring { top: 4%; left: 50%; width: min(700px, 116%); aspect-ratio: 1; transform: translateX(-50%); border: 1px solid var(--line-strong); border-radius: 50%; }
-.ct-shape.is-ring-outer {
-  top: -14%; left: 50%;
-  width: min(900px, 148%);
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  border: 1px dashed var(--line);
-  border-radius: 50%;
-}
-.ct-shape.is-disc { top: 26%; right: 8%; width: 118px; height: 118px; border-radius: 50%; background: radial-gradient(circle, rgba(53, 226, 242, .36), transparent 70%); background: radial-gradient(circle, color-mix(in srgb, var(--cyan), transparent 64%), transparent 70%); }
-.ct-shape.is-blob {
-  bottom: 6%; right: 16%;
-  width: 168px; height: 168px;
-  border-radius: 58% 42% 38% 62% / 46% 54% 46% 54%;
-  background: linear-gradient(140deg, rgba(255, 45, 149, .3), rgba(53, 226, 242, .16));
-  filter: blur(2px);
-  transform: rotate(14deg);
-}
-.theme-light .ct-shape.is-blob { background: linear-gradient(140deg, rgba(201, 16, 111, .22), rgba(13, 127, 149, .14)); }
+.ct-shape.is-disc { top: 26%; right: 8%; width: 118px; height: 118px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--cyan), transparent 64%), transparent 70%); }
 .ct-shape.is-shard { bottom: 12%; left: 9%; width: 88px; height: 88px; transform: rotate(-18deg); border: 1px solid var(--line-strong); border-radius: 22px 5px 22px 5px; }
-.ct-shape.is-bar { top: 10%; left: 18%; width: 66px; height: 7px; transform: rotate(12deg); border-radius: 4px; background: var(--cyan); opacity: .5; }
-.ct-shape.is-bar-two { bottom: 22%; left: 22%; width: 34px; height: 34px; transform: rotate(45deg); border-radius: 8px 2px 8px 2px; background: var(--magenta); opacity: .38; }
+.ct-shape.is-bar { top: 10%; left: 18%; width: 66px; height: 7px; transform: rotate(12deg); background: var(--cyan); opacity: .5; }
 .ct-shape.is-dot { bottom: 30%; right: 24%; width: 11px; height: 11px; border-radius: 50%; background: var(--magenta); opacity: .6; }
-.ct-shape.is-grid {
-  top: 16%; right: 4%;
-  width: 104px; height: 104px;
-  border-radius: 10px;
-  opacity: .5;
-  background-image: radial-gradient(circle, var(--cyan) 1.4px, transparent 1.5px);
-  background-size: 15px 15px;
-}
+.ct-shape.is-orbit-line { top: 20%; left: 50%; width: 640px; height: 180px; border: 1px solid color-mix(in srgb, var(--cyan), transparent 55%); border-radius: 50%; transform: translateX(-50%) rotate(-12deg); opacity: .5; }
+.ct-shape.is-crosshair { top: 30%; right: 14%; width: 26px; height: 26px; border: 1px solid var(--magenta); border-radius: 50%; opacity: .7; }
+.ct-shape.is-crosshair::before, .ct-shape.is-crosshair::after { position: absolute; content: ''; background: var(--magenta); }
+.ct-shape.is-crosshair::before { top: 50%; right: -9px; left: -9px; height: 1px; }
+.ct-shape.is-crosshair::after { top: -9px; bottom: -9px; left: 50%; width: 1px; }
 .theme-light .ct-shape.is-disc { background: radial-gradient(circle, rgba(255, 255, 255, .95), transparent 68%); }
 
+.ct-hero-meta { display: flex; justify-content: space-between; margin-bottom: 30px; color: var(--muted); font-family: Arial, sans-serif; font-size: 9px; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
 .ct-lede { max-width: 58ch; margin: 20px auto 0; color: var(--ink-soft); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.7; }
 .ct-kicker { margin: 0 0 16px; color: var(--cyan); font-family: Arial, sans-serif; font-size: 10.5px; font-weight: 900; letter-spacing: .34em; text-transform: uppercase; }
-/* "TALK TO THE FANDOMVERSE" is one long name, so it is set as a single
-   unbroken line and scaled to the viewport rather than left to wrap into a
-   three-word stack. The vw term does the fitting; the clamp keeps it legible at
-   the extremes instead of shrinking to nothing on a phone. */
-.ct-hero h1 {
-  margin: 0;
-  font-size: clamp(15px, 4.9vw, 50px);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -.01em;
-  white-space: nowrap;
-  text-shadow: 0 2px 24px var(--veil);
-}
-.ct-hero h1 em { color: transparent; -webkit-text-stroke: clamp(1px, .2vw, 2px) var(--cyan); font-style: normal; }
+/* "TALK TO THE FANDOMVERSE" is one long name, so it is set as a single unbroken
+   line and scaled to the viewport. Below 720px the media query lets it wrap
+   instead, which is the only width where the clamp minimum would overflow. */
+.ct-hero h1 { margin: 0; color: var(--ink); font-size: clamp(30px, 5.2vw, 72px); font-weight: 700; line-height: 1.02; white-space: nowrap; }
+.ct-hero h1 em { color: transparent; -webkit-text-stroke: 2px var(--cyan); font-style: normal; }
+.ct-hero-signal { display: flex; align-items: center; gap: 10px; max-width: 430px; margin: 26px auto 0; color: var(--muted); font-family: Arial, sans-serif; font-size: 8px; font-weight: 900; letter-spacing: .16em; text-align: left; }
+.ct-hero-signal span { flex: 1; height: 1px; background: linear-gradient(90deg, var(--cyan), var(--magenta)); }
+.ct-hero-signal b { white-space: nowrap; }
+.ct-hero-signal i { color: var(--cyan); font-style: normal; }
 
 .ct-page h2 { margin: 0; font-size: clamp(19px, 2.4vw, 28px); letter-spacing: .05em; }
 
@@ -239,10 +194,10 @@
 .theme-light .ct-directions:hover { color: #fff; box-shadow: 0 14px 30px rgba(13, 127, 149, .24); }
 
 /* ---------- footer join ----------
-   The map section has no bottom padding of its own, so the footer butts straight
-   against it. A negative margin here pulled the footer up over the map and hid
-   the directions button, so the seam is marked with a hairline and a soft
-   shadow instead, and the space lives in .ct-map's own padding. */
+   The map section owns the gap above the footer in its own padding, so nothing
+   is needed on the page root. A negative margin here pulled the footer up over
+   the map and hid the directions button, so the seam is marked with a hairline
+   and a soft shadow instead. */
 
 .ct-page > .site-footer {
   border-top: 1px solid rgba(53, 226, 242, .26);
@@ -260,14 +215,13 @@
 }
 
 @media (max-width: 720px) {
-  .ct-hero { padding: 116px 20px 34px; }
-  .ct-hero-inner { padding: 26px 16px 30px; }
+  .ct-hero { padding: 96px 20px 34px; }
+  .ct-hero-meta { font-size: 7px; letter-spacing: .12em; }
+  .ct-hero h1 { white-space: normal; }
   .ct-details,
   .ct-form-wrap { padding: 24px 20px; }
   .ct-socials { grid-template-columns: minmax(0, 1fr); }
   .ct-map-frame iframe { height: 260px; }
-  .ct-shape.is-ring-outer,
-  .ct-shape.is-grid { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

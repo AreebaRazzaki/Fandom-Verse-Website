@@ -2,11 +2,22 @@
 // index is built from the words the site actually uses: titles, categories,
 // tags, studios, blurbs and descriptions. Nothing is hardcoded here.
 
+import { findFandomByDataId } from './components/fandomConfig';
+
 const SOURCES = [
   { key: 'articles', url: '/assets/json%20data/featuredArticles.json', href: '#featured-articles', kind: 'Article' },
   { key: 'trailers', url: '/assets/json%20data/trailers.json', href: '#trailers', kind: 'Trailer' },
   { key: 'events', url: '/assets/json%20data/events.json', href: '#events', kind: 'Event' },
   { key: 'releases', url: '/assets/json%20data/upcomingReleases.json', href: '#upcoming-releases', kind: 'Release' },
+  { key: 'characters', url: '/assets/json%20data/characterProfiles.json', href: '#anime-character-profiles', kind: 'Character' },
+  // The galleries are nested one level down, so this source flattens them itself
+  // rather than relying on the shared `json[key]` lookup.
+  {
+    key: 'gallery',
+    url: '/assets/json%20data/gallery.json',
+    kind: 'Gallery',
+    list: (json) => (json.fandoms || []).flatMap((group) => (group.media || []).map((item) => ({ ...item, group: group.label, pageId: (findFandomByDataId(item.fandom || group.id) || {}).id }))),
+  },
 ];
 
 const WORDS = (value) => String(value || '')
@@ -64,7 +75,49 @@ const fromReleases = (source, list) => list.map((item) => ({
   ],
 }));
 
-const BUILDERS = { articles: fromArticles, trailers: fromTrailers, events: fromEvents, releases: fromReleases };
+const fromCharacters = (source, list) => list.map((item) => ({
+  id: `character:${item.id}`,
+  kind: source.kind,
+  href: source.href,
+  title: item.name,
+  meta: [item.role, (item.series || {}).title, (item.series || {}).year, (item.series || {}).studio].filter(Boolean).join(' · '),
+  image: item.image,
+  words: [
+    ...WORDS(item.name),
+    ...WORDS(item.epithet),
+    ...WORDS(item.role),
+    ...WORDS(item.fandom),
+    ...WORDS(item.chapter),
+    ...WORDS((item.series || {}).title),
+    ...WORDS((item.series || {}).studio),
+    ...WORDS((item.series || {}).format),
+    ...WORDS((item.series || {}).origin),
+    ...(item.traits || []).flatMap(WORDS),
+    ...(item.facts || []).flatMap((fact) => [...WORDS(fact.label), ...WORDS(fact.value)]),
+  ],
+}));
+
+const fromGallery = (source, list) => list.map((item) => ({
+  id: `gallery:${item.id}`,
+  kind: source.kind,
+  // Every fandom page mounts its gallery under `<page>-gallery`, so a plate is
+  // one link from the search box even though the seven pages are separate.
+  href: `#${item.pageId || 'anime'}-gallery`,
+  title: item.title,
+  meta: [item.group, item.kind, item.credit].filter(Boolean).join(' · '),
+  image: item.type === 'image' ? item.src : item.poster || '',
+  words: [
+    ...WORDS(item.title),
+    ...WORDS(item.caption),
+    ...WORDS(item.alt),
+    ...WORDS(item.kind),
+    ...WORDS(item.type),
+    ...WORDS(item.fandom),
+    ...WORDS(item.group),
+  ],
+}));
+
+const BUILDERS = { articles: fromArticles, trailers: fromTrailers, events: fromEvents, releases: fromReleases, characters: fromCharacters, gallery: fromGallery };
 
 let pending = null;
 let rows = null;
@@ -74,14 +127,14 @@ export const loadSearchIndex = () => {
   if (rows) return Promise.resolve(rows);
   if (pending) return pending;
 
-  pending = Promise.all(SOURCES.map((source) => fetch(source.url)
-    .then((response) => (response.ok ? response.json() : null))
-    .then((json) => {
-      if (!json) return [];
-      const list = json[source.key];
-      return Array.isArray(list) ? (BUILDERS[source.key] || (() => []))(source, list) : [];
-    })
-    .catch(() => [])))
+    pending = Promise.all(SOURCES.map((source) => fetch(source.url)
+      .then((response) => (response.ok ? response.json() : null))
+      .then((json) => {
+        if (!json) return [];
+        const list = source.list ? source.list(json) : json[source.key];
+        return Array.isArray(list) ? (BUILDERS[source.key] || (() => []))(source, list) : [];
+      })
+      .catch(() => [])))
     .then((chunks) => {
       rows = chunks.flat();
       return rows;

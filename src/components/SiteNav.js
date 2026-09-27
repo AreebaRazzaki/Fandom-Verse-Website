@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { clearBookmarks, removeBookmark, setBookmarkNote, useBookmarks } from '../bookmarks';
 import { loadSearchIndex, searchSite, suggestTerms } from '../search';
 import './SiteNav.css';
@@ -6,8 +6,14 @@ import './SiteNav.css';
 const fandomLinks = ['Anime', 'Gaming', 'Movies', 'TV Shows', 'K-Pop', 'Comics', 'Manga'];
 const discoverLinks = ['Featured Articles', 'Trailers', 'Events', 'Upcoming Releases'];
 
-const BOOKMARK_LABEL = { article: 'Article', trailer: 'Trailer', event: 'Event', release: 'Release', product: 'Product' };
-const BOOKMARK_HREF = { article: '#featured-articles', trailer: '#trailers', event: '#events', release: '#upcoming-releases', product: '#shop' };
+// The width at or below which the bar becomes the drawer. It has to match the
+// `max-width` in SiteNav.css, and it is a tablet width rather than a phone one:
+// the bar never wraps, so between here and roughly 1270px it would overflow its
+// own box and lose the options on the right.
+const DRAWER_WIDTH = 1024;
+
+const BOOKMARK_LABEL = { article: 'Article', trailer: 'Trailer', event: 'Event', release: 'Release', product: 'Product', character: 'Character' };
+const BOOKMARK_HREF = { article: '#featured-articles', trailer: '#trailers', event: '#events', release: '#upcoming-releases', product: '#shop', character: '#anime' };
 
 const palettes = {
   home: {
@@ -265,42 +271,93 @@ function SavedPopup({ items, onClose }) {
 function SiteNav({ theme, setTheme, active = 'home', variant = 'home' }) {
   const [openMenu, setOpenMenu] = useState(null);
   const [savedOpen, setSavedOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navRef = useRef(null);
   const saved = useBookmarks();
   const palette = palettes[variant]?.[theme] || palettes.home.dark;
   const linkId = (label) => `#${label.toLowerCase().replace(/\s+/g, '-')}`;
 
+  const closeDrawer = useCallback(() => {
+    setDrawerOpen(false);
+    setOpenMenu(null);
+  }, []);
+
+  // The drawer is only the nav below the narrow breakpoint. It closes on Escape,
+  // on a click outside and once the viewport grows past that breakpoint, so the
+  // wide bar can never come back with a stale open drawer hanging off it.
+  useEffect(() => {
+    if (!drawerOpen) return undefined;
+    const onKeyDown = (event) => { if (event.key === 'Escape') closeDrawer(); };
+    const onClickAway = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) closeDrawer();
+    };
+    const onResize = () => { if (window.innerWidth > DRAWER_WIDTH) closeDrawer(); };
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('mousedown', onClickAway);
+    window.addEventListener('resize', onResize);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('mousedown', onClickAway);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [drawerOpen, closeDrawer]);
+
   return (
-    <nav className={`universal-nav universal-nav-${variant}${savedOpen ? ' is-overlay-open' : ''}`} style={palette} aria-label="Main navigation">
+    <nav
+      ref={navRef}
+      className={`universal-nav universal-nav-${variant} theme-${theme}${drawerOpen ? ' is-menu-open' : ''}${savedOpen ? ' is-overlay-open' : ''}`}
+      style={palette}
+      aria-label="Main navigation"
+    >
       <a className="universal-brand" href="#home" aria-label="Fandomverse home"><img src="/assets/images/logo.png" alt="" /><span>FANDOMVERSE</span></a>
-      <div className="universal-nav-links">
-        <a className={`universal-nav-link ${active === 'home' ? 'is-active' : ''}`} href="#home">Home</a>
-        <div className="universal-nav-menu">
-          <button type="button" className="universal-nav-link" onClick={() => setOpenMenu(openMenu === 'fandoms' ? null : 'fandoms')} aria-expanded={openMenu === 'fandoms'}>Fandoms <span>⌄</span></button>
-          {openMenu === 'fandoms' && <div className="universal-dropdown">{fandomLinks.map((item) => <a href={linkId(item)} key={item}>{item}</a>)}</div>}
+
+      <button
+        type="button"
+        className={`universal-nav-toggle${drawerOpen ? ' is-open' : ''}`}
+        onClick={() => setDrawerOpen((value) => !value)}
+        aria-expanded={drawerOpen}
+        aria-controls="universal-nav-drawer"
+        aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
+      >
+        <span /><span /><span />
+      </button>
+
+      {/* Inert on wide screens (display: contents), so the bar lays out exactly as
+          it did before. Below the breakpoint it becomes the drawer, and the same
+          links, search, saved button, theme switch and sign-in move into it. */}
+      <div className="universal-nav-drawer" id="universal-nav-drawer">
+        <div className="universal-nav-links">
+          <a className={`universal-nav-link ${active === 'home' ? 'is-active' : ''}`} href="#home" onClick={closeDrawer}>Home</a>
+          <div className="universal-nav-menu">
+            <button type="button" className="universal-nav-link" onClick={() => setOpenMenu(openMenu === 'fandoms' ? null : 'fandoms')} aria-expanded={openMenu === 'fandoms'}>Fandoms <span>⌄</span></button>
+            {openMenu === 'fandoms' && <div className="universal-dropdown">{fandomLinks.map((item) => <a href={linkId(item)} key={item} onClick={closeDrawer}>{item}</a>)}</div>}
+          </div>
+          <div className="universal-nav-menu">
+            <button type="button" className="universal-nav-link" onClick={() => setOpenMenu(openMenu === 'discover' ? null : 'discover')} aria-expanded={openMenu === 'discover'}>Discover <span>⌄</span></button>
+            {openMenu === 'discover' && <div className="universal-dropdown universal-discover-dropdown">{discoverLinks.map((item) => <a href={linkId(item)} key={item} onClick={closeDrawer}>{item}</a>)}</div>}
+          </div>
+          <a className={`universal-nav-link ${active === 'shop' ? 'is-active' : ''}`} href="#shop" onClick={closeDrawer}>Shop</a>
+          <a className={`universal-nav-link ${active === 'about' ? 'is-active' : ''}`} href="#about" onClick={closeDrawer}>About</a>
+          <a className={`universal-nav-link ${active === 'contact' ? 'is-active' : ''}`} href="#contact" onClick={closeDrawer}>Contact</a>
         </div>
-        <div className="universal-nav-menu">
-          <button type="button" className="universal-nav-link" onClick={() => setOpenMenu(openMenu === 'discover' ? null : 'discover')} aria-expanded={openMenu === 'discover'}>Discover <span>⌄</span></button>
-          {openMenu === 'discover' && <div className="universal-dropdown universal-discover-dropdown">{discoverLinks.map((item) => <a href={linkId(item)} key={item}>{item}</a>)}</div>}
+        <div className="universal-nav-actions">
+          <SiteSearch />
+          <button
+            type="button"
+            className={`universal-icon-button universal-saved-button${savedOpen ? ' is-open' : ''}`}
+            onClick={() => { closeDrawer(); setSavedOpen((value) => !value); }}
+            aria-expanded={savedOpen}
+            aria-label={`Saved bookmarks${saved.length ? `, ${saved.length} item${saved.length === 1 ? '' : 's'}` : ''}`}
+          >
+            <BookmarkIcon />
+            {saved.length > 0 && <b className="universal-saved-count">{saved.length}</b>}
+          </button>
+          <button type="button" className="universal-icon-button universal-theme-button" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><ThemeIcon isLight={theme === 'light'} /><span>{theme === 'dark' ? 'Light' : 'Dark'}</span></button>
+          <a className={`universal-signin${active === 'login' ? ' is-active' : ''}`} href="#sign-in" onClick={closeDrawer}>Sign in <b>↗</b></a>
         </div>
-        <a className={`universal-nav-link ${active === 'shop' ? 'is-active' : ''}`} href="#shop">Shop</a>
-        <a className={`universal-nav-link ${active === 'about' ? 'is-active' : ''}`} href="#about">About</a>
-        <a className={`universal-nav-link ${active === 'contact' ? 'is-active' : ''}`} href="#contact">Contact</a>
       </div>
-      <div className="universal-nav-actions">
-        <SiteSearch />
-        <button
-          type="button"
-          className={`universal-icon-button universal-saved-button${savedOpen ? ' is-open' : ''}`}
-          onClick={() => setSavedOpen((value) => !value)}
-          aria-expanded={savedOpen}
-          aria-label={`Saved bookmarks${saved.length ? `, ${saved.length} item${saved.length === 1 ? '' : 's'}` : ''}`}
-        >
-          <BookmarkIcon />
-          {saved.length > 0 && <b className="universal-saved-count">{saved.length}</b>}
-        </button>
-        <button type="button" className="universal-icon-button universal-theme-button" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><ThemeIcon isLight={theme === 'light'} /><span>{theme === 'dark' ? 'Light' : 'Dark'}</span></button>
-        <a className={`universal-signin${active === 'login' ? ' is-active' : ''}`} href="#sign-in">Sign in <b>↗</b></a>
-      </div>
+
       {savedOpen && <SavedPopup items={saved} onClose={() => setSavedOpen(false)} />}
     </nav>
   );

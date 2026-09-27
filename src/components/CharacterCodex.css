@@ -1,0 +1,2169 @@
+/* Two rooms, one book.
+
+   The roster (section 05) and the open book (section 06) are both set inside a
+   "room" that answers the page theme: a dark reading room by night, a bright
+   linen one by day. The room holds every decorative layer — the wash, the ruled
+   grid, the shelf of spines along the floor, the loose sheets and the dust — so
+   switching [data-theme] re-lights the whole backdrop at once and keeps the text
+   on it readable either way.
+
+   The book itself is always paper: the pages keep their cream stock and their
+   dark ink in both themes, which is what stops the "book" from turning into a
+   dark rectangle when the room goes dark. */
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- the room, in both themes ---------- */
+
+.codex {
+  /* The room is a neutral graphite shell. The fandom it is standing in paints
+     it — every block further down keys off [data-fandom] and swaps the whole
+     set for that fandom's own accent, so no page is ever left holding a colour
+     that belongs to a different one. These values are the fallback for a
+     fandom that is not registered, and they are deliberately hueless. */
+  --room-top: #333644;
+  --room-mid: #282b38;
+  --room-deep: #1f222e;
+  --room-glow: rgba(150, 160, 180, .18);
+  --room-ink: #f0eff2;
+  --room-ink-soft: #c1bfc6;
+  --room-ink-faint: #94929b;
+  --room-line: rgba(240, 239, 242, .14);
+  --room-line-soft: rgba(240, 239, 242, .08);
+  --room-panel: rgba(240, 239, 242, .06);
+  --room-panel-line: rgba(240, 239, 242, .18);
+  --room-foil: #b9c2d4;
+  --room-shelf: #181a24;
+  --room-shelf-2: #2f3242;
+  --room-sheet: rgba(240, 239, 242, .06);
+  --room-mote: rgba(200, 205, 220, .5);
+  --room-rule: rgba(240, 239, 242, .05);
+  --room-board: #3f4355;
+  --room-board-deep: #2a2d38;
+
+  /* Everything that shades the room rather than tinting it reads off this one
+     token, so the shade follows the fandom instead of staying brown. */
+  --room-shadow: rgba(0, 0, 0, .34);
+
+  /* Ink printed on a filled accent chip. Dark in both themes, because the
+     accents stay bright in both. */
+  --room-on-accent: #101216;
+
+  /* The translucent panel fill was too thin to read as a button against the
+     room's grid and shelf layers, so anything clickable gets an opaque chip. */
+  --room-chip: #343849;
+  --room-chip-ink: #f3f2f5;
+  --room-chip-line: rgba(240, 239, 242, .3);
+
+  /* The paper never changes with the room, so the ink never has to. It is a
+     clean stock rather than a cream one, which is what used to leave a brown
+     cast sitting in the middle of a blue or a red room. */
+  --paper: #f2f2f4;
+  --paper-deep: #e3e3e8;
+  --paper-ink: #1b1c20;
+  --paper-ink-soft: #55565c;
+  --paper-ink-faint: #8a8b92;
+  --paper-line: rgba(27, 28, 32, .16);
+  --paper-hi: #fafafc;
+
+  position: relative;
+  isolation: isolate;
+  /* Tighter than the hero above it: this section is a single object on a page,
+     and the air above and below it was reading as a second break in the page. */
+  padding: clamp(36px, 4vw, 64px) 0 clamp(42px, 4.6vw, 72px);
+  color: var(--room-ink);
+  background: var(--room-deep);
+  font-family: 'Elgraine', Georgia, serif;
+}
+
+.codex[data-theme='light'] {
+  --room-top: #ececf0;
+  --room-mid: #dcdae2;
+  --room-deep: #c9c7d2;
+  --room-glow: rgba(120, 122, 140, .18);
+  --room-ink: #1f1e24;
+  --room-ink-soft: #4b4a52;
+  --room-ink-faint: #787780;
+  --room-line: rgba(31, 30, 36, .18);
+  --room-line-soft: rgba(31, 30, 36, .09);
+  --room-panel: rgba(255, 255, 255, .5);
+  --room-panel-line: rgba(31, 30, 36, .22);
+  --room-foil: #6b6a78;
+  --room-shelf: #7b7a88;
+  --room-shelf-2: #a3a2ae;
+  --room-sheet: rgba(255, 255, 255, .62);
+  --room-mote: rgba(120, 120, 140, .32);
+  --room-rule: rgba(31, 30, 36, .07);
+  --room-board: #93929f;
+  --room-board-deep: #6b6a77;
+  --room-shadow: rgba(70, 70, 90, .2);
+  --room-chip: #fbfbfd;
+  --room-chip-ink: #1f1e24;
+  --room-chip-line: rgba(31, 30, 36, .32);
+  --room-on-accent: #101216;
+
+  /* Paper goes a shade brighter than the room so the cards still lift off it. */
+  --paper: #fcfcfd;
+  --paper-deep: #f1f1f4;
+  --paper-ink: #1b1c20;
+  --paper-ink-soft: #55565c;
+  --paper-ink-faint: #8a8b92;
+  --paper-line: rgba(27, 28, 32, .18);
+  --paper-hi: #ffffff;
+}
+
+/* The profile is rendered through a portal at the end of <body>, so it sits
+   outside .codex and inherits none of its custom properties. Left undefined,
+   the paper gradient on .codex-modal-book resolves to nothing, the modal falls
+   back to the veil behind it, and dark ink ends up on a dark ground. Declaring
+   the set here keeps the popup on light paper in both themes. */
+.codex-modal {
+  --paper: #fcfcfd;
+  --paper-deep: #f1f1f4;
+  --paper-ink: #1b1c20;
+  --paper-ink-soft: #4a4a50;
+  --paper-ink-faint: #6f6f76;
+  --paper-line: rgba(27, 28, 32, .2);
+  --paper-hi: #ffffff;
+  --room-on-accent: #101216;
+}
+
+/* ---------- one room per fandom ----------
+
+   Every fandom page that renders this section names itself in [data-fandom], and
+   each of those blocks swaps the whole colour set for the page's own accent —
+   the night room for a red TV page is a deep maroon, for a blue K-Pop page a
+   deep teal, and so on. Only the set that actually carries colour is repeated
+   here; the ink, the rules and the paper stay as they are above, because they
+   are contrast surfaces rather than brand.
+
+   Gaming and Movies are absent on purpose. They restyle the room into a
+   different object entirely (a game window, a cinema marquee) further down this
+   file, and those blocks already carry their fandom's accent. */
+
+.codex[data-fandom='anime'] {
+  --room-top: #35322a;
+  --room-mid: #2a2721;
+  --room-deep: #211f1a;
+  --room-glow: rgba(201, 150, 46, .2);
+  --room-foil: #c5962e;
+  --room-shelf: #1a1913;
+  --room-shelf-2: #353127;
+  --room-mote: rgba(214, 178, 92, .5);
+  --room-board: #45402f;
+  --room-board-deep: #2d2a21;
+  --room-chip: #332f26;
+  --room-shadow: rgba(16, 12, 4, .38);
+}
+.codex[data-fandom='anime'][data-theme='light'] {
+  --room-top: #f2ebd8;
+  --room-mid: #e2d6b6;
+  --room-deep: #cbb98d;
+  --room-glow: rgba(168, 115, 8, .18);
+  --room-foil: #a87308;
+  --room-shelf: #867349;
+  --room-shelf-2: #b3a179;
+  --room-mote: rgba(168, 115, 8, .3);
+  --room-board: #a8925f;
+  --room-board-deep: #7d6a3f;
+  --room-shadow: rgba(96, 78, 32, .22);
+  --room-chip: #fdf9ee;
+}
+
+.codex[data-fandom='comics'] {
+  --room-top: #372b26;
+  --room-mid: #2c221e;
+  --room-deep: #221916;
+  --room-glow: rgba(255, 118, 43, .2);
+  --room-foil: #ff762b;
+  --room-shelf: #1b1513;
+  --room-shelf-2: #3c2c28;
+  --room-mote: rgba(255, 150, 90, .5);
+  --room-board: #4b3a32;
+  --room-board-deep: #312520;
+  --room-chip: #372a25;
+  --room-shadow: rgba(20, 10, 6, .38);
+}
+.codex[data-fandom='comics'][data-theme='light'] {
+  --room-top: #f6e6da;
+  --room-mid: #e8cdba;
+  --room-deep: #d3ab90;
+  --room-glow: rgba(216, 93, 34, .18);
+  --room-foil: #d85d22;
+  --room-shelf: #916852;
+  --room-shelf-2: #bd9b85;
+  --room-mote: rgba(216, 93, 34, .3);
+  --room-board: #b98a70;
+  --room-board-deep: #8e6350;
+  --room-shadow: rgba(96, 50, 28, .22);
+  --room-chip: #fdf6f1;
+}
+
+.codex[data-fandom='kpop'] {
+  --room-top: #24384a;
+  --room-mid: #1c2a37;
+  --room-deep: #15212b;
+  --room-glow: rgba(114, 220, 237, .2);
+  --room-foil: #72dced;
+  --room-shelf: #18222b;
+  --room-shelf-2: #2a3c4a;
+  --room-mote: rgba(140, 215, 232, .5);
+  --room-board: #314455;
+  --room-board-deep: #1e2c38;
+  --room-chip: #24313d;
+  --room-shadow: rgba(4, 12, 20, .38);
+}
+.codex[data-fandom='kpop'][data-theme='light'] {
+  --room-top: #e2edf3;
+  --room-mid: #cbdde7;
+  --room-deep: #adc9d8;
+  --room-glow: rgba(23, 109, 147, .2);
+  --room-foil: #176d93;
+  --room-shelf: #6a8697;
+  --room-shelf-2: #9ab6c6;
+  --room-mote: rgba(23, 109, 147, .3);
+  --room-board: #7ea0b3;
+  --room-board-deep: #56798f;
+  --room-shadow: rgba(30, 66, 92, .22);
+  --room-chip: #f7fbfd;
+}
+
+.codex[data-fandom='manga'] {
+  --room-top: #342d3b;
+  --room-mid: #292430;
+  --room-deep: #201c26;
+  --room-glow: rgba(224, 179, 218, .18);
+  --room-foil: #e0b3da;
+  --room-shelf: #1a1721;
+  --room-shelf-2: #352e41;
+  --room-mote: rgba(214, 186, 224, .5);
+  --room-board: #433a4e;
+  --room-board-deep: #2d2735;
+  --room-chip: #322c3c;
+  --room-shadow: rgba(12, 8, 18, .38);
+}
+.codex[data-fandom='manga'][data-theme='light'] {
+  --room-top: #f1e9f4;
+  --room-mid: #ded1e6;
+  --room-deep: #c3b1cf;
+  --room-glow: rgba(128, 91, 153, .18);
+  --room-foil: #805b99;
+  --room-shelf: #7e6b8d;
+  --room-shelf-2: #ab9bba;
+  --room-mote: rgba(128, 91, 153, .3);
+  --room-board: #a793b3;
+  --room-board-deep: #7d6a8c;
+  --room-shadow: rgba(60, 40, 76, .22);
+  --room-chip: #fbf6fd;
+}
+
+.codex[data-fandom='tvshows'] {
+  --room-top: #38262c;
+  --room-mid: #2c2025;
+  --room-deep: #221a1e;
+  --room-glow: rgba(217, 52, 59, .22);
+  --room-foil: #d9343b;
+  --room-shelf: #1c1519;
+  --room-shelf-2: #3d2831;
+  --room-mote: rgba(224, 130, 130, .5);
+  --room-board: #4a2e35;
+  --room-board-deep: #312023;
+  --room-chip: #35232a;
+  --room-shadow: rgba(20, 6, 8, .38);
+}
+.codex[data-fandom='tvshows'][data-theme='light'] {
+  --room-top: #f3e2e4;
+  --room-mid: #e6c8cb;
+  --room-deep: #d3a9ad;
+  --room-glow: rgba(169, 38, 46, .18);
+  --room-foil: #a9262e;
+  --room-shelf: #8c6165;
+  --room-shelf-2: #b89195;
+  --room-mote: rgba(169, 38, 46, .3);
+  --room-board: #b38489;
+  --room-board-deep: #8b5f64;
+  --room-shadow: rgba(90, 30, 34, .22);
+  --room-chip: #fdf7f7;
+}
+
+/* ---------- the backdrop layers ---------- */
+
+.codex-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(120% 78% at 50% -8%, var(--room-glow), transparent 62%),
+    radial-gradient(90% 60% at 50% 108%, rgba(0, 0, 0, .45), transparent 64%),
+    linear-gradient(162deg, var(--room-top) 0%, var(--room-mid) 52%, var(--room-deep) 100%);
+  pointer-events: none;
+}
+
+.codex[data-theme='light'] .codex-bg {
+  background:
+    radial-gradient(120% 78% at 50% -8%, var(--room-glow), transparent 62%),
+    radial-gradient(90% 60% at 50% 108%, var(--room-shadow), transparent 64%),
+    linear-gradient(162deg, var(--room-top) 0%, var(--room-mid) 52%, var(--room-deep) 100%);
+}
+
+/* The book section reads as a darker alcove inside the same room. */
+.codex-bg-book {
+  background:
+    radial-gradient(110% 70% at 50% 0%, var(--room-glow), transparent 58%),
+    radial-gradient(70% 50% at 50% 100%, rgba(0, 0, 0, .5), transparent 66%),
+    linear-gradient(168deg, var(--room-mid) 0%, var(--room-deep) 60%, var(--room-board-deep) 100%);
+}
+
+.codex[data-theme='light'] .codex-bg-book {
+  background:
+    radial-gradient(110% 70% at 50% 0%, var(--room-glow), transparent 58%),
+    radial-gradient(70% 50% at 50% 100%, var(--room-shadow), transparent 66%),
+    linear-gradient(168deg, var(--room-mid) 0%, var(--room-deep) 62%, var(--room-shelf) 100%);
+}
+
+.codex-bg-grid {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, var(--room-rule) 0 1px, transparent 1px 76px),
+    repeating-linear-gradient(0deg, var(--room-rule) 0 1px, transparent 1px 76px);
+  mask-image: radial-gradient(120% 90% at 50% 34%, #000 18%, transparent 84%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 34%, #000 18%, transparent 84%);
+  pointer-events: none;
+}
+
+/* A shelf of spines along the floor, so the room has a bottom edge. */
+.codex-bg-shelf {
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: clamp(70px, 9vw, 132px);
+  padding: 0 3vw;
+  background: linear-gradient(180deg, transparent, var(--room-shelf) 78%);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.codex-bg-shelf i {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(180deg, var(--room-shelf-2), var(--room-shelf));
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .25) inset;
+}
+
+.codex-bg-shelf i:nth-child(3n) { height: 82%; }
+.codex-bg-shelf i:nth-child(3n + 1) { height: 100%; }
+.codex-bg-shelf i:nth-child(3n + 2) { height: 64%; }
+.codex-bg-shelf i:nth-child(5n) { background: linear-gradient(180deg, var(--room-shelf), var(--room-shelf-2)); }
+.codex-bg-shelf i:nth-child(7n) { height: 92%; }
+
+/* Loose sheets pinned up behind the content, like drafts on a wall. */
+.codex-bg-sheets {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.codex-bg-sheets i {
+  position: absolute;
+  display: block;
+  width: clamp(90px, 12vw, 190px);
+  height: clamp(120px, 16vw, 250px);
+  border: 1px solid var(--room-line-soft);
+  background:
+    repeating-linear-gradient(0deg, var(--room-rule) 0 1px, transparent 1px 12px),
+    var(--room-sheet);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .3);
+}
+
+.codex-bg-sheets i:nth-child(1) { top: 6%; left: 3%; transform: rotate(-9deg); }
+.codex-bg-sheets i:nth-child(2) { top: 16%; right: 5%; transform: rotate(7deg); }
+.codex-bg-sheets i:nth-child(3) { bottom: 12%; left: 12%; transform: rotate(5deg); }
+.codex-bg-sheets i:nth-child(4) { bottom: 8%; right: 12%; transform: rotate(-6deg); }
+
+.codex[data-theme='light'] .codex-bg-sheets i { box-shadow: 0 20px 40px var(--room-shadow); }
+
+/* Dust in the light, kept slow and low-contrast. */
+.codex-bg-motes { position: absolute; z-index: 0; inset: 0; pointer-events: none; }
+
+.codex-bg-motes i {
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--room-mote);
+  box-shadow: 0 0 12px var(--room-mote);
+  animation: codex-drift 14s ease-in-out infinite;
+}
+
+.codex-bg-motes i:nth-child(1) { top: 18%; left: 12%; animation-delay: 0s; }
+.codex-bg-motes i:nth-child(2) { top: 42%; left: 78%; animation-delay: -3s; }
+.codex-bg-motes i:nth-child(3) { top: 66%; left: 26%; animation-delay: -6s; }
+.codex-bg-motes i:nth-child(4) { top: 28%; left: 58%; animation-delay: -9s; }
+.codex-bg-motes i:nth-child(5) { top: 78%; left: 68%; animation-delay: -12s; }
+.codex-bg-motes i:nth-child(6) { top: 8%; left: 42%; animation-delay: -7s; }
+
+.codex-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(1440px, calc(100% - 112px));
+  margin: 0 auto;
+}
+
+/* ---------- the section header ---------- */
+
+.codex-book-head {
+  position: relative;
+  margin-bottom: clamp(24px, 3vw, 44px);
+  text-align: center;
+}
+
+/* With the tagline gone the heading is the only thing announcing the section,
+   so it gets a foil-to-ink gradient and a printer's rule underneath rather
+   than sitting there as a plain line of text. */
+.codex-book-title {
+  position: relative;
+  margin: 0;
+  color: var(--room-ink);
+  font-size: clamp(34px, 4.4vw, 62px);
+  font-weight: 800;
+  letter-spacing: -.05em;
+  line-height: .94;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .codex-book-title {
+    background-image: linear-gradient(180deg, var(--room-ink) 32%, var(--room-foil) 98%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Rule — lozenge — rule, centred under the heading. */
+.codex-book-head::after {
+  content: '';
+  display: block;
+  width: min(240px, 52%);
+  height: 12px;
+  margin: 18px auto 0;
+  background:
+    linear-gradient(45deg, transparent 41%, var(--room-foil) 41% 59%, transparent 59%),
+    linear-gradient(-45deg, transparent 41%, var(--room-foil) 41% 59%, transparent 59%),
+    linear-gradient(90deg, transparent, var(--room-line) 26%, var(--room-line) 42%, transparent 42%),
+    linear-gradient(90deg, transparent 58%, var(--room-line) 58%, var(--room-line) 74%, transparent);
+}
+
+/* The oversized section number sits behind the title, stroked rather than
+   filled, so it reads as printed on the room rather than as text on top. */
+.codex-head-num {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  color: transparent;
+  font-family: Arial, sans-serif;
+  font-size: clamp(130px, 18vw, 260px);
+  font-weight: 800;
+  line-height: .8;
+  letter-spacing: -.08em;
+  opacity: .12;
+  transform: translate(-50%, -56%);
+  pointer-events: none;
+  -webkit-text-stroke: 2px var(--room-foil);
+}
+
+.codex[data-theme='light'] .codex-head-num { opacity: .2; }
+
+/* ---------- shared print elements on the paper ---------- */
+
+.codex-plate {
+  position: relative;
+  margin: 0;
+  padding: 10px 10px 8px;
+  background: var(--paper-hi);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .18);
+}
+
+.codex-plate-mat {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, var(--entry-accent), transparent 55%);
+  pointer-events: none;
+}
+
+.codex-plate-reg {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.codex-plate-reg i { position: absolute; background: var(--entry-accent); opacity: .85; }
+.codex-plate-reg i:nth-child(1) { top: 7px; left: 0; width: 16px; height: 1px; }
+.codex-plate-reg i:nth-child(2) { top: 0; left: 7px; width: 1px; height: 16px; }
+
+.codex-plate-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 14px 12px rgba(0, 0, 0, .34));
+}
+
+.codex-plate-caption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 7px 2px 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--paper-line);
+  color: var(--paper-ink-soft);
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.codex-plate-no {
+  color: var(--entry-accent);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.codex-traits { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 16px 0 0; }
+
+.codex-traits-label {
+  color: var(--paper-ink-faint);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.codex-traits-list { display: flex; flex-wrap: wrap; align-items: baseline; gap: 7px; }
+.codex-trait-pair { display: inline-flex; align-items: baseline; gap: 7px; }
+.codex-traits b {
+  padding: 3px 9px;
+  border: 1px solid color-mix(in srgb, var(--entry-accent), transparent 42%);
+  background: color-mix(in srgb, var(--entry-accent), transparent 88%);
+  color: color-mix(in srgb, var(--entry-accent), var(--room-on-accent) 45%);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.codex-dot { color: var(--entry-accent); font-size: 13px; font-style: normal; line-height: 1; }
+
+.codex-facts { display: grid; gap: 0; margin: 18px 0 0; }
+.codex-facts.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 22px; }
+
+.codex-fact {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--paper-line);
+}
+
+.codex-fact dt {
+  color: var(--paper-ink-faint);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.codex-fact dd { margin: 0; color: var(--paper-ink); font-size: 14px; font-weight: 600; line-height: 1.35; }
+
+/* VIEW PROFILE is cut as a tab that sticks out of the page, and the YouTube
+   chip keeps the series one click away from the card itself. */
+.codex-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 22px; }
+
+.codex-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  border: 1px solid var(--entry-accent);
+  background: var(--entry-accent);
+  color: var(--room-on-accent);
+  cursor: pointer;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 10px));
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.codex-view:hover { filter: brightness(1.12) saturate(1.1); transform: translateY(-2px); }
+.codex-view i { font-size: 15px; font-style: normal; line-height: 1; transition: transform 180ms ease; }
+.codex-view:hover i { transform: translateX(4px); }
+
+.codex-yt {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px 8px 9px;
+  border: 1px solid var(--paper-line);
+  background: rgba(29, 30, 34, .04);
+  color: var(--paper-ink);
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.codex-yt:hover { border-color: #e0332a; background: rgba(224, 51, 42, .08); }
+
+.codex-yt-mark { display: grid; place-items: center; width: 26px; height: 20px; border-radius: 5px; background: #e0332a; }
+.codex-yt-mark svg { width: 16px; height: 16px; fill: #fff; }
+.codex-yt-text { display: flex; align-items: baseline; gap: 7px; }
+.codex-yt-text b { color: #e0332a; font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.codex-yt-text span { color: var(--paper-ink-soft); font-size: 13px; font-weight: 600; }
+
+.codex-save { position: relative; }
+.codex-save .bookmark-toggle { border-color: var(--paper-line); background: rgba(29, 30, 34, .04); color: var(--paper-ink); }
+.codex-save .bookmark-toggle:hover { border-color: var(--entry-accent); color: var(--entry-accent); }
+.codex-save.is-on .bookmark-toggle { border-color: var(--entry-accent); background: color-mix(in srgb, var(--entry-accent), transparent 84%); color: var(--entry-accent); }
+.codex-save .bookmark-note { color: var(--paper-ink); }
+.codex-save .bookmark-note input { color: var(--paper-ink); }
+
+/* ---------- notes under the header ---------- */
+
+.codex-note-line {
+  margin: 0 0 28px;
+  padding: 18px 22px;
+  border: 1px solid var(--room-panel-line);
+  color: var(--room-ink-soft);
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.codex-note-line.is-error { color: #f0b4ad; border-color: rgba(224, 51, 42, .5); }
+.codex-note-line button { margin-left: 8px; padding: 6px 12px; border: 1px solid currentColor; background: none; cursor: pointer; color: inherit; font: inherit; }
+
+/* ---------- the book itself ---------- */
+
+.codex-book { scroll-margin-top: 92px; }
+.codex-book .codex-wrap { width: min(1280px, calc(100% - 112px)); }
+
+.codex-reader-book {
+  position: relative;
+  padding: clamp(20px, 2.4vw, 34px) clamp(20px, 2.4vw, 34px) clamp(24px, 2.8vw, 40px);
+}
+
+/* The board: the hard cover the page block is sewn into, with a foil rule
+   pressed into the cloth. */
+.codex-book-board {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border: 1px solid rgba(0, 0, 0, .6);
+  border-radius: 3px 8px 8px 3px;
+  background:
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, .028) 0 2px, transparent 2px 5px),
+    linear-gradient(112deg, var(--room-board) 0%, var(--room-board-deep) 46%, var(--room-board-deep) 100%);
+  box-shadow:
+    0 44px 90px rgba(0, 0, 0, .55),
+    0 2px 0 rgba(255, 255, 255, .05) inset,
+    0 0 0 1px var(--room-glow) inset;
+}
+
+.codex-book-board::before {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid color-mix(in srgb, var(--room-foil), transparent 70%);
+  border-radius: 2px 5px 5px 2px;
+  content: '';
+  pointer-events: none;
+}
+
+/* The page block: a real stack of leaves, so the fore-edge shows layered
+   lines instead of a single cut. */
+.codex-book-block {
+  position: absolute;
+  z-index: 1;
+  inset: clamp(20px, 2.4vw, 34px) clamp(20px, 2.4vw, 34px) clamp(24px, 2.8vw, 40px);
+  border-radius: 2px 4px 4px 2px;
+  background: var(--paper-deep);
+  box-shadow:
+    5px 5px 0 color-mix(in srgb, var(--paper-deep), #000 12%),
+    9px 9px 0 color-mix(in srgb, var(--paper-deep), #000 20%),
+    13px 13px 0 color-mix(in srgb, var(--paper-deep), #000 28%),
+    0 16px 34px rgba(0, 0, 0, .42);
+  pointer-events: none;
+}
+
+.codex-book-stamp {
+  position: absolute;
+  z-index: 4;
+  top: clamp(6px, .8vw, 12px);
+  right: clamp(24px, 3vw, 48px);
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--room-foil), transparent 45%);
+  color: var(--room-foil);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  transform: rotate(-2.5deg);
+  pointer-events: none;
+}
+
+/* Spine: the vertical band down the fore-edge with the title running along it. */
+.codex-book-spine {
+  position: absolute;
+  z-index: 4;
+  top: clamp(20px, 2.4vw, 34px);
+  bottom: clamp(24px, 2.8vw, 40px);
+  left: clamp(6px, .7vw, 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 22px;
+  border-right: 1px solid rgba(0, 0, 0, .55);
+  color: color-mix(in srgb, var(--room-foil), transparent 55%);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.codex-book-spine b,
+.codex-book-spine span { writing-mode: vertical-rl; white-space: nowrap; }
+.codex-book-spine i { display: block; width: 1px; height: 42px; background: linear-gradient(180deg, transparent, var(--room-foil), transparent); }
+
+/* ---------- the bar above the book: who is open, and the arrows ---------- */
+
+.codex-book-bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 20px;
+  padding: 0 clamp(4px, 1vw, 18px) 18px;
+}
+
+.codex-book-bar-title { display: flex; align-items: baseline; gap: 14px; margin: 0; }
+.codex-book-bar-title b { color: var(--room-ink); font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+.codex-book-bar-title span { color: var(--room-foil); font-family: Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+
+.codex-book-arrows { display: flex; gap: 10px; }
+
+.codex-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid var(--room-chip-line);
+  background: var(--room-chip);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .32);
+  cursor: pointer;
+  color: var(--room-chip-ink);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.codex-arrow i { font-size: 15px; font-style: normal; line-height: 1; }
+.codex-arrow:hover { border-color: var(--room-foil); color: var(--room-foil); transform: translateY(-2px); }
+.codex-arrow:focus-visible { outline: 2px solid var(--room-foil); outline-offset: 2px; }
+
+/* ---------- the stage: the two pages and the sheet in the air ---------- */
+
+.codex-stage {
+  position: relative;
+  z-index: 2;
+  perspective: 2400px;
+  outline: none;
+}
+
+.codex-stage:focus-visible { box-shadow: 0 0 0 2px var(--room-foil); }
+
+.codex-gutter {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 88px;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--room-deep), transparent 84%) 42%, color-mix(in srgb, var(--room-deep), transparent 7%) 50%, color-mix(in srgb, var(--room-deep), transparent 84%) 58%, transparent 100%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.codex-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 345px;
+  background:
+    repeating-linear-gradient(0deg, rgba(29, 30, 34, .045) 0 1px, transparent 1px 30px),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  color: var(--paper-ink);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .32), 0 0 44px rgba(0, 0, 0, .2) inset;
+  transform-origin: left center;
+}
+
+.codex-ribbon {
+  position: absolute;
+  z-index: 6;
+  top: -14px;
+  left: 34px;
+  width: 20px;
+  height: 62px;
+  background: linear-gradient(180deg, var(--entry-accent), color-mix(in srgb, var(--entry-accent), #000 32%));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .4);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  pointer-events: none;
+}
+
+.codex-ribbon::after {
+  position: absolute;
+  inset: 0 7px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .34), transparent 60%);
+  content: '';
+}
+
+/* --- the two pages --- */
+
+.codex-leaf {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(20px, 2.2vw, 34px);
+}
+
+.codex-leaf.is-verso {
+  border-right: 1px solid var(--paper-line);
+  background:
+    radial-gradient(80% 70% at 50% 74%, color-mix(in srgb, var(--entry-accent), transparent 86%), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(29, 30, 34, .03) 0 2px, transparent 2px 8px);
+}
+
+.codex-leaf-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: var(--paper-ink-faint);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.codex-leaf-mark b { color: var(--entry-accent); }
+.codex-leaf-mark i { flex: 1; border-top: 1px solid var(--paper-line); }
+
+/* The plates are tall cut-outs. Left completely unbounded the frame grew with
+   the page and swallowed the entry printed beside it, so it is given a ceiling —
+   but a generous one, because the plate is the reason the book is worth opening. */
+.codex-leaf .codex-plate {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+  height: clamp(200px, 30vh, 290px);
+  /* Centred in whatever height is left on the page, rather than hanging under
+     the entry mark at the top or dropping onto the foot rule at the bottom. */
+  margin: auto;
+}
+
+.codex-leaf .codex-plate-image { flex: 1; min-height: 0; max-height: 100%; }
+
+.codex-leaf-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 14px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--paper-line);
+}
+
+.codex-leaf-role { color: var(--paper-ink); font-size: 14px; font-weight: 800; }
+.codex-leaf-studio { color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+
+.codex-leaf-entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  color: var(--entry-accent);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.codex-leaf-entry i { display: block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.codex-leaf-name { margin: 0; color: var(--paper-ink); font-size: clamp(34px, 4vw, 58px); font-weight: 800; letter-spacing: -.045em; line-height: .92; }
+.codex-leaf-reading { margin: 10px 0 0; color: var(--paper-ink-faint); font-size: 15px; font-weight: 600; letter-spacing: .1em; }
+
+.codex-leaf-epithet {
+  margin: 16px 0 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--entry-accent);
+  color: var(--paper-ink-soft);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.codex-leaf-series {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 18px 0 0;
+  color: var(--paper-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.codex-leaf-series span { color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+.codex-leaf-series i { width: 3px; height: 3px; border-radius: 50%; background: var(--entry-accent); }
+
+.codex-leaf .codex-actions { margin-top: auto; padding-top: 16px; }
+
+/* --- the sheet in the air --- */
+
+.codex-fold {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  backface-visibility: hidden;
+  pointer-events: none;
+  filter: drop-shadow(-18px 0 26px rgba(0, 0, 0, .45));
+}
+
+.codex-fold.is-next { right: 0; transform-origin: left center; animation: codex-fold-next 520ms cubic-bezier(.45, .06, .32, 1) both; }
+.codex-fold.is-prev { left: 0; transform-origin: right center; animation: codex-fold-prev 520ms cubic-bezier(.45, .06, .32, 1) both; }
+
+.codex-fold-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(29, 30, 34, .05) 0 1px, transparent 1px 30px),
+    linear-gradient(100deg, var(--paper) 0%, var(--paper-deep) 100%);
+}
+
+.codex-fold-face img {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  width: 74%;
+  height: 74%;
+  object-fit: contain;
+  opacity: .16;
+  transform: translateX(-50%);
+}
+
+.codex-fold-ghost {
+  position: absolute;
+  bottom: 16%;
+  left: 10%;
+  right: 10%;
+  color: var(--paper-ink);
+  font-size: clamp(20px, 2.2vw, 32px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  text-align: center;
+}
+
+.codex-fold-folio {
+  position: absolute;
+  right: 12%;
+  bottom: 8%;
+  color: var(--paper-ink-faint);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.codex-fold-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--room-deep), transparent 95%), color-mix(in srgb, var(--room-deep), transparent 38%));
+  animation: codex-fold-shade 520ms ease both;
+}
+
+/* --- the tab strip and the line of explanation under the book --- */
+
+.codex-tabs {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0 clamp(4px, 1vw, 18px);
+}
+
+.codex-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid var(--room-chip-line);
+  background: var(--room-chip);
+  cursor: pointer;
+  color: var(--room-chip-ink);
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.codex-tabs button:hover { border-color: var(--room-foil); color: var(--room-foil); }
+.codex-tabs button:focus-visible { outline: 2px solid var(--room-foil); outline-offset: 2px; }
+
+.codex-tabs button.is-on {
+  border-color: var(--entry-accent);
+  background: color-mix(in srgb, var(--entry-accent), transparent 82%);
+  color: var(--room-ink);
+}
+
+.codex-tab-no {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--entry-accent);
+  color: var(--room-on-accent);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.codex-tab-name { font-size: 14px; font-weight: 700; }
+
+/* ---------- the open profile ---------- */
+
+.codex-modal {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 46px);
+  font-family: 'Elgraine', Georgia, serif;
+}
+
+.codex-modal-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 18, 22, .62);
+  backdrop-filter: blur(7px);
+  animation: codex-fade 260ms ease both;
+}
+
+.codex-modal[data-theme='light'] .codex-modal-veil { background: rgba(38, 38, 46, .5); }
+
+/* One column, read straight down. The profile used to be split into a picture
+   column and a text column, which stranded the illustration beside a wall of
+   copy and pushed both trailers below the fold. */
+.codex-modal-book {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: min(820px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  color: var(--paper-ink);
+  background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+  box-shadow: 0 60px 120px rgba(0, 0, 0, .55), 0 0 0 1px rgba(29, 30, 34, .18);
+  animation: codex-book-in 420ms cubic-bezier(.16, .82, .25, 1) both;
+}
+
+.codex-modal-board {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border: 10px solid transparent;
+  border-image: repeating-linear-gradient(112deg, rgba(29, 30, 34, .04) 0 2px, transparent 2px 5px), linear-gradient(112deg, #d9cfb8, #b8ac91) 10;
+  box-shadow: 0 0 0 1px rgba(29, 30, 34, .12) inset;
+  pointer-events: none;
+}
+
+.codex-modal-close {
+  position: absolute;
+  z-index: 8;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--paper-line);
+  background: rgba(251, 247, 238, .9);
+  cursor: pointer;
+  color: var(--paper-ink);
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.codex-modal-close:hover { background: var(--entry-accent); color: var(--room-on-accent); }
+
+.codex-modal-page { position: relative; z-index: 2; padding: clamp(24px, 3vw, 44px); }
+
+.codex-modal-mark { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+.codex-modal-mark b { color: var(--entry-accent); }
+.codex-modal-mark i { flex: 1; border-top: 1px solid var(--paper-line); }
+
+.codex-traits.is-modal { margin: 16px 0 0; }
+.codex-modal-page.is-copy { display: flex; flex-direction: column; }
+
+.codex-modal-kicker { margin: 0 0 10px; color: var(--entry-accent); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .26em; text-transform: uppercase; }
+.codex-modal-name { margin: 0; color: var(--paper-ink); font-size: clamp(34px, 3.4vw, 50px); font-weight: 800; letter-spacing: -.045em; line-height: .92; }
+.codex-modal-epithet { margin: 14px 0 0; color: var(--paper-ink-soft); font-size: 15px; font-style: italic; font-weight: 600; line-height: 1.5; }
+
+.codex-modal-body { margin-top: 20px; }
+.codex-modal-body p { margin: 0 0 14px; color: var(--paper-ink-soft); font-size: 15px; font-weight: 600; line-height: 1.72; }
+.codex-modal-body p.has-dropcap::first-letter { float: left; margin: 4px 10px 0 0; color: var(--entry-accent); font-size: 56px; font-weight: 800; line-height: .78; }
+
+.codex-modal-quote {
+  position: relative;
+  margin: 24px 0 0;
+  padding: 18px 20px 18px 26px;
+  border-left: 3px solid var(--entry-accent);
+  background: color-mix(in srgb, var(--entry-accent), transparent 90%);
+  color: var(--paper-ink);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.codex-modal-quote span { position: absolute; top: 4px; left: 8px; color: var(--entry-accent); font-size: 30px; line-height: 1; }
+
+.codex-modal-ledger { margin-top: 26px; }
+.codex-modal-ledger-title { margin: 0 0 6px; color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+.codex-modal-ledger .codex-facts { margin: 0; }
+
+/* One video panel, used for the series trailer and again for the popular
+   movie, so the two sit in the document the same way. */
+.codex-screen { margin-top: 26px; padding: 18px; border: 1px solid var(--paper-line); background: rgba(29, 30, 34, .04); }
+
+.codex-screen-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  color: var(--entry-accent);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.codex-screen-title::after { flex: 1; height: 1px; background: var(--paper-line); content: ''; }
+
+.codex-screen-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #100f14; }
+.codex-screen-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+.codex-screen-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.codex-screen-veil { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(12, 12, 16, .5), transparent 60%); }
+
+.codex-screen-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 50%;
+  background: rgba(12, 12, 16, .45);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.codex-screen-play:hover { background: #e0332a; transform: translate(-50%, -50%) scale(1.08); }
+.codex-screen-play i { display: block; width: 0; height: 0; margin-left: 5px; border-top: 11px solid transparent; border-bottom: 11px solid transparent; border-left: 18px solid #fff; }
+
+.codex-screen-meta { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; margin: 12px 0 0; }
+.codex-screen-meta b { color: var(--paper-ink); font-size: 14px; font-weight: 800; }
+.codex-screen-meta span { color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.codex-screen-blurb { margin: 10px 0 0; color: var(--paper-ink-soft); font-size: 14px; font-weight: 600; line-height: 1.6; }
+.codex-screen-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
+.codex-screen-links .codex-view { padding: 10px 18px; }
+
+.codex-modal-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--paper-line); }
+.codex-modal-issue { color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+
+.codex-modal-others { grid-column: 1 / -1; padding: 20px clamp(24px, 3vw, 44px) 26px; border-top: 1px solid var(--paper-line); background: rgba(29, 30, 34, .04); }
+.codex-modal-others > p { margin: 0 0 12px; color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+.codex-modal-others ul { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+
+.codex-modal-others button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 8px;
+  border: 1px solid var(--paper-line);
+  background: var(--paper-hi);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.codex-modal-others button:hover { border-color: var(--entry-accent, #c89a2b); transform: translateY(-2px); }
+.codex-modal-others-no { display: grid; place-items: center; width: 30px; height: 30px; background: var(--entry-accent); color: var(--room-on-accent); font-family: Arial, sans-serif; font-size: 12px; font-weight: 800; }
+.codex-modal-others-body { display: flex; flex-direction: column; }
+.codex-modal-others-body b { color: var(--paper-ink); font-size: 14px; font-weight: 800; }
+.codex-modal-others-body small { color: var(--paper-ink-faint); font-family: Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .06em; }
+
+/* ---------- motion ---------- */
+
+@keyframes codex-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes codex-book-in { from { opacity: 0; transform: perspective(1400px) rotateX(4deg) translateY(26px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes codex-drift { 0%, 100% { transform: translate(0, 0); opacity: .35; } 50% { transform: translate(18px, -34px); opacity: .9; } }
+
+/* A longer, gentler throw than a page turn: the sheet eases off the spine,
+   crosses at a steady pace and settles, instead of snapping over. */
+@keyframes codex-fold-next { from { transform: rotateY(0deg); } to { transform: rotateY(-156deg); } }
+@keyframes codex-fold-prev { from { transform: rotateY(0deg); } to { transform: rotateY(156deg); } }
+@keyframes codex-fold-shade { 0% { opacity: 0; } 70% { opacity: .7; } 100% { opacity: .4; } }
+
+@keyframes codex-turn-in-next {
+  0% { opacity: 0; transform: rotateY(-9deg) translateX(1.6%); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes codex-turn-in-prev {
+  0% { opacity: 0; transform: rotateY(9deg) translateX(-1.6%); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+
+.codex-spread.is-in-next { animation: codex-turn-in-next 520ms cubic-bezier(.34, .68, .3, 1) both; transform-origin: right center; }
+.codex-spread.is-in-prev { animation: codex-turn-in-prev 520ms cubic-bezier(.34, .68, .3, 1) both; transform-origin: left center; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1180px) {
+  .codex-leaf .codex-plate { max-width: 520px; height: clamp(210px, 32vh, 310px); }
+}
+
+@media (max-width: 900px) {
+  .codex-wrap,
+  .codex-book .codex-wrap { width: calc(100% - 40px); }
+  .codex-reader-book { padding: 14px; }
+  .codex-book-block { inset: 14px; }
+  .codex-book-spine { display: none; }
+  .codex-gutter { display: none; }
+  .codex-spread { grid-template-columns: 1fr; min-height: 0; }
+  .codex-leaf .codex-plate { max-width: 420px; height: clamp(190px, 29vh, 270px); }
+  .codex-leaf.is-verso { border-right: 0; border-bottom: 1px solid var(--paper-line); }
+  .codex-fold { display: none; }
+}
+
+@media (max-width: 720px) {
+  .codex { padding: 36px 0 48px; }
+  .codex-wrap,
+  .codex-book .codex-wrap { width: calc(100% - 28px); }
+  .codex-head-num { display: none; }
+  .codex-bg-sheets { display: none; }
+  .codex-leaf, .codex-modal-page { padding: 22px 18px; }
+  .codex-leaf .codex-plate { max-width: 320px; height: clamp(175px, 24vh, 235px); }
+  .codex-plate { padding: 9px 9px 7px; }
+  .codex-facts.cols-2 { grid-template-columns: 1fr; }
+  .codex-fact { grid-template-columns: 92px 1fr; }
+  .codex-book-bar { flex-direction: column; align-items: flex-start; }
+  .codex-book-arrows { width: 100%; }
+  .codex-arrow { flex: 1; justify-content: center; }
+  .codex-tabs button { flex: 1 1 auto; justify-content: center; }
+  .codex-tab-name { display: none; }
+  .codex-tab-no { width: 34px; height: 34px; }
+  .codex-modal { padding: 0; }
+  .codex-modal-book { max-height: 100svh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codex *, .codex *::before, .codex *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .codex-fold { display: none; }
+}
+
+/* ========================================================================== */
+/* The game skin.                                                            */
+/*                                                                            */
+/* Same markup, same controls, same open profile — only the room and the      */
+/* screen around it are redrawn. The room answers the page theme, and the     */
+/* page it lives on keeps one idea: a dark game window set into the page. So   */
+/* the room is the page canvas (deep magenta at night, pale at day) and the   */
+/* reader stays a dark screen in both, which is what keeps the type on the    */
+/* spread, the plate and the profile legible without either theme depending   */
+/* on the other for contrast.                                                */
+/* ========================================================================== */
+
+.codex.is-game {
+  --room-top: #8e3663;
+  --room-mid: #6d2b51;
+  --room-deep: #4b2140;
+  --room-glow: rgba(126, 226, 240, .17);
+  --room-ink: #fff2f8;
+  --room-ink-soft: #e9c6d8;
+  --room-ink-faint: #d3a5bb;
+  --room-line: rgba(255, 240, 247, .2);
+  --room-line-soft: rgba(255, 240, 247, .1);
+  --room-panel: rgba(14, 4, 11, .3);
+  --room-panel-line: rgba(160, 232, 244, .4);
+  --room-foil: #7ae0ef;
+  --room-pink: #ef7fb2;
+  --room-shelf: #3a1a31;
+  --room-shelf-2: #7c3a5c;
+  --room-sheet: rgba(255, 240, 247, .06);
+  --room-mote: rgba(150, 232, 244, .5);
+  --room-rule: rgba(255, 240, 247, .06);
+
+  /* The bezel is the same dark slate in both themes, so the cyan trim and the
+     volume stamp keep their contrast whichever way the room is lit. */
+  --room-board: #2f4a5d;
+  --room-board-deep: #16283a;
+
+  --room-chip: #3d1f34;
+  --room-chip-ink: #fff0f7;
+  --room-chip-line: rgba(150, 232, 244, .42);
+
+  --screen-scan: rgba(122, 224, 239, .06);
+}
+
+.codex.is-game[data-theme='light'] {
+  --room-top: #f3edf2;
+  --room-mid: #ded5e0;
+  --room-deep: #d5a1b9;
+  --room-glow: rgba(23, 110, 131, .16);
+  --room-ink: #241a26;
+  --room-ink-soft: #4b3b48;
+  --room-ink-faint: #6a5665;
+  --room-line: rgba(36, 26, 38, .2);
+  --room-line-soft: rgba(36, 26, 38, .1);
+  --room-panel: rgba(255, 255, 255, .52);
+  --room-panel-line: rgba(23, 110, 131, .4);
+  --room-foil: #176e83;
+  --room-pink: #b8376f;
+  --room-shelf: #9c7488;
+  --room-shelf-2: #ded2dc;
+  --room-sheet: rgba(255, 255, 255, .62);
+  --room-mote: rgba(23, 110, 131, .32);
+  --room-rule: rgba(36, 26, 38, .07);
+  --room-chip: #fdfbfd;
+  --room-chip-ink: #241a26;
+  --room-chip-line: rgba(23, 110, 131, .45);
+}
+
+/* ---------- the room ---------- */
+
+.codex.is-game .codex-bg-book {
+  background:
+    repeating-linear-gradient(30deg, transparent 0 49.5%, rgba(255, 240, 247, .05) 50%, transparent 50.5%),
+    repeating-linear-gradient(-30deg, transparent 0 49.5%, var(--screen-scan) 50%, transparent 50.5%),
+    radial-gradient(120% 80% at 50% -6%, var(--room-glow), transparent 60%),
+    radial-gradient(90% 60% at 50% 106%, rgba(10, 2, 8, .5), transparent 64%),
+    linear-gradient(162deg, var(--room-top) 0%, var(--room-mid) 52%, var(--room-deep) 100%);
+  background-size: 58px 58px, 58px 58px, auto, auto, auto;
+}
+
+.codex.is-game[data-theme='light'] .codex-bg-book {
+  background:
+    repeating-linear-gradient(30deg, transparent 0 49.5%, rgba(36, 26, 38, .04) 50%, transparent 50.5%),
+    repeating-linear-gradient(-30deg, transparent 0 49.5%, rgba(23, 110, 131, .05) 50%, transparent 50.5%),
+    radial-gradient(120% 80% at 50% -6%, var(--room-glow), transparent 60%),
+    radial-gradient(90% 60% at 50% 106%, rgba(96, 60, 80, .22), transparent 64%),
+    linear-gradient(162deg, var(--room-top) 0%, var(--room-mid) 52%, var(--room-deep) 100%);
+  background-size: 58px 58px, 58px 58px, auto, auto, auto;
+}
+
+/* The grid is denser here so the room reads as a screen rather than a wall. */
+.codex.is-game .codex-bg-grid {
+  background-image:
+    repeating-linear-gradient(90deg, var(--room-rule) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(0deg, var(--room-rule) 0 1px, transparent 1px 32px);
+}
+
+.codex.is-game[data-theme='light'] .codex-bg-sheets i { box-shadow: 0 20px 40px rgba(74, 42, 60, .24); }
+
+.codex.is-game .codex-head-num { opacity: .16; }
+.codex.is-game[data-theme='light'] .codex-head-num { opacity: .24; }
+
+/* ---------- the heading ---------- */
+
+.codex.is-game .codex-book-head::after {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--room-foil) 26%, var(--room-foil) 74%, transparent);
+  box-shadow: 0 8px 0 -1px color-mix(in srgb, var(--room-pink), transparent 48%);
+}
+
+.codex.is-game .codex-note-line {
+  background: var(--room-panel);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.codex.is-game[data-theme='light'] .codex-note-line.is-error { color: #8a1f1f; border-color: rgba(158, 32, 32, .45); }
+
+/* ---------- the bezel ---------- */
+
+.codex.is-game .codex-book-board {
+  border-color: rgba(122, 224, 239, .38);
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(0deg, rgba(122, 224, 239, .05) 0 1px, transparent 1px 5px),
+    linear-gradient(140deg, var(--room-board) 0%, var(--room-board-deep) 100%);
+  box-shadow:
+    -10px 12px 0 color-mix(in srgb, var(--room-pink), transparent 60%),
+    0 34px 70px rgba(0, 0, 0, .5),
+    0 0 0 1px rgba(122, 224, 239, .1) inset;
+}
+
+.codex.is-game .codex-book-board::before {
+  inset: 10px;
+  border-color: rgba(122, 224, 239, .3);
+  border-radius: 12px;
+}
+
+.codex.is-game .codex-book-block {
+  border-radius: 12px;
+  background: var(--paper-deep);
+  box-shadow:
+    5px 5px 0 rgba(122, 224, 239, .12),
+    9px 9px 0 rgba(122, 224, 239, .08),
+    13px 13px 0 rgba(122, 224, 239, .05),
+    0 18px 36px rgba(0, 0, 0, .45);
+}
+
+.codex.is-game .codex-book-stamp {
+  border-color: rgba(122, 224, 239, .5);
+  border-radius: 3px;
+  background: rgba(6, 16, 25, .72);
+  color: var(--room-foil);
+  transform: none;
+}
+
+.codex.is-game .codex-book-spine { color: var(--room-foil); }
+.codex.is-game .codex-book-spine i { background: linear-gradient(180deg, transparent, var(--room-foil), transparent); }
+
+/* ---------- the screen ---------- */
+
+.codex.is-game .codex-arrow {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.codex.is-game .codex-tabs button.is-on {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--entry-accent), transparent 55%);
+}
+
+.codex.is-game .codex-gutter {
+  background: linear-gradient(90deg, transparent 0%, rgba(122, 224, 239, .1) 44%, rgba(122, 224, 239, .32) 50%, rgba(122, 224, 239, .1) 56%, transparent 100%);
+}
+
+.codex.is-game .codex-spread {
+  background:
+    repeating-linear-gradient(0deg, var(--screen-scan) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  box-shadow: 0 0 0 1px rgba(122, 224, 239, .28), 0 0 60px rgba(0, 0, 0, .5) inset;
+}
+
+/* Target corners in the entry's own colour, echoing the hero's reticle. */
+.codex.is-game .codex-spread::before,
+.codex.is-game .codex-spread::after {
+  position: absolute;
+  z-index: 7;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--entry-accent);
+  opacity: .8;
+  content: '';
+  pointer-events: none;
+}
+
+.codex.is-game .codex-spread::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.codex.is-game .codex-spread::after { right: 10px; bottom: 10px; border-top: 0; border-left: 0; }
+
+.codex.is-game .codex-ribbon {
+  top: -12px;
+  left: 22px;
+  width: 92px;
+  height: 24px;
+  background: linear-gradient(90deg, var(--entry-accent), color-mix(in srgb, var(--entry-accent), #05121c 48%));
+  clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.codex.is-game .codex-ribbon::after { inset: 0 9px; }
+
+.codex.is-game .codex-leaf.is-verso {
+  border-right-color: rgba(122, 224, 239, .22);
+  background:
+    radial-gradient(80% 70% at 50% 78%, color-mix(in srgb, var(--entry-accent), transparent 84%), transparent 70%),
+    repeating-linear-gradient(0deg, var(--screen-scan) 0 1px, transparent 1px 6px);
+}
+
+.codex.is-game .codex-leaf-mark b { color: var(--entry-accent); }
+
+/* The plate is a screen, so the cut-out gets an accent glow instead of a
+   shadow to sit in. */
+.codex.is-game .codex-plate {
+  background: linear-gradient(180deg, var(--paper-hi), var(--paper));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, .5), 0 0 0 1px rgba(122, 224, 239, .32);
+}
+
+.codex.is-game .codex-plate-reg { display: none; }
+
+.codex.is-game .codex-plate-mat {
+  inset: 12px;
+  border: 0;
+  background:
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 0 0 / 26px 2px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 0 0 / 2px 26px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 100% 0 / 26px 2px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 100% 0 / 2px 26px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 0 100% / 26px 2px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 0 100% / 2px 26px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 100% 100% / 26px 2px no-repeat,
+    linear-gradient(var(--entry-accent), var(--entry-accent)) 100% 100% / 2px 26px no-repeat;
+  opacity: .8;
+}
+
+.codex.is-game .codex-plate-image {
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .65)) drop-shadow(0 0 26px color-mix(in srgb, var(--entry-accent), transparent 72%));
+}
+
+.codex.is-game .codex-plate-caption { color: var(--paper-ink-soft); }
+
+/* On a dark screen an accent-filled chip with dark ink would disappear, so the
+   trait chips become outline-on-tint with the accent lifted towards white. */
+.codex.is-game .codex-traits b {
+  border-color: color-mix(in srgb, var(--entry-accent), transparent 42%);
+  background: color-mix(in srgb, var(--entry-accent), transparent 86%);
+  color: color-mix(in srgb, var(--entry-accent), #ffffff 42%);
+}
+
+.codex.is-game .codex-view {
+  border: 0;
+  background: var(--entry-accent);
+  color: #07131c;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .42);
+}
+
+.codex.is-game .codex-yt,
+.codex.is-game .codex-save .bookmark-toggle { background: rgba(122, 224, 239, .07); }
+
+.codex.is-game .codex-yt-text b { color: #ff6a5f; }
+.codex.is-game .codex-yt:hover { background: rgba(255, 106, 95, .12); }
+
+.codex.is-game .codex-save.is-on .bookmark-toggle {
+  background: color-mix(in srgb, var(--entry-accent), transparent 82%);
+  color: color-mix(in srgb, var(--entry-accent), #ffffff 42%);
+}
+
+/* ---------- the sheet in the air ---------- */
+
+.codex.is-game .codex-fold-face {
+  background:
+    repeating-linear-gradient(0deg, var(--screen-scan) 0 1px, transparent 1px 4px),
+    linear-gradient(100deg, var(--paper) 0%, var(--paper-deep) 100%);
+}
+
+.codex.is-game .codex-fold-face img {
+  opacity: .32;
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--entry-accent), transparent 55%));
+}
+
+.codex.is-game .codex-fold-shade { background: linear-gradient(90deg, rgba(122, 224, 239, .05), rgba(2, 8, 14, .7)); }
+
+/* ---------- motion ---------- */
+
+.codex.is-game .codex-stage::after {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--room-foil), transparent);
+  content: '';
+  pointer-events: none;
+  animation: codex-scan 7s ease-in-out infinite;
+}
+
+@keyframes codex-scan {
+  0% { top: 0; opacity: 0; }
+  12% { opacity: .5; }
+  52% { top: calc(100% - 2px); opacity: .5; }
+  64%, 100% { top: calc(100% - 2px); opacity: 0; }
+}
+
+/* ========================================================================== */
+/* The game skin, continued: the open profile.                                */
+/*                                                                            */
+/* The popup is portalled to the end of <body>, so it inherits none of the     */
+/* section's tokens and has to carry its own set of them — otherwise the      */
+/* screen gradient resolves to nothing and the ink lands on the veil.         */
+/* ========================================================================== */
+
+.codex-modal.is-game {
+  --paper: #0b1a27;
+  --paper-deep: #061019;
+  --paper-ink: #eaf5f9;
+  --paper-ink-soft: #b0c6d1;
+  --paper-ink-faint: #8399a6;
+  --paper-line: rgba(122, 224, 239, .24);
+  --paper-hi: #12283a;
+}
+
+.codex-modal.is-game .codex-modal-veil { background: rgba(22, 5, 16, .7); }
+.codex-modal.is-game[data-theme='light'] .codex-modal-veil { background: rgba(72, 22, 48, .58); }
+
+.codex-modal.is-game .codex-modal-book {
+  border-radius: 20px;
+  box-shadow:
+    -10px 12px 0 color-mix(in srgb, #b8376f, transparent 60%),
+    0 60px 120px rgba(0, 0, 0, .6),
+    0 0 0 1px rgba(122, 224, 239, .3);
+}
+
+.codex-modal.is-game .codex-modal-board {
+  border: 0;
+  background: none;
+  box-shadow: inset 0 0 0 1px rgba(122, 224, 239, .2);
+}
+
+.codex-modal.is-game .codex-modal-close {
+  border-color: rgba(122, 224, 239, .4);
+  border-radius: 3px;
+  background: rgba(6, 16, 25, .82);
+  color: #eaf5f9;
+}
+
+.codex-modal.is-game .codex-traits b {
+  border-color: color-mix(in srgb, var(--entry-accent), transparent 42%);
+  background: color-mix(in srgb, var(--entry-accent), transparent 86%);
+  color: color-mix(in srgb, var(--entry-accent), #ffffff 42%);
+}
+
+.codex-modal.is-game .codex-view {
+  border: 0;
+  background: var(--entry-accent);
+  color: #07131c;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .42);
+}
+
+.codex-modal.is-game .codex-yt,
+.codex-modal.is-game .codex-save .bookmark-toggle { background: rgba(122, 224, 239, .07); }
+
+.codex-modal.is-game .codex-yt-text b { color: #ff6a5f; }
+
+.codex-modal.is-game .codex-save.is-on .bookmark-toggle {
+  background: color-mix(in srgb, var(--entry-accent), transparent 82%);
+  color: color-mix(in srgb, var(--entry-accent), #ffffff 42%);
+}
+
+.codex-modal.is-game .codex-screen,
+.codex-modal.is-game .codex-modal-others { background: rgba(122, 224, 239, .05); }
+
+.codex-modal.is-game .codex-screen-play { border-radius: 4px; }
+
+.codex-modal.is-game .codex-modal-others-no { color: #07131c; }
+
+/* ========================================================================== */
+/* The cinema skin.                                                          */
+/*                                                                            */
+/* Mounted by the movies page as its second section, so the room has to be     */
+/* that page and not a bookshop. Every colour the room publishes is lifted     */
+/* from movies.css rather than invented, which is what keeps the section from  */
+/* reading as an anime page that got dropped in. By night the room is the      */
+/* hero frame's own emerald run through the page's crystal gradient —          */
+/* #3f6859, #31534a, down to the #192b28 page background — and by day the     */
+/* same run through the light theme's #e0ece5, #c5d9cf, #b8cec4. The foil and  */
+/* the second accent are the page's own --movie-accent and --movie-deep-accent.*/
+/*                                                                            */
+/* The reader is treated as a projection rather than a book: the surround is a */
+/* screen bezel, a beam sweeps down the spread, and the spread is still light  */
+/* paper, because the type on it has to stay readable in both themes.          */
+/* ========================================================================== */
+
+.codex.is-cinema {
+  --room-top: #3f6859;
+  --room-mid: #31534a;
+  --room-deep: #192b28;
+  --room-glow: rgba(119, 201, 174, .2);
+  --room-ink: #eff9f2;
+  --room-ink-soft: #c6dcd1;
+  --room-ink-faint: #8fa89c;
+  --room-line: rgba(239, 249, 242, .16);
+  --room-line-soft: rgba(239, 249, 242, .08);
+  --room-panel: rgba(9, 24, 21, .34);
+  --room-panel-line: rgba(119, 201, 174, .4);
+  --room-foil: #77c9ae;
+  --room-jade: #328d79;
+  --room-shelf: #0d1c19;
+  --room-shelf-2: #2c4f45;
+  --room-sheet: rgba(239, 249, 242, .05);
+  --room-mote: rgba(166, 222, 201, .5);
+  --room-rule: rgba(239, 249, 242, .05);
+
+  /* The bezel is one dark slate in both themes, so the jade trim and the
+     volume stamp keep their contrast whichever way the room is lit. */
+  --room-board: #1c3b34;
+  --room-board-deep: #0c1e1a;
+
+  --room-chip: #1b3831;
+  --room-chip-ink: #eff9f2;
+  --room-chip-line: rgba(119, 201, 174, .36);
+
+  --screen-beam: rgba(166, 222, 201, .16);
+}
+
+.codex.is-cinema[data-theme='light'] {
+  --room-top: #e0ece5;
+  --room-mid: #c5d9cf;
+  --room-deep: #b8cec4;
+  --room-glow: rgba(36, 124, 109, .18);
+  --room-ink: #163a34;
+  --room-ink-soft: #2c4c44;
+  --room-ink-faint: #3d5d53;
+  --room-line: rgba(22, 58, 52, .2);
+  --room-line-soft: rgba(22, 58, 52, .1);
+  --room-panel: rgba(255, 255, 255, .5);
+  --room-panel-line: rgba(36, 124, 109, .4);
+  --room-foil: #247c6d;
+  --room-jade: #246f63;
+  --room-shelf: #6f8f83;
+  --room-shelf-2: #cfe0d7;
+  --room-sheet: rgba(255, 255, 255, .6);
+  --room-mote: rgba(36, 124, 109, .3);
+  --room-rule: rgba(22, 58, 52, .07);
+  --room-chip: #f7fcf8;
+  --room-chip-ink: #163a34;
+  --room-chip-line: rgba(22, 58, 52, .38);
+
+  --screen-beam: rgba(255, 255, 255, .5);
+}
+
+/* ---------- the room ---------- */
+
+/* Two projectors throw from the top corners, which is where the page's own
+   crystal highlights sit, so the wash lands on the same parts of the frame. */
+.codex.is-cinema .codex-bg-book {
+  background:
+    radial-gradient(70% 60% at 14% -4%, var(--room-glow), transparent 64%),
+    radial-gradient(70% 60% at 86% -4%, var(--room-glow), transparent 64%),
+    radial-gradient(90% 56% at 50% 108%, rgba(0, 0, 0, .5), transparent 66%),
+    linear-gradient(168deg, var(--room-top) 0%, var(--room-mid) 58%, var(--room-deep) 100%);
+}
+
+.codex.is-cinema[data-theme='light'] .codex-bg-book {
+  background:
+    radial-gradient(70% 60% at 14% -4%, var(--room-glow), transparent 64%),
+    radial-gradient(70% 60% at 86% -4%, var(--room-glow), transparent 64%),
+    radial-gradient(90% 56% at 50% 108%, rgba(22, 58, 52, .2), transparent 66%),
+    linear-gradient(168deg, var(--room-top) 0%, var(--room-mid) 58%, var(--room-deep) 100%);
+}
+
+/* A tighter grid than the book room, so the wall reads as panelling. */
+.codex.is-cinema .codex-bg-grid {
+  background-image:
+    repeating-linear-gradient(90deg, var(--room-rule) 0 1px, transparent 1px 54px),
+    repeating-linear-gradient(0deg, var(--room-rule) 0 1px, transparent 1px 54px);
+}
+
+.codex.is-cinema .codex-head-num { opacity: .18; }
+.codex.is-cinema[data-theme='light'] .codex-head-num { opacity: .22; }
+
+/* The floor of spines becomes a rack of film canisters: squarer, glossier,
+   and lit along the top edge so they catch the projector. */
+.codex.is-cinema .codex-bg-shelf {
+  background: linear-gradient(180deg, transparent, var(--room-shelf) 82%);
+  opacity: .62;
+}
+
+.codex.is-cinema .codex-bg-shelf i {
+  border-radius: 1px;
+  background:
+    linear-gradient(180deg, rgba(166, 222, 201, .22) 0 2px, transparent 2px),
+    linear-gradient(180deg, var(--room-shelf-2), var(--room-shelf) 84%);
+}
+
+/* And the loose sheets become one-sheet posters, hung flat and cropped. */
+.codex.is-cinema .codex-bg-sheets i {
+  background:
+    linear-gradient(90deg, var(--room-foil), transparent 60%) 0 0 / 100% 3px no-repeat,
+    linear-gradient(180deg, var(--room-sheet), transparent 76%),
+    repeating-linear-gradient(0deg, var(--room-rule) 0 1px, transparent 1px 16px);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .34);
+}
+
+.codex.is-cinema[data-theme='light'] .codex-bg-sheets i { box-shadow: 0 20px 40px rgba(22, 58, 52, .2); }
+
+/* ---------- the heading ---------- */
+
+/* A marquee rule: one clean bar in the page's jade rather than the book's
+   lozenge, because the hero above it is built entirely from straight edges. */
+.codex.is-cinema .codex-book-head::after {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--room-foil) 24%, var(--room-jade) 76%, transparent);
+  box-shadow: 0 7px 0 -1px color-mix(in srgb, var(--room-foil), transparent 55%);
+}
+
+.codex.is-cinema .codex-note-line {
+  background: var(--room-panel);
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.codex.is-cinema[data-theme='light'] .codex-note-line.is-error { color: #8a1f1f; border-color: rgba(158, 32, 32, .45); }
+
+/* ---------- the screen ---------- */
+
+.codex.is-cinema .codex-book-board {
+  border-color: rgba(119, 201, 174, .34);
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(119, 201, 174, .04) 0 1px, transparent 1px 9px),
+    linear-gradient(140deg, var(--room-board) 0%, var(--room-board-deep) 100%);
+  box-shadow:
+    -10px 12px 0 color-mix(in srgb, var(--room-jade), transparent 66%),
+    0 40px 80px rgba(0, 0, 0, .52),
+    0 0 0 1px rgba(119, 201, 174, .1) inset;
+}
+
+.codex.is-cinema .codex-book-board::before {
+  inset: 10px;
+  border-color: rgba(119, 201, 174, .28);
+  border-radius: 0;
+}
+
+.codex.is-cinema .codex-book-block {
+  border-radius: 0;
+  background: var(--paper-deep);
+  box-shadow:
+    5px 5px 0 color-mix(in srgb, var(--room-jade), transparent 78%),
+    9px 9px 0 color-mix(in srgb, var(--room-jade), transparent 86%),
+    0 18px 36px rgba(0, 0, 0, .45);
+}
+
+.codex.is-cinema .codex-book-stamp {
+  border-color: rgba(119, 201, 174, .5);
+  border-radius: 0;
+  background: rgba(8, 24, 20, .74);
+  color: var(--room-foil);
+  transform: none;
+}
+
+.codex.is-cinema .codex-book-spine { color: var(--room-foil); }
+.codex.is-cinema .codex-book-spine i { background: linear-gradient(180deg, transparent, var(--room-foil), transparent); }
+
+.codex.is-cinema .codex-arrow { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+
+.codex.is-cinema .codex-tabs button.is-on {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--entry-accent), transparent 55%);
+}
+
+.codex.is-cinema .codex-tab-no { border-radius: 0; }
+
+/* The seam of the old book becomes the join between two projection panels. */
+.codex.is-cinema .codex-gutter {
+  width: 96px;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--room-foil), transparent 78%) 44%, color-mix(in srgb, var(--room-foil), transparent 40%) 50%, color-mix(in srgb, var(--room-foil), transparent 78%) 56%, transparent 100%);
+}
+
+/* ---------- the spread ---------- */
+
+.codex.is-cinema .codex-spread {
+  background:
+    repeating-linear-gradient(0deg, var(--screen-beam) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  box-shadow: 0 0 0 1px rgba(119, 201, 174, .26), 0 0 70px rgba(0, 0, 0, .45) inset;
+}
+
+/* Sprocket holes down the top and bottom edges, so the spread reads as a
+   length of film rather than a page. The game skin claimed ::before/::after
+   for its target corners; this is the same pair, used for the strip. */
+.codex.is-cinema .codex-spread::before,
+.codex.is-cinema .codex-spread::after {
+  position: absolute;
+  z-index: 7;
+  right: 0;
+  left: 0;
+  height: 9px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 7px, color-mix(in srgb, var(--room-foil), transparent 55%) 7px 17px, transparent 17px 26px);
+  content: '';
+  pointer-events: none;
+}
+
+.codex.is-cinema .codex-spread::before { top: 0; }
+.codex.is-cinema .codex-spread::after { bottom: 0; }
+
+/* The bookmark ribbon becomes the leader tab every film strip starts with. */
+.codex.is-cinema .codex-ribbon {
+  top: -10px;
+  left: 24px;
+  width: 108px;
+  height: 22px;
+  background: linear-gradient(90deg, var(--entry-accent), color-mix(in srgb, var(--entry-accent), #04120e 46%));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .4);
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+
+.codex.is-cinema .codex-ribbon::after { inset: 0 10px; }
+
+.codex.is-cinema .codex-leaf.is-verso {
+  border-right-color: color-mix(in srgb, var(--room-foil), transparent 68%);
+  background:
+    radial-gradient(74% 66% at 50% 76%, color-mix(in srgb, var(--entry-accent), transparent 88%), transparent 72%),
+    repeating-linear-gradient(0deg, var(--screen-beam) 0 1px, transparent 1px 7px);
+}
+
+.codex.is-cinema .codex-leaf-mark b { color: var(--entry-accent); }
+
+/* The plate is a still, so the cut-out gets a lit edge instead of a paper mat. */
+.codex.is-cinema .codex-plate {
+  background: linear-gradient(180deg, var(--paper-hi), var(--paper));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, .42), 0 0 0 1px rgba(119, 201, 174, .28);
+}
+
+.codex.is-cinema .codex-plate-reg { display: none; }
+
+.codex.is-cinema .codex-plate-mat {
+  inset: 12px;
+  border: 1px solid color-mix(in srgb, var(--entry-accent), transparent 62%);
+  border-width: 1px 1px 3px;
+  background: none;
+  opacity: .85;
+}
+
+.codex.is-cinema .codex-plate-image {
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .6)) drop-shadow(0 0 30px color-mix(in srgb, var(--room-foil), transparent 78%));
+}
+
+.codex.is-cinema .codex-plate-caption { color: var(--paper-ink-soft); }
+
+.codex.is-cinema .codex-traits b {
+  border-color: color-mix(in srgb, var(--entry-accent), transparent 46%);
+  background: color-mix(in srgb, var(--entry-accent), transparent 90%);
+  color: color-mix(in srgb, var(--entry-accent), #0d1a16 52%);
+}
+
+.codex.is-cinema .codex-view {
+  border: 0;
+  background: var(--room-foil);
+  color: #0a1c17;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .4);
+}
+
+.codex.is-cinema .codex-yt,
+.codex.is-cinema .codex-save .bookmark-toggle { background: color-mix(in srgb, var(--room-foil), transparent 92%); }
+
+.codex.is-cinema .codex-save .bookmark-note { color: var(--paper-ink); }
+.codex.is-cinema .codex-save .bookmark-note input { color: var(--paper-ink); }
+
+.codex.is-cinema .codex-save.is-on .bookmark-toggle {
+  background: color-mix(in srgb, var(--entry-accent), transparent 86%);
+  color: color-mix(in srgb, var(--entry-accent), #0d1a16 52%);
+}
+
+/* ---------- the sheet in the air ---------- */
+
+.codex.is-cinema .codex-fold-face {
+  background:
+    repeating-linear-gradient(0deg, var(--screen-beam) 0 1px, transparent 1px 5px),
+    linear-gradient(100deg, var(--paper) 0%, var(--paper-deep) 100%);
+}
+
+.codex.is-cinema .codex-fold-face img {
+  opacity: .3;
+  filter: drop-shadow(0 0 26px color-mix(in srgb, var(--room-foil), transparent 58%));
+}
+
+.codex.is-cinema .codex-fold-shade { background: linear-gradient(90deg, color-mix(in srgb, var(--room-foil), transparent 94%), rgba(6, 20, 17, .68)); }
+
+/* ---------- motion ---------- */
+
+/* The beam. It never stops, but the reduced-motion block above collapses its
+   animation to a single frame, so the base state carries a resting haze rather
+   than freezing the sweep at zero opacity and leaving nothing behind. */
+.codex.is-cinema .codex-stage::before {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 46%;
+  background: linear-gradient(180deg, var(--screen-beam), transparent);
+  content: '';
+  opacity: .5;
+  pointer-events: none;
+  animation: codex-projector 9s ease-in-out infinite;
+}
+
+@keyframes codex-projector {
+  0% { opacity: 0; transform: translateY(-30%); }
+  18% { opacity: .9; }
+  58% { opacity: .55; transform: translateY(60%); }
+  76%, 100% { opacity: 0; transform: translateY(90%); }
+}
+
+/* ========================================================================== */
+/* The cinema skin, continued: the open profile.                               */
+/*                                                                            */
+/* The popup is portalled to the end of <body>, so it inherits none of the     */
+/* section's tokens and has to carry its own set of them. The paper stays light */
+/* in both themes — only the bezel, the veil and the trim are re-cut, so the    */
+/* long biography column keeps the same contrast it has in the book.           */
+/* ========================================================================== */
+
+.codex-modal.is-cinema {
+  --paper: #f7fbf8;
+  --paper-deep: #eaf3ee;
+  --paper-ink: #14231f;
+  --paper-ink-soft: #45564f;
+  --paper-ink-faint: #6c7d75;
+  --paper-line: rgba(20, 35, 31, .2);
+  --paper-hi: #fdfffd;
+}
+
+.codex-modal.is-cinema .codex-modal-veil { background: rgba(6, 26, 21, .72); }
+.codex-modal.is-cinema[data-theme='light'] .codex-modal-veil { background: rgba(24, 62, 53, .58); }
+
+.codex-modal.is-cinema .codex-modal-book {
+  border-radius: 0;
+  box-shadow:
+    -10px 12px 0 color-mix(in srgb, #246f63, transparent 62%),
+    0 60px 120px rgba(0, 0, 0, .6),
+    0 0 0 1px rgba(119, 201, 174, .3);
+}
+
+.codex-modal.is-cinema .codex-modal-board {
+  border: 0;
+  background: none;
+  box-shadow: inset 0 0 0 1px rgba(119, 201, 174, .22);
+}
+
+.codex-modal.is-cinema .codex-modal-close {
+  border-color: rgba(119, 201, 174, .4);
+  border-radius: 0;
+  background: rgba(8, 24, 20, .8);
+  color: #eff9f2;
+}
+
+.codex-modal.is-cinema .codex-traits b {
+  border-color: color-mix(in srgb, var(--entry-accent), transparent 46%);
+  background: color-mix(in srgb, var(--entry-accent), transparent 90%);
+  color: color-mix(in srgb, var(--entry-accent), #0d1a16 52%);
+}
+
+.codex-modal.is-cinema .codex-view {
+  border: 0;
+  background: var(--entry-accent);
+  color: #0a1c17;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .4);
+}
+
+.codex-modal.is-cinema .codex-yt,
+.codex-modal.is-cinema .codex-save .bookmark-toggle { background: color-mix(in srgb, var(--entry-accent), transparent 92%); }
+
+.codex-modal.is-cinema .codex-save .bookmark-note { color: var(--paper-ink); }
+.codex-modal.is-cinema .codex-save .bookmark-note input { color: var(--paper-ink); }
+
+.codex-modal.is-cinema .codex-save.is-on .bookmark-toggle {
+  background: color-mix(in srgb, var(--entry-accent), transparent 86%);
+  color: color-mix(in srgb, var(--entry-accent), #0d1a16 52%);
+}
+
+.codex-modal.is-cinema .codex-screen,
+.codex-modal.is-cinema .codex-modal-others { background: color-mix(in srgb, #247c6d, transparent 94%); }
+
+.codex-modal.is-cinema .codex-screen-play { border-radius: 0; }
+
+.codex-modal.is-cinema .codex-modal-others-no { border-radius: 0; color: #0a1c17; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+  .codex.is-cinema .codex-gutter { display: none; }
+  .codex.is-cinema .codex-leaf.is-verso { border-right: 0; border-bottom: 1px solid var(--paper-line); }
+}
+
+

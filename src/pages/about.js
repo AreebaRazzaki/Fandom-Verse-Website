@@ -17,10 +17,10 @@ const FANDOMS = [
 ];
 
 const TEAM = [
-  { name: 'Areeba', role: 'Founder & curator', line: 'Decides what gets printed and refuses to reprint it.', art: '/assets/images/comics.png' },
-  { name: 'Zoya', role: 'Editorial', line: 'Writes the articles and keeps the canon honest.', art: '/assets/images/k-pop.png' },
-  { name: 'Hassan', role: 'Design', line: 'Builds the vault, the map and everything you can save.', art: '/assets/images/bg comics.png' },
-  { name: 'Maham', role: 'Community', line: 'Runs the events calendar and answers every email.', art: '/assets/images/manga.png' },
+  { name: 'Areeba', role: 'Founder & curator', line: 'Decides what gets printed and refuses to reprint it.', art: '/assets/images/areeba.jpg' },
+  { name: 'Rafay', role: 'Editorial', line: 'Writes the articles and keeps the canon honest.', art: '/assets/images/rafay.jpg' },
+  { name: 'Rida', role: 'Design', line: 'Builds the vault, the map and everything you can save.', art: '/assets/images/rida.jpg' },
+  { name: 'Musab', role: 'Community', line: 'Runs the events calendar and answers every email.', art: '/assets/images/musab.jpg' },
 ];
 
 const REASONS = [
@@ -48,44 +48,45 @@ function About() {
 
       <header className="ab-hero">
         {/* Decorative geometry fills what used to read as dead space above and
-            beside the wordmark, in both themes. It all sits behind the copy. */}
+            beside the wordmark, in both themes. */}
         <div className="ab-hero-shapes" aria-hidden="true">
-          <span className="ab-shape is-halo" />
           <span className="ab-shape is-ring" />
-          <span className="ab-shape is-ring is-ring-outer" />
           <span className="ab-shape is-disc" />
-          <span className="ab-shape is-blob" />
           <span className="ab-shape is-shard" />
           <span className="ab-shape is-bar" />
-          <span className="ab-shape is-bar is-bar-two" />
           <span className="ab-shape is-dash" />
           <span className="ab-shape is-dot" />
-          <span className="ab-shape is-grid" />
         </div>
+         <div className="ab-hero-layout">
+           <figure className="ab-story-card">
+             <div className="ab-story-card-head"><span>FIELD NOTES / 001</span><b>FV</b></div>
+             <div className="ab-story-art"><img src="/assets/images/manga.png" alt="Illustrated fandom character" /><i>ARCHIVE<br />OF<br />OBSESSION</i></div>
+             <figcaption><b>Every story needs a shelf.</b><span>Collected across seven rooms, kept alive by the people who still care.</span></figcaption>
+             <div className="ab-story-card-foot"><span>EST. 2024</span><span>OPEN THE BOOK →</span></div>
+           </figure>
 
-        <div className="ab-hero-inner">
-          <p className="ab-kicker">About the site</p>
-          <h1>THE STORY BEHIND <em>FANDOMVERSE</em></h1>
-          <p className="ab-lede">
-            Fandomverse is a fan-run shelf for the seven worlds we keep coming back to. Every corner of the
-            site was built around one idea: the stuff you love deserves a proper place to live.
-          </p>
-        </div>
-
-        <div className="ab-hero-stats">
-          <div><b>7</b><i>Fandoms</i></div>
-          <div><b>23</b><i>Releases tracked</i></div>
-          <div><b>84</b><i>Shelf items</i></div>
-        </div>
+           <div className="ab-hero-copy">
+             <p className="ab-kicker">About the site · A living archive</p>
+             <h1>THE STORY BEHIND <em>FANDOMVERSE</em></h1>
+             <p className="ab-lede">
+               Fandomverse began as a margin in a notebook: a place for the worlds we return to, the scenes
+               we quote, and the objects we refuse to let disappear. Now it is a fan-run shelf for seven
+               universes, built to feel like opening a new chapter.
+             </p>
+             <div className="ab-hero-stats">
+               <div><b>7</b><i>Fandoms</i></div>
+               <div><b>23</b><i>Releases tracked</i></div>
+               <div><b>84</b><i>Shelf items</i></div>
+             </div>
+           </div>
+         </div>
       </header>
 
       <section className="ab-why" aria-label="Why FandomVerse">
-        <p className="ab-eyebrow"><b>01</b> Why we built it</p>
         <h2>WHY FANDOMVERSE</h2>
         <div className="ab-why-grid">
-          {REASONS.map((reason, index) => (
+          {REASONS.map((reason) => (
             <article key={reason.head} className="ab-why-card">
-              <span className="ab-why-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <h3>{reason.head}</h3>
               <p>{reason.line}</p>
             </article>
@@ -93,14 +94,14 @@ function About() {
         </div>
       </section>
 
-      {/* The map is one shared panel: pick a fandom, the hub redraws around it. */}
-      <section className="ab-map" aria-label="Fandom universe map">
-        <div className="ab-map-copy">
-          <p className="ab-eyebrow"><b>02</b> The map</p>
-          <h2>FANDOM UNIVERSE MAP</h2>
-          <p>Seven fandoms orbit one hub. Choose a world to see what lives there.</p>
+      <section className="ab-chapters" aria-label="Fandom field guide">
+        <div className="ab-chapters-intro">
+          <p className="ab-section-kicker">The field guide · seven chapters</p>
+          <h2>TURN THE PAGE.<br /><em>FIND YOUR WORLD.</em></h2>
+          <p>There is no single way into a fandom. Choose a chapter and see the objects, stories and rituals waiting inside.</p>
+        </div>
 
-          <div className="ab-map-nodes" role="tablist" aria-label="Choose a fandom">
+        <div className="ab-chapter-rail" role="tablist" aria-label="Choose a fandom chapter">
             {FANDOMS.map((item) => (
               <button
                 type="button"
@@ -112,41 +113,26 @@ function About() {
                 className={`ab-node${openFandom === item.id ? ' is-active' : ''}`}
                 onClick={() => setOpenFandom(item.id)}
               >
-                {item.name}
+                <small>0{FANDOMS.indexOf(item) + 1}</small><span>{item.name}</span><b>↗</b>
               </button>
             ))}
-          </div>
         </div>
 
-        <div className="ab-hub" role="img" aria-label="Fandomverse hub with seven fandoms around it">
-          <span className="ab-hub-ring" aria-hidden="true" />
-          <span className="ab-hub-ring ab-hub-ring-two" aria-hidden="true" />
-          <b className="ab-hub-core">FANDOMVERSE</b>
-          {FANDOMS.map((item, index) => (
-            <i key={item.id} className={`ab-satellite is-at-${index + 1}${openFandom === item.id ? ' is-active' : ''}`} aria-hidden="true">
-              {item.name}
-            </i>
-          ))}
-        </div>
-
-        <div
-          className="ab-map-detail"
+        <article
+          className="ab-chapter-detail"
           id="ab-map-detail"
           role="tabpanel"
           aria-labelledby={`ab-tab-${active.id}`}
           key={active.id}
         >
-          <img src={active.art} alt="" />
-          <h3>{active.name}</h3>
-          <p>{active.line}</p>
-          <a className="ab-map-link" href={`#${active.id === 'tv' ? 'tv-shows' : active.id === 'kpop' ? 'k-pop' : active.id}`}>
-            Open {active.name}
+          <div className="ab-chapter-image"><img src={active.art} alt="" /><span>CHAPTER / {String(FANDOMS.indexOf(active) + 1).padStart(2, '0')}</span></div>
+          <div className="ab-chapter-copy"><p className="ab-chapter-label">NOW READING</p><h3>{active.name}</h3><p>{active.line}</p><a className="ab-map-link" href={`#${active.id === 'tv' ? 'tv-shows' : active.id === 'kpop' ? 'k-pop' : active.id}`}>Open chapter
           </a>
-        </div>
+          </div>
+        </article>
       </section>
 
       <section className="ab-team" aria-label="The team">
-        <p className="ab-eyebrow"><b>03</b> The people</p>
         <h2>THE PEOPLE BEHIND IT</h2>
         <div className="ab-team-grid">
           {TEAM.map((member) => (
@@ -161,12 +147,7 @@ function About() {
       </section>
 
       <section className="ab-mission" aria-label="Our mission">
-        <p className="ab-eyebrow"><b>04</b> The promise</p>
-        <h2>OUR MISSION</h2>
-        <p>
-          To keep every fandom on the site current, correctly spelled and honestly presented — and to make
-          finding something you love take one click, not twenty.
-        </p>
+        <div className="ab-mission-copy"><p className="ab-section-kicker">A note from the editors</p><h2>KEEP THE<br /><em>FEELING ALIVE.</em></h2><p>To keep every fandom current, correctly spelled and honestly presented, so finding something you love takes one click, not twenty.</p></div>
         <div className="ab-mission-actions">
           <a className="ab-cta" href="#shop">Browse the vault</a>
           <a className="ab-cta ab-cta-ghost" href="#contact">Talk to us</a>

@@ -1,0 +1,1254 @@
+/* The media wall: two shelves of interactive cards — six stills, six trailers.
+
+   Colour does not live in this file. Every `--mwall-*` tone is injected by the
+   component straight from the fandom's own page stylesheet (see
+   `fandomConfig.js`), so the wall is the page's own surface rather than a
+   second theme laid on top of it. The block below is only the fallback for a
+   fandom that is not registered, plus the derived steps computed from whatever
+   tones arrived. Both `.mwall` and `.mwall-viewer` get the derived steps,
+   because the viewer is portalled out to document.body and inherits nothing. */
+
+.mwall,
+.mwall-viewer {
+  --mwall-line-2: color-mix(in srgb, var(--mwall-line), var(--mwall-ink) 24%);
+  --mwall-chip: color-mix(in srgb, var(--mwall-card), transparent 26%);
+  --mwall-veil: color-mix(in srgb, var(--mwall-page), transparent 6%);
+  --mwall-tint: color-mix(in srgb, var(--mwall-accent), transparent 88%);
+  --mwall-tint-2: color-mix(in srgb, var(--mwall-accent), transparent 74%);
+  --mwall-tint-two: color-mix(in srgb, var(--mwall-accent-two), transparent 82%);
+  --mwall-shadow: 0 24px 56px -30px color-mix(in srgb, var(--mwall-sunk), transparent 16%);
+  --mwall-shadow-lift: 0 34px 70px -28px color-mix(in srgb, var(--mwall-sunk), transparent 2%);
+  --mwall-mark: rgba(255, 255, 255, .58);
+}
+
+.mwall {
+  --mwall-page: #17181a;
+  --mwall-sunk: #0f1012;
+  --mwall-card: #252628;
+  --mwall-mat1: #303134;
+  --mwall-mat2: #1a1b1d;
+  --mwall-ink: #f2f1ee;
+  --mwall-soft: #cdcbc6;
+  --mwall-muted: #8f8d86;
+  --mwall-line: rgba(242, 241, 238, .15);
+  --mwall-accent: #b98516;
+  --mwall-accent-two: #c5962e;
+
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  width: 100%;
+  padding: clamp(78px, 8vw, 116px) 0 clamp(60px, 6vw, 88px);
+  color: var(--mwall-ink);
+  background: var(--mwall-page);
+  font-family: 'Elgraine', Georgia, serif;
+}
+
+.mwall-viewer {
+  --mwall-page: #17181a;
+  --mwall-sunk: #0f1012;
+  --mwall-card: #252628;
+  --mwall-mat1: #303134;
+  --mwall-mat2: #1a1b1d;
+  --mwall-ink: #f2f1ee;
+  --mwall-soft: #cdcbc6;
+  --mwall-muted: #8f8d86;
+  --mwall-line: rgba(242, 241, 238, .15);
+  --mwall-accent: #b98516;
+  --mwall-accent-two: #c5962e;
+}
+
+/* ------------------------------------------------------------------ */
+/* Backdrop: two accent glows, a ruled grid, two great arcs, three light */
+/* beams, vertical tape, a wire of empty frames, loose geometry, film   */
+/* perforations, drifting dust, a giant ghosted word and a grain pass.  */
+/* ------------------------------------------------------------------ */
+
+.mwall-bg,
+.mwall-bg-grid,
+.mwall-bg-tape,
+.mwall-bg-ghost,
+.mwall-bg-grain,
+.mwall-bg-arcs,
+.mwall-bg-beams,
+.mwall-bg-shapes,
+.mwall-bg-frames,
+.mwall-bg-perf,
+.mwall-bg-motes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mwall-bg {
+  background:
+    radial-gradient(96% 58% at 88% -8%, var(--mwall-tint), transparent 60%),
+    radial-gradient(78% 54% at 2% 104%, var(--mwall-tint-two), transparent 58%),
+    linear-gradient(180deg, var(--mwall-sunk), var(--mwall-page) 38%, var(--mwall-sunk));
+}
+
+.mwall-bg-grid {
+  opacity: .4;
+  background-image:
+    linear-gradient(to right, var(--mwall-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--mwall-line) 1px, transparent 1px);
+  background-size: 132px 132px;
+  mask-image: radial-gradient(120% 84% at 50% 6%, #000 20%, transparent 74%);
+  -webkit-mask-image: radial-gradient(120% 84% at 50% 6%, #000 20%, transparent 74%);
+}
+
+.mwall-bg-tape i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--mwall-accent), transparent 70%), transparent);
+}
+.mwall-bg-tape i:nth-child(1) { left: 8%; }
+.mwall-bg-tape i:nth-child(2) { left: 27%; opacity: .55; }
+.mwall-bg-tape i:nth-child(3) { left: 50%; opacity: .4; }
+.mwall-bg-tape i:nth-child(4) { left: 73%; opacity: .55; }
+.mwall-bg-tape i:nth-child(5) { left: 92%; }
+
+.mwall-bg-ghost {
+  top: auto;
+  right: -2%;
+  bottom: 2%;
+  left: auto;
+  width: auto;
+  max-width: 92%;
+  color: transparent;
+  font-size: clamp(90px, 15vw, 210px);
+  font-weight: 800;
+  line-height: .78;
+  letter-spacing: -.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--mwall-accent), transparent 84%);
+  opacity: .5;
+}
+
+.mwall-bg-grain {
+  opacity: .34;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---- the room the wall stands in ---- */
+
+/* Two circles far larger than the section, so only their edges cross it and
+   the wall reads as sitting inside a curve rather than behind a border. */
+.mwall-bg-arcs i {
+  position: absolute;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--mwall-accent-two), transparent 80%);
+  border-radius: 50%;
+}
+.mwall-bg-arcs i:nth-child(1) { top: -30%; left: -13%; width: 56vw; height: 56vw; }
+.mwall-bg-arcs i:nth-child(2) { right: -17%; bottom: -36%; width: 68vw; height: 68vw; border-style: dashed; opacity: .5; }
+
+/* Three cones of light coming down off the top edge, each one swaying on its
+   own slow clock so the wall is lit rather than flooded. */
+.mwall-bg-beams {
+  top: -8%;
+  right: -4%;
+  bottom: auto;
+  left: -4%;
+  height: 82%;
+  overflow: hidden;
+}
+.mwall-bg-beams i {
+  position: absolute;
+  top: -16%;
+  width: clamp(130px, 17vw, 280px);
+  height: 132%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--mwall-accent), transparent 82%), transparent 74%);
+  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
+  filter: blur(7px);
+  opacity: .5;
+  transform-origin: 50% 0;
+  animation: mwall-beam 19s ease-in-out infinite;
+}
+.mwall-bg-beams i:nth-child(1) { left: 8%; }
+.mwall-bg-beams i:nth-child(2) { left: 47%; animation-duration: 25s; animation-delay: -7s; }
+.mwall-bg-beams i:nth-child(3) { left: 84%; animation-duration: 22s; animation-delay: -14s; }
+
+@keyframes mwall-beam {
+  0%, 100% { opacity: .34; transform: rotate(-4deg); }
+  50% { opacity: .72; transform: rotate(5deg); }
+}
+
+/* Loose geometry, hung out in the margins where the plates never reach: a
+   plain ring, a slow-turning dashed ring, a triangle, a diamond, a hexagon, a
+   cross, a corner bracket and a target. */
+.mwall-bg-shapes i { position: absolute; display: block; }
+
+.mwall-bg-shapes i:nth-child(1) {
+  top: 3%;
+  left: 5%;
+  width: clamp(140px, 18vw, 300px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--mwall-accent), transparent 76%);
+  border-radius: 50%;
+}
+.mwall-bg-shapes i:nth-child(2) {
+  top: 9%;
+  right: 7%;
+  width: clamp(90px, 12vw, 190px);
+  aspect-ratio: 1;
+  border: 1px dashed color-mix(in srgb, var(--mwall-ink), transparent 78%);
+  border-radius: 50%;
+  animation: mwall-spin 48s linear infinite;
+}
+.mwall-bg-shapes i:nth-child(3) {
+  bottom: 5%;
+  left: 9%;
+  width: clamp(70px, 9vw, 150px);
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--mwall-accent-two), transparent 84%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.mwall-bg-shapes i:nth-child(4) {
+  right: 11%;
+  bottom: 11%;
+  width: clamp(56px, 7vw, 120px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--mwall-accent), transparent 72%);
+  transform: rotate(45deg);
+}
+.mwall-bg-shapes i:nth-child(5) {
+  top: 24%;
+  left: 2.5%;
+  width: clamp(50px, 6vw, 104px);
+  aspect-ratio: 1.15;
+  background: color-mix(in srgb, var(--mwall-ink), transparent 90%);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+.mwall-bg-shapes i:nth-child(6) {
+  top: 31%;
+  right: 4.5%;
+  width: clamp(30px, 3.4vw, 54px);
+  aspect-ratio: 1;
+  background:
+    linear-gradient(color-mix(in srgb, var(--mwall-accent), transparent 68%), color-mix(in srgb, var(--mwall-accent), transparent 68%)) center / 100% 30% no-repeat,
+    linear-gradient(color-mix(in srgb, var(--mwall-accent), transparent 68%), color-mix(in srgb, var(--mwall-accent), transparent 68%)) center / 30% 100% no-repeat;
+}
+.mwall-bg-shapes i:nth-child(7) {
+  top: 58%;
+  right: 3%;
+  width: clamp(46px, 5vw, 86px);
+  aspect-ratio: 1;
+  border-top: 1px solid color-mix(in srgb, var(--mwall-ink), transparent 74%);
+  border-left: 1px solid color-mix(in srgb, var(--mwall-ink), transparent 74%);
+}
+.mwall-bg-shapes i:nth-child(8) {
+  bottom: 19%;
+  left: 14%;
+  width: clamp(40px, 4.6vw, 78px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--mwall-accent-two), transparent 78%);
+  border-radius: 50%;
+}
+.mwall-bg-shapes i:nth-child(8)::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  content: '';
+  background: var(--mwall-accent-two);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes mwall-spin { to { transform: rotate(360deg); } }
+
+/* A slack wire across the top of the wall with empty frames still hanging on
+   it — the plates the wall has not been given yet. */
+.mwall-bg-frames::before {
+  position: absolute;
+  top: clamp(30px, 3.4vw, 56px);
+  right: 0;
+  left: 0;
+  height: clamp(26px, 3.6vw, 58px);
+  content: '';
+  border-bottom: 1px solid color-mix(in srgb, var(--mwall-accent), transparent 66%);
+  border-radius: 0 0 14% 14% / 0 0 100% 100%;
+}
+
+.mwall-bg-frames i {
+  position: absolute;
+  display: block;
+  width: clamp(74px, 10vw, 150px);
+  aspect-ratio: 3 / 4;
+  border: 1px solid color-mix(in srgb, var(--mwall-ink), transparent 84%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--mwall-card), transparent 70%), color-mix(in srgb, var(--mwall-sunk), transparent 36%));
+  box-shadow: 0 24px 48px -34px color-mix(in srgb, var(--mwall-sunk), transparent 8%);
+}
+/* The mount inside the frame, so it reads as a picture rather than a box. */
+.mwall-bg-frames i::after {
+  position: absolute;
+  inset: 9px;
+  content: '';
+  border: 1px solid color-mix(in srgb, var(--mwall-accent), transparent 82%);
+}
+/* The cord. It runs all the way up off the top of the section, so every frame
+   is on the same wire no matter where along the sag it happens to hang. */
+.mwall-bg-frames i::before {
+  position: absolute;
+  top: -260px;
+  left: 50%;
+  width: 1px;
+  height: 260px;
+  content: '';
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--mwall-ink), transparent 74%) 18%, color-mix(in srgb, var(--mwall-ink), transparent 74%));
+}
+
+.mwall-bg-frames i:nth-child(1) { top: 11%; left: 2.5%; transform: rotate(-6deg); }
+.mwall-bg-frames i:nth-child(2) { top: 8%; left: 13%; width: clamp(52px, 6.6vw, 100px); transform: rotate(4deg); }
+.mwall-bg-frames i:nth-child(3) { top: 13%; right: 3%; transform: rotate(5deg); }
+.mwall-bg-frames i:nth-child(4) { top: 8.5%; right: 14%; width: clamp(48px, 6vw, 92px); transform: rotate(-5deg); }
+.mwall-bg-frames i:nth-child(5) { top: 32%; left: 1.5%; transform: rotate(7deg); }
+.mwall-bg-frames i:nth-child(6) { top: 28%; right: 1.5%; transform: rotate(-8deg); }
+
+/* Film perforations down both edges, because a wall of frames and trailers is
+   still a strip of film with its sprockets showing. */
+.mwall-bg-perf i {
+  position: absolute;
+  left: 9px;
+  width: 8px;
+  height: 22px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mwall-ink), transparent 88%);
+}
+.mwall-bg-perf i:nth-child(1) { top: 12%; }
+.mwall-bg-perf i:nth-child(2) { top: 27%; }
+.mwall-bg-perf i:nth-child(3) { top: 42%; }
+.mwall-bg-perf i:nth-child(4) { top: 57%; }
+.mwall-bg-perf i:nth-child(5) { top: 72%; }
+.mwall-bg-perf i:nth-child(6) { top: 87%; }
+.mwall-bg-perf i:nth-child(n + 7) { right: 9px; left: auto; }
+.mwall-bg-perf i:nth-child(7) { top: 17%; }
+.mwall-bg-perf i:nth-child(8) { top: 32%; }
+.mwall-bg-perf i:nth-child(9) { top: 47%; }
+.mwall-bg-perf i:nth-child(10) { top: 62%; }
+.mwall-bg-perf i:nth-child(11) { top: 77%; }
+.mwall-bg-perf i:nth-child(12) { top: 92%; }
+
+/* Dust in the beams. */
+.mwall-bg-motes i {
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mwall-accent-two), transparent 52%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--mwall-accent-two), transparent 58%);
+  animation: mwall-drift 16s ease-in-out infinite;
+}
+.mwall-bg-motes i:nth-child(1) { top: 20%; left: 13%; }
+.mwall-bg-motes i:nth-child(2) { top: 41%; left: 79%; animation-delay: -3s; }
+.mwall-bg-motes i:nth-child(3) { top: 63%; left: 24%; animation-delay: -6s; }
+.mwall-bg-motes i:nth-child(4) { top: 27%; left: 57%; animation-delay: -9s; }
+.mwall-bg-motes i:nth-child(5) { top: 76%; left: 67%; animation-delay: -12s; }
+.mwall-bg-motes i:nth-child(6) { top: 8%; left: 41%; animation-delay: -7s; }
+.mwall-bg-motes i:nth-child(7) { top: 88%; left: 87%; animation-delay: -14s; }
+
+@keyframes mwall-drift {
+  0%, 100% { opacity: .2; transform: translate3d(0, 0, 0); }
+  50% { opacity: .72; transform: translate3d(15px, -28px, 0); }
+}
+
+/* ------------------------------------------------------------------ */
+/* Frame                                                               */
+/* ------------------------------------------------------------------ */
+
+.mwall-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.mwall-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(18px, 3vw, 44px);
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--mwall-line);
+}
+
+/* The name of the wall, ruled on both sides. The two rules are the same element
+   with opposite gradients, so the accent always leads into the title and trails
+   out of it however wide the column happens to be. */
+.mwall-bar {
+  display: flex;
+  gap: clamp(12px, 2vw, 26px);
+  align-items: center;
+  min-width: 0;
+}
+
+.mwall-bar-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 18px;
+  background: linear-gradient(90deg, transparent, var(--mwall-line-2));
+}
+.mwall-bar-rule:last-child { background: linear-gradient(90deg, var(--mwall-line-2), transparent); }
+
+.mwall-bar-title {
+  flex: none;
+  margin: 0;
+  color: var(--mwall-ink);
+  font-size: clamp(26px, 3.6vw, 46px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 34px color-mix(in srgb, var(--mwall-accent), transparent 72%);
+}
+
+.mwall-tally {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--mwall-line);
+  border-left: 2px solid var(--mwall-accent);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mwall-card), transparent 42%);
+}
+.mwall-tally div {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.mwall-tally dt {
+  color: var(--mwall-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.mwall-tally dd {
+  margin: 0;
+  color: var(--mwall-ink);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Toolbar                                                             */
+/* ------------------------------------------------------------------ */
+
+.mwall-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.mwall-badges { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* The two badges are the only way in or out of a shelf, so they are sized like
+   doors rather than like chips: a glyph plate, a name, a gloss, and the count. */
+.mwall-badge {
+  position: relative;
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+  overflow: hidden;
+  padding: 12px 20px 12px 12px;
+  border: 1px solid var(--mwall-line);
+  border-radius: 3px;
+  color: var(--mwall-soft);
+  background: color-mix(in srgb, var(--mwall-card), transparent 28%);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 220ms ease, color 220ms ease, background 220ms ease, transform 260ms cubic-bezier(.16, .82, .25, 1);
+}
+.mwall-badge:hover { transform: translateY(-3px); border-color: var(--mwall-line-2); color: var(--mwall-ink); }
+.mwall-badge.is-on { border-color: var(--mwall-accent); color: var(--mwall-ink); background: var(--mwall-tint); }
+
+.mwall-badge-glyph {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 2px;
+  color: var(--mwall-muted);
+  background: color-mix(in srgb, var(--mwall-sunk), transparent 28%);
+  transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+.mwall-badge-glyph svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mwall-badge:hover .mwall-badge-glyph { color: var(--mwall-ink); border-color: var(--mwall-line-2); }
+.mwall-badge.is-on .mwall-badge-glyph {
+  border-color: var(--mwall-accent);
+  color: var(--mwall-ink);
+  background: color-mix(in srgb, var(--mwall-accent), transparent 82%);
+}
+.mwall-badge.is-on .mwall-badge-glyph svg { fill: currentColor; stroke: currentColor; }
+.mwall-badge.is-video.is-on .mwall-badge-glyph svg { fill: none; stroke: currentColor; }
+.mwall-badge.is-video.is-on .mwall-badge-glyph svg path { fill: currentColor; }
+
+.mwall-badge-body { display: grid; gap: 3px; min-width: 0; text-align: left; }
+.mwall-badge-body b {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.mwall-badge-body small {
+  color: var(--mwall-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.mwall-badge.is-on .mwall-badge-body small { color: var(--mwall-accent); }
+
+.mwall-badge em {
+  color: var(--mwall-muted);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1;
+}
+.mwall-badge.is-on em { color: var(--mwall-ink); }
+
+/* A hairline of accent along the foot, wiped in from the left when the badge is
+   pressed, so the open shelf is obvious without turning the badge into a fill. */
+.mwall-badge::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  content: '';
+  background: linear-gradient(90deg, var(--mwall-accent), var(--mwall-accent-two));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 340ms cubic-bezier(.16, .82, .25, 1);
+}
+.mwall-badge.is-on::after { transform: scaleX(1); }
+
+.mwall-readout {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0;
+  color: var(--mwall-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.mwall-readout b {
+  color: var(--mwall-ink);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.mwall-note {
+  margin: 0;
+  padding: 30px;
+  border: 1px dashed var(--mwall-line-2);
+  border-radius: 3px;
+  color: var(--mwall-muted);
+  background: color-mix(in srgb, var(--mwall-card), transparent 40%);
+  font-size: 14px;
+}
+.mwall-note.is-error {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--mwall-accent), transparent 30%);
+  color: var(--mwall-soft);
+}
+.mwall-note button {
+  margin-left: 6px;
+  padding: 4px 10px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  color: inherit;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------ */
+/* The card grid                                                       */
+/* ------------------------------------------------------------------ */
+
+.mwall-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.mwall-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--mwall-line);
+  border-radius: 3px;
+  background: var(--mwall-card);
+  box-shadow: var(--mwall-shadow);
+  transition: border-color 260ms ease, transform 320ms cubic-bezier(.16, .82, .25, 1), box-shadow 320ms ease;
+}
+.mwall-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 4;
+  height: 2px;
+  content: '';
+  background: linear-gradient(90deg, var(--mwall-accent), var(--mwall-accent-two));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(.16, .82, .25, 1);
+}
+.mwall-card:hover,
+.mwall-card:focus-within {
+  border-color: var(--mwall-line-2);
+  box-shadow: var(--mwall-shadow-lift);
+  transform: translateY(-7px);
+}
+.mwall-card:hover::before,
+.mwall-card:focus-within::before { transform: scaleX(1); }
+
+/* ---- the art window ---- */
+
+.mwall-art {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mwall-mat {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(70% 60% at 50% 0%, var(--mwall-tint), transparent 70%),
+    linear-gradient(180deg, var(--mwall-mat1), var(--mwall-mat2));
+}
+
+.mwall-img {
+  width: 100%;
+  height: 100%;
+  transition: transform 680ms cubic-bezier(.16, .82, .25, 1);
+}
+/* A trailer thumbnail is a photograph, so it is cropped into the window. The
+   stills are transparent character art, so they are matted and fitted instead:
+   cropping transparent art just crops the character out of the card. */
+.mwall-art.is-still .mwall-img { object-fit: contain; padding: 12px 12px 0; }
+.mwall-art.is-video .mwall-img { object-fit: cover; }
+.mwall-card:hover .mwall-img { transform: scale(1.06); }
+
+.mwall-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .48) 0%, transparent 34%),
+    linear-gradient(0deg, rgba(0, 0, 0, .62) 0%, transparent 44%);
+}
+
+.mwall-corners i {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 0 solid var(--mwall-mark);
+  transition: border-color 240ms ease;
+}
+.mwall-corners i:nth-child(1) { top: 8px; left: 8px; border-top-width: 1px; border-left-width: 1px; }
+.mwall-corners i:nth-child(2) { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
+.mwall-corners i:nth-child(3) { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
+.mwall-corners i:nth-child(4) { right: 8px; bottom: 8px; border-right-width: 1px; border-bottom-width: 1px; }
+.mwall-card:hover .mwall-corners i { border-color: var(--mwall-accent); }
+
+.mwall-num {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  color: #fff;
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.05em;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, .72);
+}
+
+.mwall-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 999px;
+  color: var(--mwall-ink);
+  background: var(--mwall-chip);
+  backdrop-filter: blur(8px);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.mwall-chip em {
+  color: var(--mwall-muted);
+  font-style: normal;
+  letter-spacing: .04em;
+}
+.mwall-chip i { font-size: 8px; font-style: normal; }
+.mwall-chip.is-video { border-color: color-mix(in srgb, var(--mwall-accent), transparent 40%); }
+
+/* The play disc is ink, never the accent: at this size a mid-tone hue on a
+   dark plate does not clear the contrast bar. */
+.mwall-disc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, .46);
+  backdrop-filter: blur(6px);
+  transform: translate(-50%, -50%);
+  transition: transform 340ms cubic-bezier(.16, .82, .25, 1), background 340ms ease, border-color 340ms ease;
+}
+.mwall-disc i {
+  margin-left: 4px;
+  font-size: 19px;
+  font-style: normal;
+}
+.mwall-card:hover .mwall-disc {
+  border-color: var(--mwall-accent);
+  background: color-mix(in srgb, var(--mwall-accent), transparent 72%);
+  transform: translate(-50%, -50%) scale(1.14);
+}
+
+.mwall-zoom {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, .7);
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition: opacity 260ms ease, transform 260ms cubic-bezier(.16, .82, .25, 1);
+}
+.mwall-card:hover .mwall-zoom { opacity: .9; transform: none; }
+
+.mwall-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent);
+  transform: skewX(-14deg);
+  transition: left 720ms cubic-bezier(.16, .82, .25, 1);
+}
+.mwall-card:hover .mwall-sheen { left: 120%; }
+
+/* The whole window opens the plate, so the button covers the art and stops
+   short of the tools underneath it. */
+.mwall-open {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.mwall:focus-within .mwall-open { outline: none; }
+.mwall-card:focus-within { border-color: var(--mwall-accent); }
+.mwall-open:focus-visible { outline: 2px solid var(--mwall-accent); outline-offset: -4px; }
+
+/* ---- the copy ---- */
+
+.mwall-body { flex: 1 1 auto; padding: 16px 18px 4px; }
+
+.mwall-kind {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 9px;
+  color: var(--mwall-accent);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.mwall-kind i { flex: 1 1 auto; height: 1px; background: var(--mwall-line); }
+.mwall-kind em {
+  max-width: 58%;
+  overflow: hidden;
+  color: var(--mwall-muted);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mwall-name {
+  margin: 0;
+  color: var(--mwall-ink);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -.018em;
+  transition: color 220ms ease;
+}
+.mwall-card:hover .mwall-name { color: var(--mwall-accent); }
+
+.mwall-caption {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 9px 0 0;
+  color: var(--mwall-muted);
+  font-size: 12.5px;
+  line-height: 1.52;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ---- the foot ---- */
+
+.mwall-card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 16px;
+}
+
+.mwall-slot {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--mwall-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mwall-tools { display: flex; flex: none; gap: 6px; align-items: center; }
+
+.mwall-watch {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 7px 12px;
+  border: 1px solid color-mix(in srgb, var(--mwall-accent-two), transparent 54%);
+  border-radius: 2px;
+  color: var(--mwall-soft);
+  background: transparent;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+.mwall-watch i { font-size: 8px; font-style: normal; transition: transform 200ms ease; }
+.mwall-watch:hover { border-color: var(--mwall-accent); color: var(--mwall-ink); background: var(--mwall-tint); }
+.mwall-watch:hover i { transform: translateX(2px); }
+
+/* ------------------------------------------------------------------ */
+/* The wall's own foot                                                 */
+/* ------------------------------------------------------------------ */
+
+.mwall-tips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid var(--mwall-line);
+}
+
+.mwall-tip { max-width: 62ch; margin: 0; color: var(--mwall-muted); font-size: 12.5px; line-height: 1.6; }
+.mwall-tip b {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 3px 9px;
+  border: 1px solid var(--mwall-accent);
+  border-radius: 2px;
+  color: var(--mwall-accent);
+  font-size: 9.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+.mwall-end {
+  margin: 0;
+  color: var(--mwall-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ */
+/* The viewer                                                          */
+/* ------------------------------------------------------------------ */
+
+.mwall-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2.4vw, 30px);
+  color: var(--mwall-ink);
+  font-family: 'Elgraine', Georgia, serif;
+  animation: mwall-fade 260ms ease both;
+}
+
+.mwall-viewer-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--mwall-veil);
+  backdrop-filter: blur(14px);
+}
+
+.mwall-viewer-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(1180px, 100%);
+  max-height: 100%;
+  overflow: hidden auto;
+  padding: clamp(16px, 2vw, 26px);
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 4px;
+  background: var(--mwall-card);
+  box-shadow: var(--mwall-shadow-lift);
+  animation: mwall-rise 320ms cubic-bezier(.16, .82, .25, 1) both;
+}
+
+.mwall-viewer-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mwall-accent), var(--mwall-accent-two));
+}
+
+.mwall-viewer-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mwall-viewer-brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.mwall-viewer-brand b { color: var(--mwall-accent); }
+.mwall-viewer-brand i { width: 22px; height: 1px; background: var(--mwall-line-2); }
+.mwall-viewer-brand span { color: var(--mwall-muted); letter-spacing: .12em; }
+
+.mwall-viewer-close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 2px;
+  color: var(--mwall-soft);
+  background: transparent;
+  font-family: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+.mwall-viewer-close:hover { border-color: var(--mwall-accent); color: var(--mwall-ink); transform: rotate(90deg); }
+
+.mwall-viewer-body { display: flex; gap: 10px; align-items: center; }
+
+.mwall-viewer-arrow {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 2px;
+  color: var(--mwall-soft);
+  background: color-mix(in srgb, var(--mwall-card), transparent 40%);
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.mwall-viewer-arrow:hover:not(:disabled) { border-color: var(--mwall-accent); color: var(--mwall-ink); }
+.mwall-viewer-arrow:disabled { opacity: .3; cursor: default; }
+
+.mwall-viewer-figure {
+  display: grid;
+  flex: 1 1 auto;
+  place-items: center;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--mwall-line);
+  border-radius: 3px;
+  background: linear-gradient(150deg, var(--mwall-mat1), var(--mwall-mat2));
+}
+.mwall-viewer-image {
+  width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+  padding: 22px;
+}
+
+.mwall-viewer-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.mwall-viewer-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.mwall-viewer-embed-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 5px 11px;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 999px;
+  color: var(--mwall-ink);
+  background: var(--mwall-chip);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.mwall-viewer-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--mwall-line);
+}
+.mwall-viewer-copy { min-width: 0; }
+.mwall-viewer-copy h3 {
+  margin: 0;
+  color: var(--mwall-ink);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.mwall-viewer-copy p { max-width: 72ch; margin: 8px 0 0; color: var(--mwall-soft); font-size: 13.5px; line-height: 1.55; }
+.mwall-viewer-credit {
+  display: block;
+  margin-top: 9px;
+  color: var(--mwall-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.mwall-viewer-tools { display: flex; flex: none; gap: 8px; align-items: center; }
+.mwall-viewer-link {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  padding: 10px 15px;
+  border: 1px solid var(--mwall-line-2);
+  border-radius: 2px;
+  color: var(--mwall-soft);
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+.mwall-viewer-link i { font-style: normal; }
+.mwall-viewer-link:hover { border-color: var(--mwall-accent); color: var(--mwall-ink); background: var(--mwall-tint); }
+
+.mwall-viewer-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--mwall-line);
+  scrollbar-width: thin;
+}
+.mwall-strip-tile {
+  position: relative;
+  flex: none;
+  width: 84px;
+  height: 58px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--mwall-line);
+  border-radius: 2px;
+  background: var(--mwall-mat2);
+  cursor: pointer;
+  opacity: .5;
+  transition: opacity 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+.mwall-strip-tile img { width: 100%; height: 100%; object-fit: cover; }
+.mwall-strip-tile:hover { opacity: .85; transform: translateY(-2px); }
+.mwall-strip-tile.is-on { border-color: var(--mwall-accent); opacity: 1; }
+.mwall-strip-no {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  padding: 1px 4px;
+  color: #fff;
+  background: rgba(0, 0, 0, .66);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.mwall :focus-visible,
+.mwall-viewer :focus-visible { outline: 2px solid var(--mwall-accent); outline-offset: 2px; }
+
+@keyframes mwall-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mwall-rise { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------------ */
+/* Narrow screens                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 1180px) {
+  .mwall-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mwall-head { grid-template-columns: minmax(0, 1fr); }
+  .mwall-tally { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mwall-bg-ghost { display: none; }
+  .mwall-bg-shapes i:nth-child(5),
+  .mwall-bg-shapes i:nth-child(6) { display: none; }
+}
+
+@media (max-width: 860px) {
+  .mwall-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .mwall-tips { flex-direction: column; align-items: stretch; }
+  .mwall-viewer-arrow { width: 36px; height: 36px; }
+  .mwall-toolbar { flex-direction: column; align-items: stretch; }
+  .mwall-badges { width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .mwall-grid { grid-template-columns: minmax(0, 1fr); }
+  .mwall-art { aspect-ratio: 16 / 10; }
+  .mwall-viewer-foot { flex-direction: column; align-items: stretch; }
+  .mwall-tally { grid-template-columns: minmax(0, 1fr); }
+  .mwall-badges { flex-direction: column; }
+  .mwall-bg-tape i:nth-child(2),
+  .mwall-bg-tape i:nth-child(4) { display: none; }
+  .mwall-bg-perf i:nth-child(2),
+  .mwall-bg-perf i:nth-child(4),
+  .mwall-bg-perf i:nth-child(6),
+  .mwall-bg-perf i:nth-child(8),
+  .mwall-bg-perf i:nth-child(10),
+  .mwall-bg-perf i:nth-child(12) { display: none; }
+  .mwall-bg-frames i:nth-child(2),
+  .mwall-bg-frames i:nth-child(4) { display: none; }
+  .mwall-bg-beams i:nth-child(2) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mwall-card,
+  .mwall-img,
+  .mwall-card::before,
+  .mwall-corners i,
+  .mwall-disc,
+  .mwall-sheen,
+  .mwall-zoom,
+  .mwall-chip,
+  .mwall-badge,
+  .mwall-badge::after,
+  .mwall-badge-glyph,
+  .mwall-watch,
+  .mwall-bg-beams i,
+  .mwall-bg-shapes i:nth-child(2),
+  .mwall-bg-motes i,
+  .mwall-viewer,
+  .mwall-viewer-stage { transition: none !important; animation: none !important; }
+  .mwall-card:hover,
+  .mwall-card:focus-within,
+  .mwall-badge:hover,
+  .mwall-strip-tile:hover { transform: none; }
+  .mwall-card:hover .mwall-disc { transform: translate(-50%, -50%); }
+  .mwall-bg-beams i { opacity: .5; }
+  .mwall-bg-motes i { opacity: .45; }
+}

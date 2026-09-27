@@ -22,8 +22,17 @@ const cards = (container) => [...container.querySelectorAll('.fv-card')];
 const cardNamed = (container, name) => cards(container).find((card) => card.textContent.includes(name));
 const tabs = (container) => [...container.querySelectorAll('.fv-tab')];
 const tabNamed = (container, label) => tabs(container).find((tab) => tab.textContent.startsWith(label));
+// The sort control paints its own listbox, so the tests open the menu the way a
+// shopper does and click a row in it rather than firing change on a <select>.
+// Choosing a sort closes the menu, so picking opens it again every time.
+const sortTrigger = (container) => container.querySelector('.fv-sort-trigger');
+const sortOptions = (container) => [...container.querySelectorAll('.fv-sort-option')];
+const pickSort = (container, label) => {
+  if (!container.querySelector('.fv-sort-menu')) fireEvent.click(sortTrigger(container));
+  return sortOptions(container).find((option) => option.textContent.startsWith(label));
+};
 const bagButton = (container) => container.querySelector('.fv-vault-button');
-const cart = (container) => container.querySelector('.fv-cart');
+const cart = (container) => container.querySelector('.fv-bag');
 const openModal = async (container, name) => {
   fireEvent.click(within(cardNamed(container, name)).getByRole('button', { name: /^details$/i }));
   await waitFor(() => expect(container.querySelector('.fv-modal')).not.toBeNull());
@@ -229,23 +238,86 @@ describe('explore the vault', () => {
     };
     const firstNames = () => cards(container).map((card) => card.querySelector('.fv-card-name').textContent);
 
-    const select = container.querySelector('.fv-sort select');
-    expect([...select.options].map((option) => option.textContent)).toEqual(['Featured', 'Price: low to high', 'Price: high to low', 'Name: A to Z']);
+    fireEvent.click(sortTrigger(container));
+    // Each row carries a plain-language hint under the label, so the labels are
+    // read off their own element rather than the whole row's text.
+    expect(sortOptions(container).map((option) => option.querySelector('b').textContent))
+      .toEqual(['Featured', 'Price: low to high', 'Price: high to low', 'Name: A to Z']);
 
-    fireEvent.change(select, { target: { value: 'low' } });
+    fireEvent.click(pickSort(container, 'Price: low to high'));
     const low = cards(container).map(middle);
     expect(low).toEqual([...low].sort((a, b) => a - b));
 
-    fireEvent.change(select, { target: { value: 'high' } });
+    fireEvent.click(pickSort(container, 'Price: high to low'));
     const high = cards(container).map(middle);
     expect(high).toEqual([...high].sort((a, b) => b - a));
 
-    fireEvent.change(select, { target: { value: 'az' } });
+    fireEvent.click(pickSort(container, 'Name: A to Z'));
     expect(firstNames()).toEqual([...firstNames()].sort((a, b) => a.localeCompare(b)));
 
     // The mix of single prices and ranges still orders cleanly.
-    fireEvent.change(select, { target: { value: 'low' } });
+    fireEvent.click(pickSort(container, 'Price: low to high'));
     expect(cards(container).map(middle)).toEqual([...low].reverse().sort((a, b) => a - b));
+  });
+
+  it('opens the sort menu, marks the live sort, and closes on escape', async () => {
+    const { container } = await mount();
+    const trigger = sortTrigger(container);
+
+    // Nothing but the trigger exists until it is asked for, and the trigger
+    // always states which sort is in force.
+    expect(container.querySelector('.fv-sort-menu')).toBeNull();
+    expect(container.querySelector('.fv-sort select')).toBeNull();
+    expect(trigger.textContent).toContain('Featured');
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    expect(trigger.getAttribute('aria-haspopup')).toBe('listbox');
+
+    fireEvent.click(trigger);
+    const menu = container.querySelector('.fv-sort-menu');
+    expect(menu).toBeInTheDocument();
+    expect(menu.getAttribute('role')).toBe('listbox');
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger.className).toContain('is-open');
+    // Featured is the live sort, so it is the selected row and the cursor lands
+    // on it — the shopper arrows away from where the shelf already is.
+    const featured = sortOptions(container)[0];
+    expect(featured.getAttribute('aria-selected')).toBe('true');
+    expect(featured.className).toContain('is-current');
+    expect(menu.getAttribute('aria-activedescendant')).toBe(featured.id);
+
+    // The chosen sort moves to the trigger and out of the list.
+    fireEvent.click(pickSort(container, 'Name: A to Z'));
+    expect(container.querySelector('.fv-sort-menu')).toBeNull();
+    expect(trigger.textContent).toContain('Name: A to Z');
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+
+    // Escape backs out without changing anything.
+    fireEvent.click(trigger);
+    fireEvent.keyDown(container.querySelector('.fv-sort-menu'), { key: 'Escape' });
+    expect(container.querySelector('.fv-sort-menu')).toBeNull();
+    expect(trigger.textContent).toContain('Name: A to Z');
+  });
+
+  it('dresses the sort control like the rest of the shelf instead of a native select', async () => {
+    const { container } = await mount();
+    // The OS popup cannot be styled, so the sort arrived on every platform as a
+    // flat white rectangle that shared nothing with the shelf's angled neon
+    // faces. The menu is painted here instead, so the open trigger, the raised
+    // panel, the live-sort tick and the flipping chevron are all its own.
+    expect(container.querySelector('.fv-sort select')).toBeNull();
+    expect(CSS).toMatch(/\.fv-sort-trigger \{[^}]*border-radius: 12px 4px 12px 4px/);
+    expect(CSS).toMatch(/\.fv-sort-trigger \{[^}]*background: linear-gradient\(/);
+    expect(CSS).toMatch(/\.theme-light \.fv-sort-trigger \{[^}]*background: linear-gradient\(/);
+    expect(CSS).toMatch(/\.fv-sort-trigger:focus-visible \{[^}]*outline: 2px solid/);
+    // The open state has to read as part of the control, so the chevron flips.
+    expect(CSS).toMatch(/\.fv-sort-trigger\.is-open \{[^}]*border-color: var\(--magenta\)/);
+    expect(CSS).toMatch(/\.fv-sort-trigger\.is-open svg \{[^}]*transform: rotate\(180deg\)/);
+    // The menu is anchored under the trigger, not dropped in the page flow.
+    expect(CSS).toMatch(/\.fv-sort \{[^}]*position: relative/);
+    expect(CSS).toMatch(/\.fv-sort-menu \{[^}]*position: absolute/);
+    expect(CSS).toMatch(/\.theme-light \.fv-sort-menu \{[^}]*background: #fff/);
+    // The live sort is called out by a filled tick, not by colour alone.
+    expect(CSS).toMatch(/\.fv-sort-option\.is-current \.fv-sort-tick \{[^}]*background: var\(--magenta\)/);
   });
 
   it('lays the shelf out as a uniform four-column grid with no cropped tiles', async () => {
@@ -412,7 +484,7 @@ describe('the vault bag', () => {
     expect(panel.textContent).toContain(target.name);
   });
 
-  it('opens the vault as a centred modal popup holding everything that was added', async () => {
+  it('opens the vault as a side drawer holding everything that was added', async () => {
     const { container } = await mount();
     const added = [PRODUCTS[0], PRODUCTS[9], PRODUCTS[40]];
     for (const target of added) await addFromCard(container, target.name);
@@ -421,23 +493,26 @@ describe('the vault bag', () => {
     const panel = await openVault(container);
     expect(panel.getAttribute('role')).toBe('dialog');
     expect(panel.getAttribute('aria-modal')).toBe('true');
-    expect(panel.querySelector('.fv-cart-count').textContent).toContain('3');
+    expect(panel.tagName).toBe('ASIDE');
+    expect(panel.querySelector('.fv-bag-head span').textContent).toContain('3');
 
-    // Every piece the shopper added is in the popup, with its own artwork and
+    // Every piece the shopper added is in the drawer, with its own artwork and
     // line total, not just the one that was added last.
-    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(added.length);
+    expect(panel.querySelectorAll('.fv-bag-line')).toHaveLength(added.length);
     added.forEach((target) => {
-      const line = [...panel.querySelectorAll('.fv-cart-line')].find((node) => node.textContent.includes(target.name));
+      const line = [...panel.querySelectorAll('.fv-bag-line')].find((node) => node.textContent.includes(target.name));
       expect(line).toBeTruthy();
       expect(line.querySelector('img').getAttribute('src')).toBe(target.image);
       expect(line.textContent).toContain(target.category);
     });
 
-    // Centred in the stage, not pinned to a side, and the pieces sit two-up.
-    expect(CSS).toMatch(/\.fv-overlay \{[^}]*align-items: center; justify-content: center/);
-    expect(CSS).toMatch(/\.fv-cart \{[^}]*width: min\(760px, 100%\)/);
-    expect(CSS).toMatch(/\.fv-cart-list \{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
-    expect(CSS).not.toMatch(/\.fv-bag/);
+    // Bolted to the right edge of the stage, not floating in the middle of it,
+    // and one piece per row down the panel.
+    expect(CSS).toMatch(/\.fv-overlay-bag \{[^}]*align-items: stretch; justify-content: flex-end/);
+    expect(CSS).toMatch(/\.fv-bag \{[^}]*width: min\(480px, 100%\)/);
+    expect(CSS).toMatch(/\.fv-bag \{[^}]*margin-left: auto/);
+    expect(CSS).toMatch(/\.fv-bag \{[^}]*border-right: 0/);
+    expect(CSS).not.toMatch(/\.fv-cart/);
   });
 
   it('flies the cover into the View Vault button when a piece is added', async () => {
@@ -486,7 +561,7 @@ describe('the vault bag', () => {
     expect(within(panel).getByLabelText(`Quantity of ${target.name}`).textContent).toBe('2');
 
     fireEvent.click(within(panel).getByRole('button', { name: `Remove ${target.name} from the vault` }));
-    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(0);
+    expect(panel.querySelectorAll('.fv-bag-line')).toHaveLength(0);
     expect(panel.textContent).toMatch(/the vault is empty/i);
   });
 
@@ -502,13 +577,13 @@ describe('the vault bag', () => {
     }
 
     const panel = await openVault(container);
-    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(2);
+    expect(panel.querySelectorAll('.fv-bag-line')).toHaveLength(2);
     const expected = (mid(first) + mid(second)).toFixed(2);
-    expect(panel.querySelector('.fv-cart-total b').textContent).toBe(`$${expected}`);
+    expect(panel.querySelector('.fv-bag-total b').textContent).toBe(`$${expected}`);
     expect(panel.textContent).toMatch(/no payment here/i);
 
     fireEvent.click(within(panel).getByRole('button', { name: /clear cart/i }));
-    expect(panel.querySelectorAll('.fv-cart-line')).toHaveLength(0);
+    expect(panel.querySelectorAll('.fv-bag-line')).toHaveLength(0);
     expect(bagButton(container).getAttribute('aria-label')).toMatch(/empty/i);
   });
 

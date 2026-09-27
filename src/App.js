@@ -35,14 +35,22 @@ function App() {
 
     if (currentHash === '#article' || currentHash.startsWith('#article/')) return { page: 'editorial', category: 'all' };
 
-    const categoryHash = currentHash.match(/^#featured-articles\/([a-z-]+)$/);
-    if (categoryHash) return { page: 'editorial', category: categoryHash[1] };
+    // `#featured-articles/<fandom>` opens the Articles page already filtered, and
+    // `#featured-articles/<fandom>/<slug>` goes one step further and opens that
+    // story in the reader. The fandom pages use the second form to link straight
+    // to a single story.
+    const categoryHash = currentHash.match(/^#featured-articles\/([a-z-]+)(?:\/([a-z0-9-]+))?$/);
+    if (categoryHash) return { page: 'editorial', category: categoryHash[1], slug: categoryHash[2] || null };
     if (currentHash === '#featured-articles' || currentPath.endsWith('/editorial') || currentPath.endsWith('/featured-articles')) return { page: 'editorial', category: 'all' };
     if (currentPath.startsWith('/article/')) return { page: 'editorial', category: 'all' };
 
     if (currentHash === '#trailers' || currentPath.endsWith('/trailers')) return { page: 'trailers' };
     if (currentHash === '#upcoming-releases' || currentPath.endsWith('/upcoming-releases')) return { page: 'upcoming' };
 
+    // Same shape for events: `#events/<fandom>` lands on the passport with that
+    // fandom already chipped, and `#events/<fandom>/<eventId>` opens its pass.
+    const eventsHash = currentHash.match(/^#events\/([a-z-]+)(?:\/([a-z0-9-]+))?$/);
+    if (eventsHash) return { page: 'events', fandom: eventsHash[1], eventId: eventsHash[2] || null };
     if (currentHash === '#events' || currentPath.endsWith('/events')) return { page: 'events' };
 
     if (currentHash === '#shop' || currentPath.endsWith('/shop') || currentPath.endsWith('/fan-vault')) return { page: 'shop' };
@@ -69,8 +77,8 @@ function App() {
     };
   }, []);
 
-  if (route.page === 'editorial') return <Editorial category={route.category} />;
-  if (route.page === 'events') return <Events />;
+  if (route.page === 'editorial') return <Editorial category={route.category} slug={route.slug} />;
+  if (route.page === 'events') return <Events fandom={route.fandom} eventId={route.eventId} />;
   if (route.page === 'upcoming') return <Upcoming />;
   if (route.page === 'shop') return <Shop />;
   if (route.page === 'about') return <About />;

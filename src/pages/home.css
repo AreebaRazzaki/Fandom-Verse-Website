@@ -51,6 +51,11 @@ button {
 
 .home-page {
   --hero-ink: var(--ink);
+  /* Accent-coloured text needs its own token. On the light stage the raw fandom
+     accent lands between 1.02:1 and 2.13:1 against the tan background, so text
+     that uses it directly is effectively invisible. Decorative fills keep using
+     --accent; anything drawn as type uses --accent-ink. */
+  --accent-ink: var(--accent);
   min-height: 100vh;
   overflow: hidden;
   color: var(--paper);
@@ -144,7 +149,7 @@ button {
 .nav-trigger .chevron {
   display: inline-block;
   margin-left: 5px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 15px;
   transform: translateY(-1px);
 }
@@ -174,7 +179,7 @@ button {
 }
 
 .dropdown-menu a:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
   background: rgba(255, 255, 255, .05);
 }
 
@@ -199,7 +204,7 @@ button {
 }
 
 .icon-button:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
   transform: translateY(-2px);
 }
 
@@ -234,7 +239,7 @@ button {
 
 .signin-button span,
 .explore-button span {
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 15px;
 }
 
@@ -281,7 +286,7 @@ button {
   align-items: center;
   gap: 10px;
   margin: 0 0 66px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -310,7 +315,7 @@ button {
 
 .eyebrow {
   margin: 0 0 18px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 10px;
   letter-spacing: .18em;
   line-height: 1.5;
@@ -460,7 +465,7 @@ h1 {
   position: absolute;
   z-index: 3;
   inset: 0;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Georgia, serif;
   font-size: 22px;
 }
@@ -521,7 +526,7 @@ h1 {
 }
 
 .rail-number {
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 11px;
 }
 
@@ -550,7 +555,7 @@ h1 {
 
 .control-button:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .carousel-dots {
@@ -899,7 +904,7 @@ h1 {
   overflow: hidden;
   width: 280px;
   height: 18px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Arial, sans-serif;
   font-size: 8px;
   font-weight: 600;
@@ -1325,7 +1330,7 @@ h1 {
 
 .rail-category {
   margin-top: 25px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Arial, sans-serif;
   font-size: 40px;
   font-weight: 800;
@@ -1379,7 +1384,7 @@ h1 {
 }
 
 .rail-list b {
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Arial, sans-serif;
   font-size: 8px;
 }
@@ -1387,7 +1392,7 @@ h1 {
 .rail-stamp {
   margin-top: auto;
   padding-top: 22px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Arial, sans-serif;
   font-size: 7px;
   font-weight: 600;
@@ -1490,6 +1495,11 @@ h1 {
   --paper: color-mix(in srgb, var(--accent), #16171d 42%);
   --muted: color-mix(in srgb, var(--accent), #16171d 62%);
   --line: color-mix(in srgb, var(--accent), #16171d 74%);
+  /* Darkened far enough that every fandom accent clears 4.5:1 on #c9baa7 while
+     staying recognisably its own hue. 70% is the lowest round value where the
+     lightest accent (K-Pop #50c7eb) still passes; the raw accents measure
+     1.02:1 to 2.13:1 there. */
+  --accent-ink: color-mix(in srgb, var(--accent), #16171d 70%);
   background: radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--accent), transparent 79%), transparent 44%), #c9baa7;
 }
 
@@ -1534,6 +1544,10 @@ h1 {
   height: calc(100svh - 82px);
   min-height: 0;
   padding: 12px 0 58px;
+  /* The stage is viewport-tall, so the single centred row used to float in the
+     leftover space and push the character art down toward the fold. Packing the
+     row at the top lifts the whole hero and opens up clearance underneath. */
+  align-content: start;
 }
 
 .hero-copy { justify-self: start; }
@@ -1596,7 +1610,7 @@ h1 {
   height: 28px;
   border: 1px solid var(--accent);
   border-radius: 50%;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 15px;
   font-weight: 400;
   transition: background 220ms ease, color 220ms ease;
@@ -1919,7 +1933,7 @@ h1 {
   align-items: center;
   gap: 11px;
   margin: 0 0 19px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-family: Arial, sans-serif;
   font-size: 13px;
   font-weight: 800;

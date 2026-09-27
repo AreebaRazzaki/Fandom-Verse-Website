@@ -562,3 +562,18 @@
   .gaming-copy::before { display: none; }
   .gaming-copy-badges { max-width: 320px; margin-right: auto; margin-left: auto; }
 }
+
+/* Let the page scroll past the hero.
+
+   The hero is a fixed 100svh window, and the page was pinned with
+   `overflow: hidden` on the main element and on <html>/<body>, so everything
+   mounted under it — the player codex, the gallery and the desk — was clipped
+   away and unreachable on a desktop viewport. `clip` on the inline axis keeps
+   the horizontal crop without turning the block into a scroll container, which
+   is the same treatment anime.css uses. */
+.gaming-page { overflow-x: clip; overflow-y: visible; }
+
+@media (min-width: 721px) {
+  html:has(.gaming-page), body:has(.gaming-page) { overflow: visible; }
+}
+

@@ -214,6 +214,17 @@ describe('search box in the nav', () => {
     await waitFor(() => expect(panel(container)).toBeNull());
   });
 
+  it('keeps the right-hand controls legible instead of shrunken to a whisper', () => {
+    const css = readCss('components/SiteNav.css');
+
+    // The theme pill's label used to render at 9.5px and the sign-in at 13px, so
+    // the right-hand cluster read smaller than the links it sits beside.
+    expect(css).toMatch(/\.universal-theme-button \{[^}]*font-size: 11\.5px/);
+    expect(css).toMatch(/\.universal-signin \{[^}]*font-size: 14\.5px/);
+    // The narrow breakpoint must not shrink them back below the desktop size.
+    expect(css).toMatch(/@media \(max-width: 1024px\)[\s\S]*?\.universal-signin \{[^}]*font-size: 11\.5px/);
+  });
+
   it('is a compact strip that grows while it is in use', () => {
     const css = readCss('components/SiteNav.css');
     const box = css.slice(css.indexOf('.universal-search-box {'), css.indexOf('.universal-search-box svg'));
@@ -222,8 +233,11 @@ describe('search box in the nav', () => {
     expect(box).toMatch(/height: 34px/);
     expect(css).toMatch(/\.universal-search\.is-open \.universal-search-box,\s*\.universal-search-box:focus-within \{[^}]*width: 260px/);
     expect(css).toMatch(/\.universal-search-panel \{[^}]*position: absolute/);
-    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.universal-search-box \{ width: 32px; height: 34px; \}/);
-    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.universal-search\.is-open \.universal-search-box,\s*\.universal-search-box:focus-within \{ width: 190px; \}/);
+    // Below the breakpoint the search is no longer squeezed into a bar beside the
+    // links: it sits in the drawer on a row of its own at full width, so it is a
+    // usable tap target instead of a 32px glyph.
+    expect(css).toMatch(/@media \(max-width: 1024px\)[\s\S]*?\.universal-search \{ flex: 1 1 100%; \}/);
+    expect(css).toMatch(/@media \(max-width: 1024px\)[\s\S]*?\.universal-search-box,\s*\.universal-search\.is-open \.universal-search-box,\s*\.universal-search-box:focus-within \{ width: 100%; height: 42px; \}/);
   });
 
   it('draws the search glyph dark and solid so it never looks dim', () => {

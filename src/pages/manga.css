@@ -155,7 +155,7 @@
 .manga-copy-left h1 { display: flex; flex-direction: column; margin: 0; color: var(--manga-left-ink); font-size: clamp(45px, 5vw, 78px); font-weight: 400; letter-spacing: -.09em; line-height: .78; }
 .manga-copy-left h1 em { color: transparent; font-style: normal; -webkit-text-stroke: 1px var(--manga-accent); }
 .manga-left-note { max-width: 235px; margin: 30px 0 0; color: var(--manga-left-soft); font-size: 13px; line-height: 1.5; }
-.manga-cta { display: inline-flex; align-items: center; gap: 13px; margin-top: 27px; padding: 12px 15px; border: 1px solid color-mix(in srgb, var(--manga-left-ink), transparent 62%); background: color-mix(in srgb, var(--manga-left-ink), transparent 83%); color: var(--manga-left-ink); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; transition: background 180ms ease, transform 180ms ease; }
+.manga-cta { display: inline-flex; align-items: center; gap: 13px; margin-top: 14px; padding: 12px 15px; border: 1px solid color-mix(in srgb, var(--manga-left-ink), transparent 62%); background: color-mix(in srgb, var(--manga-left-ink), transparent 83%); color: var(--manga-left-ink); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; transition: background 180ms ease, transform 180ms ease; }
 .manga-cta:hover { background: var(--manga-accent); color: var(--manga-right-ink); transform: translateY(-2px); }
 .manga-cta span { font-size: 18px; }
 
@@ -208,8 +208,7 @@
 .manga-signal strong { color: var(--manga-accent); }
 .manga-director { margin-top: 27px; color: var(--manga-right-soft); font-family: Arial, sans-serif; font-size: 10px; line-height: 1.5; }
 .manga-director b { color: var(--manga-right-ink); }
-.manga-hero-footer { position: absolute; z-index: 9; right: 4.5%; bottom: 21px; left: 5.2%; display: flex; justify-content: space-between; color: var(--manga-right-soft); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .15em; }
-.manga-hero-footer span:first-child { color: var(--manga-left-soft); }
+.manga-hero-footer { position: absolute; z-index: 9; right: 4.5%; bottom: 21px; left: 5.2%; display: flex; justify-content: flex-end; color: var(--manga-right-soft); font-family: Arial, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .15em; }
 
 @keyframes manga-masthead-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes manga-copy-in { from { opacity: 0; transform: translateX(-22px); } to { opacity: 1; transform: translateX(0); } }

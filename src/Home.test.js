@@ -1,4 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import fs from 'fs';
+import path from 'path';
 import Home from './pages/home';
 
 const fandomNames = ['Anime', 'Gaming', 'Movies', 'TV Shows', 'K-Pop', 'Comics', 'Manga'];
@@ -125,5 +127,35 @@ describe('home hero carousel', () => {
     render(<Home />);
     const labels = [...document.querySelectorAll('.carousel-dot')].map((dot) => dot.getAttribute('aria-label'));
     fandomNames.forEach((name) => expect(labels).toContain(`Show ${name}`));
+  });
+});
+
+describe('home hero framing and light-stage legibility', () => {
+  const CSS = fs.readFileSync(path.join(__dirname, 'pages/home.css'), 'utf8');
+
+  it('packs the hero stage at the top so the character art clears the fold', () => {
+    // The stage is viewport-tall, so a single centred row used to float in the
+    // leftover space and push the character art down toward the fold. Packing it
+    // at the top lifts the hero and opens clearance underneath the character.
+    expect(CSS).toMatch(/\.hero \{[^}]*align-content: start/);
+  });
+
+  it('keeps the character art inside its own stage instead of clipping it', () => {
+    // The art is letterboxed with object-fit: contain and anchored to the bottom
+    // of the stage, so a taller box reveals more of the figure rather than
+    // cropping it. An overflow clip here would cut the feet off.
+    expect(CSS).toMatch(/\.fandom-character \{[^}]*object-fit: contain/);
+    expect(CSS).toMatch(/\.fandom-character \{[^}]*object-position: [^;]*bottom/);
+    expect(CSS).not.toMatch(/\.fandom-character \{[^}]*object-fit: cover/);
+  });
+
+  it('draws accent-coloured type with a legible ink instead of the raw accent', () => {
+    // The raw fandom accents measure 1.02:1 to 2.13:1 on the light stage's tan
+    // background, so type painted in them was effectively invisible. Decorative
+    // fills keep --accent; anything drawn as type must use --accent-ink.
+    expect(CSS).toMatch(/\.home-page \{[^}]*--accent-ink: var\(--accent\)/);
+    expect(CSS).toMatch(/\.home-page\.theme-light \{[^}]*--accent-ink: color-mix\(in srgb, var\(--accent\), #16171d 70%\)/);
+    // No text rule may fall back to the raw accent on either stage.
+    expect(CSS).not.toMatch(/^\s*color: var\(--accent\);/m);
   });
 });

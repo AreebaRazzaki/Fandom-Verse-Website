@@ -1,0 +1,1124 @@
+/* The desk.
+
+   The second half of every fandom page: a reading panel and a passes panel,
+   side by side, then a pair of named doors onto the full Articles and Events
+   pages. Both panels are interactive rather than a pair of flat buttons — the
+   index rail on the right of each panel previews its rows on hover and focus
+   and pins one on click, the pass panel runs a live clock down to the doors,
+   and the wide label at the foot of each panel is backed by a hidden list of
+   the fandom's own stories and passes. So one press either takes you to the
+   whole filtered page or opens the single thing you were already looking at.
+
+   Colour does not live in this file. `--cta-*` is injected by the component
+   from that fandom's own page stylesheet (see `fandomConfig.js`), and the
+   `--desk-*` names below are just the desk's own vocabulary restated in terms
+   of it. The literals after each `var()` are only a fallback for a fandom that
+   is not registered. */
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elgraine';
+  src: url('../../public/assets/font/Elgraine-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+.cta {
+  /* Fallbacks only; a registered fandom overrides --cta-* inline. */
+  --cta-page: #0b0c0f;
+  --cta-sunk: #131419;
+  --cta-card: #1b1d23;
+  --cta-mat1: #191b21;
+  --cta-mat2: #0d0e12;
+  --cta-ink: #f2eee5;
+  --cta-soft: #b5b0a5;
+  --cta-muted: #7c7970;
+  --cta-line: rgba(242, 238, 229, .15);
+  --cta-accent: #d89416;
+  --cta-accent-two: #20b7aa;
+
+  --desk-deep: var(--cta-page);
+  --desk-mid: var(--cta-sunk);
+  --desk-lift: var(--cta-card);
+  --desk-ink: var(--cta-ink);
+  --desk-ink-soft: var(--cta-soft);
+  --desk-ink-faint: var(--cta-muted);
+  --desk-line: var(--cta-line);
+  --desk-line-soft: color-mix(in srgb, var(--cta-line), transparent 55%);
+  --desk-wash: color-mix(in srgb, var(--cta-card), transparent 62%);
+  --desk-chip: color-mix(in srgb, var(--cta-card), transparent 16%);
+  --desk-chip-ink: var(--cta-ink);
+  --desk-chip-line: color-mix(in srgb, var(--cta-line), var(--cta-ink) 18%);
+  --desk-stub: var(--cta-mat1);
+  --desk-tape: color-mix(in srgb, var(--cta-accent) 34%, transparent);
+  --desk-tint: color-mix(in srgb, var(--cta-accent) 88%, transparent);
+  --desk-tint-2: color-mix(in srgb, var(--cta-accent) 74%, transparent);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(38px, 4.6vw, 72px) 0 clamp(42px, 5vw, 80px);
+  color: var(--desk-ink);
+  background: var(--desk-deep);
+  font-family: 'Elgraine', Georgia, serif;
+}
+
+/* ---------- decorative layers ---------- */
+
+.cta-bg,
+.cta-bg-rule,
+.cta-bg-nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cta-bg {
+  z-index: 0;
+  background:
+    radial-gradient(100% 62% at 84% -6%, color-mix(in srgb, var(--cta-accent-two) 24%, transparent), transparent 66%),
+    radial-gradient(90% 56% at 4% 104%, color-mix(in srgb, var(--cta-accent) 22%, transparent), transparent 66%),
+    linear-gradient(180deg, var(--desk-mid), var(--desk-deep));
+}
+
+/* Five ledger rules, the way a desk pad is ruled. */
+.cta-bg-rule {
+  z-index: 1;
+}
+
+.cta-bg-rule i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--desk-line-soft) 12%, var(--desk-line-soft) 88%, transparent);
+}
+
+.cta-bg-rule i:nth-child(1) { top: 8%; }
+.cta-bg-rule i:nth-child(2) { top: 27%; }
+.cta-bg-rule i:nth-child(3) { top: 49%; }
+.cta-bg-rule i:nth-child(4) { top: 71%; }
+.cta-bg-rule i:nth-child(5) { top: 90%; }
+
+.cta-bg-nodes i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--desk-line);
+}
+
+.cta-bg-nodes i:nth-child(1) { left: 5%; top: 20%; }
+.cta-bg-nodes i:nth-child(2) { left: 5%; top: 20.6%; }
+.cta-bg-nodes i:nth-child(3) { right: 7%; top: 44%; }
+.cta-bg-nodes i:nth-child(4) { right: 7%; top: 44.6%; }
+.cta-bg-nodes i:nth-child(5) { left: 22%; bottom: 8%; }
+.cta-bg-nodes i:nth-child(6) { right: 24%; bottom: 8.6%; }
+
+/* ---------- head ---------- */
+
+.cta-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(1420px, 92vw);
+  margin: 0 auto;
+}
+
+.cta-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(18px, 2.6vw, 44px);
+  padding-bottom: clamp(16px, 2vw, 26px);
+  border-bottom: 1px solid var(--desk-line);
+}
+
+.cta-num {
+  margin: 0;
+  align-self: start;
+  font-family: Arial, sans-serif;
+  font-size: clamp(38px, 5vw, 74px);
+  font-weight: 900;
+  line-height: .82;
+  letter-spacing: -.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--desk-line);
+}
+
+.cta-head-copy {
+  min-width: 0;
+}
+
+.cta-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--cta-accent);
+}
+
+.cta-kicker span {
+  width: 26px;
+  height: 1px;
+  background: var(--cta-accent);
+}
+
+.cta-title {
+  margin: 0;
+  font-size: clamp(30px, 4.4vw, 58px);
+  font-weight: 800;
+  line-height: .96;
+  letter-spacing: -.015em;
+  text-transform: uppercase;
+}
+
+.cta-tagline {
+  margin: 12px 0 0;
+  max-width: 62ch;
+  font-size: clamp(13.5px, 1.1vw, 16px);
+  line-height: 1.6;
+  color: var(--desk-ink-soft);
+}
+
+.cta-tally {
+  display: flex;
+  gap: clamp(14px, 2vw, 30px);
+  margin: 0;
+  padding-left: clamp(12px, 1.6vw, 24px);
+  border-left: 1px solid var(--desk-line);
+}
+
+.cta-tally div {
+  text-align: left;
+}
+
+.cta-tally dt {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-tally dd {
+  margin: 4px 0 0;
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cta-accent);
+}
+
+/* ---------- notes ---------- */
+
+.cta-note {
+  margin: clamp(20px, 3vw, 40px) 0;
+  padding: 22px 24px;
+  border: 1px dashed var(--desk-line);
+  font-size: 15px;
+  color: var(--desk-ink-soft);
+}
+
+.cta-note.is-error {
+  border-style: solid;
+  border-color: var(--desk-tape);
+  color: var(--desk-ink);
+}
+
+.cta-note button {
+  margin-left: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--desk-chip-line);
+  border-radius: 4px;
+  background: var(--desk-chip);
+  color: var(--desk-chip-ink);
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ---------- panels ---------- */
+
+.cta-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 28px);
+  padding-top: clamp(18px, 2.2vw, 30px);
+}
+
+.cta-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(16px, 1.8vw, 26px);
+  border: 1px solid var(--desk-line);
+  border-radius: 3px;
+  background: var(--desk-lift);
+  box-shadow: 0 22px 46px -30px rgba(0, 0, 0, .8);
+}
+
+.cta-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cta-accent), transparent 62%);
+}
+
+.cta-panel.is-empty {
+  min-height: 200px;
+  display: grid;
+  place-items: center;
+}
+
+.cta-panel-empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--desk-ink-faint);
+}
+
+.cta-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: clamp(12px, 1.4vw, 18px);
+  border-bottom: 1px solid var(--desk-line-soft);
+}
+
+.cta-panel-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--cta-accent);
+}
+
+.cta-panel-kicker span {
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+}
+
+.cta-panel-note {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+/* ---------- stories panel ---------- */
+
+.cta-story-layout,
+.cta-event-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+  padding: clamp(14px, 1.6vw, 22px) 0;
+}
+
+.cta-story-lead {
+  display: grid;
+  gap: clamp(12px, 1.4vw, 18px);
+  animation: cta-swap 320ms cubic-bezier(.2, .8, .25, 1) both;
+}
+
+@keyframes cta-swap {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.cta-story-art {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--desk-line-soft);
+  background: var(--desk-stub);
+}
+
+.cta-story-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 520ms cubic-bezier(.2, .8, .25, 1);
+}
+
+.cta-story-lead:hover .cta-story-art img {
+  transform: scale(1.045);
+}
+
+.cta-story-art-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 7, 9, .06) 40%, rgba(6, 7, 9, .82));
+}
+
+.cta-story-art figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  color: #f5f1e8;
+}
+
+.cta-story-art figcaption b {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--cta-accent);
+}
+
+.cta-story-art figcaption span {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.cta-story-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 8px;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-story-meta i,
+.cta-event-flags i {
+  width: 12px;
+  height: 1px;
+  background: var(--desk-line);
+}
+
+.cta-story-title {
+  margin: 0;
+  font-size: clamp(19px, 1.8vw, 26px);
+  font-weight: 800;
+  line-height: 1.14;
+}
+
+.cta-story-excerpt {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.62;
+  color: var(--desk-ink-soft);
+}
+
+.cta-story-actions,
+.cta-event-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.cta-press {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid var(--cta-accent);
+  border-radius: 2px;
+  background: var(--cta-accent);
+  color: #14120d;
+  font-family: Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.cta-press i {
+  font-style: normal;
+  transition: transform 180ms ease;
+}
+
+.cta-press:hover {
+  background: transparent;
+  color: var(--cta-accent);
+  transform: translateY(-2px);
+}
+
+.cta-press:hover i {
+  transform: translateX(4px);
+}
+
+.cta-press:focus-visible {
+  outline: 2px solid var(--cta-accent);
+  outline-offset: 3px;
+}
+
+.cta-press.is-pass {
+  background: transparent;
+  color: var(--cta-accent);
+}
+
+.cta-press.is-pass:hover {
+  background: var(--cta-accent);
+  color: #14120d;
+}
+
+/* ---------- events panel ---------- */
+
+.cta-event-lead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(12px, 1.4vw, 20px);
+  animation: cta-swap 320ms cubic-bezier(.2, .8, .25, 1) both;
+}
+
+/* A torn ticket stub: the date stays readable even at 340px. */
+.cta-event-stub {
+  align-self: start;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 12px 12px 14px;
+  border: 1px solid var(--desk-line);
+  border-left: 2px solid var(--cta-accent);
+  border-radius: 2px;
+  background: var(--desk-stub);
+}
+
+.cta-event-stub b {
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.cta-event-stub i {
+  font-style: normal;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--cta-accent);
+}
+
+.cta-event-stub small {
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  letter-spacing: .18em;
+  color: var(--desk-ink-faint);
+}
+
+.cta-event-copy {
+  min-width: 0;
+}
+
+.cta-event-flags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 8px;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-event-flags b {
+  color: var(--cta-accent);
+}
+
+.cta-event-flags .is-selling { color: #4fd6a4; }
+.cta-event-flags .is-limited { color: #ffb454; }
+.cta-event-flags .is-sold-out { color: #ff6b6b; }
+
+.cta-event-title {
+  margin: 0;
+  font-size: clamp(19px, 1.8vw, 26px);
+  font-weight: 800;
+  line-height: 1.14;
+}
+
+.cta-event-where {
+  margin: 8px 0 0;
+  font-family: Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--desk-ink-soft);
+}
+
+.cta-event-desc {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  line-height: 1.62;
+  color: var(--desk-ink-soft);
+}
+
+.cta-event-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cta-event-marks li {
+  padding: 5px 10px;
+  border: 1px solid var(--desk-line-soft);
+  border-radius: 999px;
+  font-family: Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--desk-ink-soft);
+}
+
+.cta-event-price {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 800;
+  color: var(--cta-accent);
+}
+
+.cta-event-doors {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-event-clock {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px dashed var(--desk-line);
+  background: var(--desk-wash);
+}
+
+.cta-event-clock b {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: var(--cta-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.cta-event-clock small {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-event-clock.is-past {
+  border-color: var(--desk-line-soft);
+}
+
+.cta-event-clock.is-past b {
+  color: var(--desk-ink-faint);
+}
+
+/* ---------- the rail ---------- */
+
+.cta-rail {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--desk-line-soft);
+  padding-top: clamp(12px, 1.4vw, 18px);
+}
+
+.cta-rail-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--desk-line-soft);
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.cta-rail-row:hover,
+.cta-rail-row:focus-visible {
+  border-color: var(--desk-line);
+  background: var(--desk-wash);
+  transform: translateX(3px);
+}
+
+.cta-rail-row:focus-visible {
+  outline: 2px solid var(--cta-accent);
+  outline-offset: 2px;
+}
+
+.cta-rail-row.is-on {
+  border-color: var(--cta-accent);
+  background: color-mix(in srgb, var(--cta-accent) 10%, transparent);
+}
+
+.cta-rail-no {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--desk-ink-faint);
+}
+
+.cta-rail-row.is-on .cta-rail-no {
+  color: var(--cta-accent);
+}
+
+.cta-rail-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cta-rail-body b {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.28;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cta-rail-body small {
+  font-family: Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+/* The state label only appears on the row that is actually on the desk, so
+   the rail reads as a stack of previews rather than a set of buttons. */
+.cta-rail-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.cta-rail-state i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cta-rail-row:hover .cta-rail-state {
+  opacity: .6;
+}
+
+.cta-rail-row.is-on .cta-rail-state {
+  opacity: 1;
+  color: var(--cta-accent);
+}
+
+/* ---------- the dock ---------- */
+
+.cta-dock {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: auto;
+  padding-top: clamp(12px, 1.4vw, 18px);
+  border-top: 1px solid var(--desk-line);
+}
+
+/* The label is the whole-page link. The list underneath it is the interactive
+   half: it stays collapsed until the dock is pointed at or something inside it
+   takes focus, so the panel is not a wall of links by default. */
+.cta-dock-go {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--desk-line);
+  border-radius: 2px;
+  color: var(--desk-ink);
+  text-decoration: none;
+  background: var(--desk-wash);
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.cta-dock-go b {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.cta-dock-go i {
+  grid-row: span 2;
+  font-style: normal;
+  font-size: 16px;
+  color: var(--cta-accent);
+  transition: transform 200ms ease;
+}
+
+.cta-dock-go small {
+  font-family: Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-dock-go:hover {
+  border-color: var(--cta-accent);
+  background: color-mix(in srgb, var(--cta-accent) 12%, transparent);
+}
+
+.cta-dock-go:hover b {
+  color: var(--cta-accent);
+}
+
+.cta-dock-go:hover i {
+  transform: translateX(5px);
+}
+
+.cta-dock-go:focus-visible {
+  outline: 2px solid var(--cta-accent);
+  outline-offset: 3px;
+}
+
+.cta-dock-list {
+  grid-row: 2;
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.cta-dock:hover .cta-dock-list,
+.cta-dock:focus-within .cta-dock-list {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.cta-dock-list a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--desk-line-soft);
+  border-radius: 2px;
+  color: var(--desk-ink);
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.cta-dock-list a:hover,
+.cta-dock-list a:focus-visible {
+  border-color: var(--cta-accent);
+  background: var(--desk-wash);
+  transform: translateX(3px);
+  outline: none;
+}
+
+.cta-dock-no {
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cta-accent);
+  white-space: nowrap;
+}
+
+.cta-dock-body {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.cta-dock-body b {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.cta-dock-body small {
+  font-family: Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--desk-ink-faint);
+}
+
+.cta-dock-arrow {
+  font-size: 13px;
+  color: var(--desk-ink-faint);
+}
+
+.cta-dock-list a:hover .cta-dock-arrow,
+.cta-dock-list a:focus-visible .cta-dock-arrow {
+  color: var(--cta-accent);
+}
+
+/* Screen-reader-only live region, used to announce the opened story. */
+.cta-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- calm ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cta * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .cta-story-lead:hover .cta-story-art img,
+  .cta-rail-row:hover,
+  .cta-rail-row:focus-visible,
+  .cta-dock-list a:hover,
+  .cta-dock-list a:focus-visible,
+  .cta-press:hover,
+  .cta-dock-go:hover i {
+    transform: none;
+  }
+}
+
+/* ---------- the two doors ---------- */
+
+.cta-next {
+  margin-top: clamp(28px, 3vw, 44px);
+  padding-top: clamp(24px, 2.6vw, 34px);
+  border-top: 1px solid var(--desk-line);
+}
+
+.cta-next-label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 16px;
+  color: var(--desk-ink-faint);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+.cta-next-label span {
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cta-accent), var(--cta-accent-two));
+}
+
+.cta-next-doors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cta-next-go {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'no body arrow' 'no label arrow';
+  gap: 4px 18px;
+  align-items: center;
+  padding: 22px 24px;
+  overflow: hidden;
+  border: 1px solid var(--desk-line);
+  border-radius: 3px;
+  color: var(--desk-ink);
+  background: var(--desk-lift);
+  text-decoration: none;
+  transition: border-color 240ms ease, transform 240ms cubic-bezier(.16, .82, .25, 1), background 240ms ease;
+}
+.cta-next-go::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  content: '';
+  background: linear-gradient(180deg, var(--cta-accent), var(--cta-accent-two));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 320ms cubic-bezier(.16, .82, .25, 1);
+}
+.cta-next-go:hover {
+  border-color: var(--desk-chip-line);
+  background: color-mix(in srgb, var(--desk-lift), var(--cta-accent) 8%);
+  transform: translateY(-3px);
+}
+.cta-next-go:hover::before { transform: scaleY(1); }
+.cta-next-go:focus-visible { outline: 2px solid var(--cta-accent); outline-offset: 2px; }
+
+.cta-next-no {
+  grid-area: no;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--desk-chip-line);
+  border-radius: 50%;
+  color: var(--cta-accent);
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.cta-next-body { grid-area: body; min-width: 0; }
+.cta-next-body b {
+  display: block;
+  font-size: clamp(19px, 1.9vw, 25px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.cta-next-body small {
+  display: block;
+  margin-top: 8px;
+  color: var(--desk-ink-soft);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.52;
+}
+
+.cta-next-go-label {
+  grid-area: label;
+  margin-top: 10px;
+  color: var(--desk-ink-faint);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.cta-next-go > i {
+  grid-area: arrow;
+  font-size: 22px;
+  font-style: normal;
+  color: var(--cta-accent);
+  transition: transform 240ms cubic-bezier(.16, .82, .25, 1);
+}
+.cta-next-go:hover > i { transform: translateX(6px); }
+
+/* ---------- narrow ---------- */
+
+@media (max-width: 1180px) {
+  .cta-panels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cta-next-doors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .cta-head {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .cta-tally {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    padding-top: 14px;
+    border-left: 0;
+    border-top: 1px solid var(--desk-line);
+  }
+}
+
+@media (max-width: 560px) {
+  .cta-num { font-size: 34px; }
+  .cta-event-lead { grid-template-columns: minmax(0, 1fr); }
+  .cta-event-stub { justify-self: start; display: flex; align-items: baseline; gap: 8px; }
+  .cta-rail-row { grid-template-columns: auto minmax(0, 1fr); }
+  .cta-rail-state { display: none; }
+}

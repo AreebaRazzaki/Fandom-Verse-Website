@@ -4,7 +4,18 @@
 .movies-page,
 .movies-page * { box-sizing: border-box; }
 
-body:has(.movies-page) { overflow: hidden; }
+/* The stage is a full-height frame, but the codex, the wall and the doors all
+   live below it, so the page itself has to grow and scroll. Nothing here may set
+   an overflow on <body>: a body that scrolls becomes the nearest scrollport for
+   the sticky nav, and since its own height is its content it never scrolls —
+   the bar then rides up with the page instead of sticking. Clipping sideways is
+   done on .movies-page below, which does not break stickiness. The one override
+   here is `clip` and not `hidden`: the global body rule hides sideways, and a
+   hidden axis forces the other axis to auto, which is exactly the scrollport
+   that breaks the sticky bar. `clip` cuts the overflow off without becoming
+   one. */
+body:has(.movies-page) { overflow-x: clip; overflow-y: visible; }
+
 
 .movies-page {
   --movie-bg: #192b28;
@@ -15,16 +26,16 @@ body:has(.movies-page) { overflow: hidden; }
   --movie-accent: #77c9ae;
   --movie-deep-accent: #328d79;
   --movie-crystal: rgba(166, 222, 201, .12);
+  --movie-nav-h: 88px;
   width: 100%;
-  height: 100svh;
-  overflow: hidden;
-  scrollbar-width: none;
+  height: auto;
+  min-height: 100svh;
+  overflow-x: hidden;
+  overflow-y: visible;
   color: var(--movie-ink);
   background: var(--movie-bg);
   font-family: 'Elgraine', Georgia, serif;
 }
-
-.movies-page::-webkit-scrollbar { display: none; }
 
 .movies-theme-light {
   --movie-bg: #b8cec4;
@@ -38,7 +49,9 @@ body:has(.movies-page) { overflow: hidden; }
   background: var(--movie-bg);
 }
 
-.movies-stage { position: relative; width: 100%; height: calc(100svh - 82px); min-height: 0; overflow: hidden; isolation: isolate; background: var(--movie-bg); }
+.movies-stage { position: relative; width: 100%; height: 100svh; min-height: 0; margin-top: calc(-1 * var(--movie-nav-h)); overflow: hidden; isolation: isolate; background: var(--movie-bg); }
+.movies-backdrop { position: absolute; inset: 0; }
+.movies-panel { position: absolute; top: var(--movie-nav-h); right: 0; bottom: 0; left: 0; }
 .movies-crystal { position: absolute; z-index: 0; inset: 0; background: radial-gradient(circle at 9% 15%, rgba(111, 204, 166, .24), transparent 23%), linear-gradient(124deg, transparent 0 25%, var(--movie-crystal) 25.2% 25.45%, transparent 25.7% 100%), linear-gradient(35deg, transparent 0 57%, var(--movie-crystal) 57.2% 57.45%, transparent 57.7% 100%), linear-gradient(145deg, transparent 0 76%, var(--movie-crystal) 76.2% 76.45%, transparent 76.7% 100%), linear-gradient(135deg, #31534a, #172925 60%, #3f6859); }
 .movies-theme-light .movies-crystal { background: radial-gradient(circle at 9% 15%, rgba(255, 255, 255, .3), transparent 23%), linear-gradient(124deg, transparent 0 25%, var(--movie-crystal) 25.2% 25.45%, transparent 25.7% 100%), linear-gradient(35deg, transparent 0 57%, var(--movie-crystal) 57.2% 57.45%, transparent 57.7% 100%), linear-gradient(145deg, transparent 0 76%, var(--movie-crystal) 76.2% 76.45%, transparent 76.7% 100%), linear-gradient(135deg, #c5d9cf, #9ebbb0 60%, #e0ece5); }
 .movies-frame { position: absolute; z-index: 2; inset: clamp(18px, 2.4vw, 34px) clamp(18px, 4.5vw, 68px) clamp(18px, 2.6vw, 32px); overflow: hidden; isolation: isolate; background: var(--movie-frame); clip-path: polygon(0 5%, 2.4% 0, 97.6% 0, 100% 5%, 100% 95%, 97.6% 100%, 2.4% 100%, 0 95%); filter: drop-shadow(0 24px 30px rgba(7, 28, 22, .3)); }
@@ -70,6 +83,14 @@ body:has(.movies-page) { overflow: hidden; }
 .movies-play span { font-size: 10px; }
 .movies-save { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--movie-frame-edge); background: color-mix(in srgb, var(--movie-frame), transparent 35%); color: var(--movie-ink); cursor: pointer; font-size: 22px; transition: color 180ms ease, border-color 180ms ease, transform 180ms ease; }
 .movies-save:hover, .movies-save.is-saved { border-color: var(--movie-accent); color: var(--movie-accent); transform: translateY(-2px); }
+
+/* The way down to the film codex, set as a caption under the actions so it
+   reads as part of the poster card rather than as another button on it. */
+.movies-cast-link { display: inline-flex; align-items: center; gap: 9px; margin-top: 14px; padding-bottom: 3px; border-bottom: 1px solid color-mix(in srgb, var(--movie-accent), transparent 55%); color: var(--movie-accent); font-family: Arial, sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-decoration: none; text-transform: uppercase; transition: gap 180ms ease, color 180ms ease, border-color 180ms ease; }
+.movies-cast-link:hover { gap: 14px; border-bottom-color: var(--movie-accent); color: var(--movie-ink); }
+.movies-cast-link:focus-visible { outline: 2px solid var(--movie-accent); outline-offset: 3px; }
+.movies-cast-link span { font-size: 11px; }
+
 .movies-side-code { position: absolute; z-index: 11; top: 26%; right: 3%; display: grid; gap: 12px; color: var(--movie-muted); font-family: Arial, sans-serif; font-size: 8px; font-weight: 800; letter-spacing: .16em; writing-mode: vertical-rl; transform: rotate(180deg); }
 .movies-side-code b { color: var(--movie-accent); }
 
@@ -101,9 +122,7 @@ body:has(.movies-page) { overflow: hidden; }
 }
 
 @media (max-width: 720px) {
-  body:has(.movies-page) { overflow-x: hidden; overflow-y: auto; }
-  .movies-page { width: 100%; height: auto; min-height: 100svh; overflow: visible; }
-  .movies-stage { height: calc(100svh - 124px); min-height: 0; }
+  .movies-page { --movie-nav-h: 124px; }
   .movies-frame { inset: 14px 12px 16px; }
   .movies-masthead { top: 27px; right: 7%; left: 7%; font-size: 7px; letter-spacing: .1em; }
   .movies-masthead i { display: none; }
@@ -120,6 +139,7 @@ body:has(.movies-page) { overflow: hidden; }
   .movies-actions { margin-top: 11px; }
   .movies-play { padding: 9px 13px; font-size: 9px; }
   .movies-save { width: 34px; height: 34px; }
+  .movies-cast-link { margin-top: 11px; font-size: 8px; }
   .movies-side-code { display: none; }
   .movies-shelf { height: 32%; padding: 14px 5% 22px; }
   .movies-shelf-heading h2 { font-size: 14px; }
@@ -130,7 +150,7 @@ body:has(.movies-page) { overflow: hidden; }
 }
 
 @media (max-width: 720px) {
-  .movies-stage { min-height: 680px; height: auto; }
+  .movies-stage { height: 100svh; min-height: 680px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
