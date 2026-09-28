@@ -272,6 +272,54 @@
   line-height: 1.6;
 }
 
+/* ---------- guest access ---------- */
+
+.au-guest { display: grid; gap: 12px; justify-items: start; margin-top: 26px; }
+
+/* A hairline either side of the word, so the guest route reads as a peer of the
+   submit button rather than a footnote. */
+.au-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+.au-divider::before,
+.au-divider::after { flex: 1; height: 1px; content: ''; background: var(--line-strong); }
+
+.au-guest-btn {
+  display: inline-block;
+  padding: 15px 28px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px 4px 14px 4px;
+  color: var(--ink);
+  background: transparent;
+  font-family: Arial, sans-serif;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: .2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+.au-guest-btn:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(53, 226, 242, .18);
+}
+.theme-light .au-guest-btn:hover { box-shadow: 0 16px 30px rgba(13, 127, 149, .18); }
+.au-guest-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+.au-guest-note { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {

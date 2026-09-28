@@ -23,6 +23,21 @@ export function Field({ id, label, type, value, onChange, error, autoComplete, p
   );
 }
 
+// The way out of both auth screens. Reading the site never needs an account, so
+// the escape hatch sits under the form instead of leaving the fields as the only
+// option. It is a plain link home: no session, no storage, nothing to sign out of.
+export function GuestAccess() {
+  return (
+    <div className="au-guest">
+      <span className="au-divider">or</span>
+      <a className="au-guest-btn" href="#home">Continue as a guest</a>
+      <p className="au-guest-note">
+        No account needed &mdash; browse every fandom, just without bookmarks and notes.
+      </p>
+    </div>
+  );
+}
+
 export function AuthArt({ caption, points }) {
   return (
     <div className="au-art" aria-hidden="true">

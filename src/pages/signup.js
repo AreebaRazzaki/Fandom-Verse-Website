@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { EMAIL, Field, GlitchFandoms } from './authShared';
+import { EMAIL, Field, GlitchFandoms, GuestAccess } from './authShared';
 import './auth.css';
 
 const THEME_KEY = 'signup-theme';
@@ -157,6 +157,8 @@ function Signup() {
                 <button type="submit" className="au-cta">Create account</button>
                 <p className="au-signup-trust">Demo build &mdash; nothing you type here is stored or sent anywhere.</p>
               </form>
+
+              <GuestAccess />
 
               <p className="au-switch">
                 Already a member? <a href="#sign-in">Sign in</a>

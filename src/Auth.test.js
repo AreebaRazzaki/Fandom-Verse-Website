@@ -191,6 +191,33 @@ describe('sign up', () => {
 });
 
 describe('both auth screens', () => {
+  it('offer a way in as a guest, without touching storage', () => {
+    [mountLogin, mountSignup].forEach((mount) => {
+      const { container } = mount();
+      const guest = container.querySelector('.au-guest-btn');
+
+      expect(guest).toBeInTheDocument();
+      expect(guest.textContent).toMatch(/continue as a guest/i);
+      // Guests land on the site itself, and the button is a link rather than a
+      // submit so it can never trip the form validation.
+      expect(guest.getAttribute('href')).toBe('#home');
+      expect(container.querySelector('form .au-guest-btn')).toBeNull();
+      expect(container.querySelector('.au-divider').textContent).toBe('or');
+      expect(container.querySelector('.au-guest-note').textContent).toMatch(/no account needed/i);
+    });
+
+    expect(JSON.stringify(window.localStorage)).not.toMatch(/guest/i);
+  });
+
+  it('style the guest route as a ghost button under a hairline divider', () => {
+    const btnRule = CSS.match(/\.au-guest-btn \{[^}]*\}/)[0];
+    expect(btnRule).toMatch(/border: 1px solid var\(--line-strong\)/);
+    expect(btnRule).toMatch(/background: transparent/);
+    // A link has to carry its own focus ring.
+    expect(CSS).toMatch(/\.au-guest-btn:focus-visible \{[^}]*outline: 2px solid var\(--cyan\)/);
+    expect(CSS).toMatch(/\.au-divider::before,[^{]*\.au-divider::after \{[^}]*height: 1px/);
+  });
+
   it('centre one panel over a lavender light stage', () => {
     const { container } = mountLogin();
 

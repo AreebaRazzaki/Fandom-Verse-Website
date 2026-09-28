@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EMAIL, Field, GlitchFandoms } from './authShared';
+import { EMAIL, Field, GlitchFandoms, GuestAccess } from './authShared';
 import './auth.css';
 
 const THEME_KEY = 'login-theme';
@@ -108,6 +108,8 @@ function Login() {
 
                 <button type="submit" className="au-cta">Sign in</button>
               </form>
+
+              <GuestAccess />
 
               <p className="au-switch">
                 New to the verse? <a href="#sign-up">Create an account</a>
