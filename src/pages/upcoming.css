@@ -214,6 +214,11 @@
 
 .theme-light .nx-filters { border-color: rgba(23, 16, 43, .12); background: rgba(242, 237, 250, .92); }
 
+/* The chips live on their own track so a phone can scroll them sideways without
+   taking the count along. On a wide screen the track wraps exactly as the bar
+   used to, and the count is pushed to the far end by its auto margin. */
+.nx-filters-scroll { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+
 .nx-filter {
   display: inline-flex;
   align-items: center;
@@ -459,8 +464,8 @@
 }
 
 @media (max-width: 720px) {
-  /* The nav wraps to two rows here, so the band it takes is taller. The docked
-     filter bar already docks at 138px for the same reason. */
+  /* The nav wraps to two rows here, so the band it takes is taller. The filter
+     bar is no longer sticky here, so this band only has to clear the nav. */
   .nx-page { --nx-nav-band: 138px; }
   .nx-hero { padding: calc(96px + var(--nx-nav-band)) 20px 26px; }
   .nx-hero-next { grid-template-columns: 56px minmax(0, 1fr); gap: 12px; padding: 10px 12px; }
@@ -473,8 +478,36 @@
   .nx-sheet { grid-template-columns: 1fr; }
   .nx-sheet-body { padding: 26px 22px; }
   .nx-sheet-facts { grid-template-columns: 1fr 1fr; }
-  .nx-filters { padding: 14px 20px; top: 138px; }
-  .nx-filters-count { width: 100%; margin-left: 0; }
+  /* The nav is the only thing that stays pinned now. The filter bar used to dock
+     at 138px, straight under a nav that already wraps to two rows here, so the
+     pair ate the top of every screen. Scrolling the chips sideways keeps the bar
+     to a single line, which no longer needs to be sticky at all. */
+  .nx-filters { position: static; display: grid; gap: 10px; padding: 14px 0; }
+  .nx-filters-scroll {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /* Momentum on touch, and it stops a sideways swipe over the chips from
+       triggering the browser's own back gesture. */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* A flex item defaults to min-width:auto, which would let the chips stretch
+       the track past the bar instead of scrolling inside it. */
+    min-width: 0;
+    /* The gutter moves onto the track so the chips can bleed to the screen edge
+       when they scroll, and the 3px keeps the slim scrollbar off the border. */
+    padding: 0 20px 3px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .26) transparent;
+  }
+  /* Chips hold their natural width, so a long label is never cut mid-word. */
+  .nx-filters-scroll > * { flex: 0 0 auto; }
+  .nx-filters-scroll::-webkit-scrollbar { height: 4px; }
+  .nx-filters-scroll::-webkit-scrollbar-track { background: transparent; }
+  .nx-filters-scroll::-webkit-scrollbar-thumb { border-radius: 2px; background: rgba(255, 255, 255, .26); }
+  .theme-light .nx-filters-scroll { scrollbar-color: rgba(23, 16, 43, .26) transparent; }
+  .theme-light .nx-filters-scroll::-webkit-scrollbar-thumb { background: rgba(23, 16, 43, .26); }
+  /* The count keeps its own line below the track, out of the scroll. */
+  .nx-filters-count { width: auto; margin-left: 0; padding: 0 20px; }
   .nx-player { padding: 18px 18px 22px; }
   .nx-player-title { font-size: 20px; }
 }

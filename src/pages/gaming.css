@@ -577,3 +577,56 @@
   html:has(.gaming-page), body:has(.gaming-page) { overflow: visible; }
 }
 
+/* ---------- mobile hero ----------
+
+   Every re-skin layer above finishes with a bare `.gaming-copy` rule, so the
+   desktop geometry (`left: 4.4%`, `width: 21.5%`) was landing *after* the mobile
+   media queries and winning the cascade — media queries add no specificity, only
+   source order. On a phone that squeezed the copy into a ~60px sliver, and its
+   fixed-width children (the 175px signal meter, the 320px badge grid, the 245px
+   intro) overflowed it while the hero's own `overflow: hidden` clipped the lot.
+
+   This block is last on purpose: it hands the column back to the copy and lets
+   the window size itself to the phone. */
+@media (max-width: 720px) {
+  /* The copy takes the full column again. */
+  .gaming-copy { left: auto; width: 100%; max-width: 100%; }
+
+  /* The fixed pixel widths were cut for the desktop column, so they need a cap
+     that answers to the viewport instead. */
+  .gaming-intro,
+  .gaming-copy-detail { max-width: 32ch; }
+  .gaming-copy-signal { width: min(175px, 100%); }
+  .gaming-copy-badges { max-width: 340px; }
+  .gaming-copy-stats { flex-wrap: wrap; }
+
+  /* The title already scaled off vw, but a 60px box was clipping it. */
+  .gaming-copy h1 { font-size: clamp(40px, 13vw, 60px); }
+  .gaming-copy-code { font-size: 9px; letter-spacing: .12em; }
+
+  /* The window keeps its full-bleed, but stops being a fixed 735px tall. The
+     stage follows the phone's width so the character keeps a portrait shape
+     rather than stretching to 290x430. */
+  .gaming-window { min-height: 0; }
+  .gaming-window .gaming-stage-wrap { height: auto; }
+  .gaming-window .gaming-stage { width: 100%; height: min(86vw, 400px); }
+  .gaming-window .gaming-character { width: 70%; }
+
+  /* The 18px/20px hard shadow was tuned for a large stage and swamps a small
+     one. */
+  .gaming-stage-surface {
+    box-shadow: 8px 9px 0 color-mix(in srgb, var(--game-pink), transparent 64%), inset 0 0 44px rgba(91, 224, 242, .11);
+  }
+
+  /* Four HUD labels cannot share a short stage without colliding, so they get
+     tighter padding and the top and bottom pairs are pulled apart. */
+  .gaming-hud { padding: 5px 7px; }
+  .gaming-hud b { font-size: 7.5px; }
+  .gaming-hud span { font-size: 6.5px; }
+  .gaming-hud-player { top: 9%; left: 2%; }
+  .gaming-hud-system { top: 2%; right: 2%; }
+  .gaming-hud-level { bottom: 9%; left: 2%; }
+  .gaming-hud-ready { bottom: 2%; right: 2%; }
+  .gaming-stage-index { right: 6%; bottom: 4%; font-size: 8px; }
+}
+

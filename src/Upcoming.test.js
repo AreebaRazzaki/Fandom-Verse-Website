@@ -223,6 +223,40 @@ describe('NEXT IN THE UNIVERSE upcoming releases page', () => {
     expect(css).toMatch(/\.theme-light \.nx-shape\.is-disc \{[^}]*background/);
   });
 
+  it('scrolls the filter chips sideways on a phone and leaves only the nav pinned', async () => {
+    const { container } = await mount();
+    const css = readCss('pages/upcoming.css');
+    const narrow = css.slice(css.indexOf('@media (max-width: 720px)'));
+
+    // The chips get a track of their own, so scrolling them never drags the
+    // count off the end of the row.
+    const track = container.querySelector('.nx-filters-scroll');
+    expect(track).not.toBeNull();
+    expect(track.querySelectorAll('.nx-filter').length).toBe(FILTERS.length);
+    expect(container.querySelector('.nx-filters > .nx-filters-count')).not.toBeNull();
+
+    // Wrapping the chips onto three or four lines made the bar swallow the top of
+    // the screen, so a narrow viewport scrolls them sideways on a single line.
+    expect(narrow).toMatch(/\.nx-filters-scroll \{[^}]*flex-wrap: nowrap/);
+    expect(narrow).toMatch(/\.nx-filters-scroll \{[^}]*overflow-x: auto/);
+    // A flex item defaults to min-width:auto, which would let the chips stretch
+    // the track past the bar instead of scrolling inside it.
+    expect(narrow).toMatch(/\.nx-filters-scroll \{[^}]*min-width: 0/);
+    expect(narrow).toMatch(/\.nx-filters-scroll > \* \{ flex: 0 0 auto/);
+    // A sideways swipe over the chips must not trigger the browser back gesture.
+    expect(narrow).toMatch(/\.nx-filters-scroll \{[^}]*overscroll-behavior-x: contain/);
+    expect(narrow).toMatch(/\.nx-filters-scroll \{[^}]*scrollbar-width: thin/);
+
+    // The nav is the only pinned thing left: the bar used to dock at 138px,
+    // straight under a nav that already wraps to two rows at this width.
+    expect(narrow).toMatch(/\.nx-filters \{ position: static;[^}]*\}/);
+    expect(narrow).not.toMatch(/\.nx-filters \{[^}]*position: sticky/);
+
+    // The wide-screen bar is untouched: it still docks under the nav.
+    expect(css).toMatch(/\.nx-filters \{[^}]*position: sticky;\s*top: 96px/);
+    expect(css).toMatch(/\.nx-filters-scroll \{ display: flex; flex-wrap: wrap/);
+  });
+
   it('stacks hero, then filters, then the cards, with no spotlight between them', async () => {
     const { container } = await mount();
     const order = [...container.querySelector('.nx-hero').parentElement.children];

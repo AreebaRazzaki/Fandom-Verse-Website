@@ -440,19 +440,24 @@ export default function Upcoming() {
           </header>
 
           <nav className="nx-filters" aria-label="Filter releases by category">
-            {categories.map((item) => (
-              <button
-                type="button"
-                key={item.id}
-                className={`nx-filter${filter === item.id ? ' is-active' : ''}`}
-                style={{ '--filter-accent': item.accent }}
-                onClick={() => setFilter(item.id)}
-                aria-pressed={filter === item.id}
-              >
-                {item.label}
-                <i>{counts[item.id] || 0}</i>
-              </button>
-            ))}
+            {/* The chips scroll sideways on a phone, so they need a track of
+                their own. The count stays outside it and keeps the full width
+                to itself rather than being pushed off the end of the scroll. */}
+            <div className="nx-filters-scroll">
+              {categories.map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={`nx-filter${filter === item.id ? ' is-active' : ''}`}
+                  style={{ '--filter-accent': item.accent }}
+                  onClick={() => setFilter(item.id)}
+                  aria-pressed={filter === item.id}
+                >
+                  {item.label}
+                  <i>{counts[item.id] || 0}</i>
+                </button>
+              ))}
+            </div>
             <span className="nx-filters-count">{visible.length} of {releases.length}</span>
           </nav>
 
