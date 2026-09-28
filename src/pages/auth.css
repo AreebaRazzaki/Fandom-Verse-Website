@@ -318,8 +318,6 @@
 .theme-light .au-guest-btn:hover { box-shadow: 0 16px 30px rgba(13, 127, 149, .18); }
 .au-guest-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 
-.au-guest-note { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
-
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {

@@ -31,9 +31,6 @@ export function GuestAccess() {
     <div className="au-guest">
       <span className="au-divider">or</span>
       <a className="au-guest-btn" href="#home">Continue as a guest</a>
-      <p className="au-guest-note">
-        No account needed &mdash; browse every fandom, just without bookmarks and notes.
-      </p>
     </div>
   );
 }

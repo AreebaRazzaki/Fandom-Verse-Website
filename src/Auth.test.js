@@ -203,7 +203,6 @@ describe('both auth screens', () => {
       expect(guest.getAttribute('href')).toBe('#home');
       expect(container.querySelector('form .au-guest-btn')).toBeNull();
       expect(container.querySelector('.au-divider').textContent).toBe('or');
-      expect(container.querySelector('.au-guest-note').textContent).toMatch(/no account needed/i);
     });
 
     expect(JSON.stringify(window.localStorage)).not.toMatch(/guest/i);
