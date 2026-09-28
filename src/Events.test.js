@@ -246,6 +246,34 @@ describe('FANDOM PASSPORT event page', () => {
     expect(getTickets()).toHaveLength(0);
   });
 
+  it('scrolls the filter chips sideways on a phone instead of wrapping them', async () => {
+    const { container } = await mount();
+    const row = container.querySelector('.pass-filters-row');
+    expect(row).not.toBeNull();
+
+    const css = readCss('pages/events.css');
+    // Wrapping onto four or five lines made the sticky bar cover the screen, so
+    // on narrow viewports each row becomes a single scrolling line instead.
+    const narrow = css.slice(css.indexOf('@media (max-width: 850px)'));
+    expect(narrow).toMatch(/\.pass-filters-row \{[^}]*flex-wrap: nowrap/);
+    expect(narrow).toMatch(/\.pass-filters-row \{[^}]*overflow-x: auto/);
+    // A grid item defaults to min-width:auto, which would let the chips stretch
+    // the row wider than the bar instead of scrolling inside it.
+    expect(narrow).toMatch(/\.pass-filters-row \{[^}]*min-width: 0/);
+    // Chips hold their own width so a long label is never clipped mid-word.
+    expect(narrow).toMatch(/\.pass-filters-row > \* \{ flex: 0 0 auto/);
+    // A sideways swipe over the chips must not trigger the browser back gesture.
+    expect(narrow).toMatch(/\.pass-filters-row \{[^}]*overscroll-behavior-x: contain/);
+    // The bar keeps its blur, so the scrollbar is a thin line rather than the
+    // full-width chunk that would undo the fix.
+    expect(narrow).toMatch(/\.pass-filters-row \{[^}]*scrollbar-width: thin/);
+    expect(narrow).toMatch(/\.pass-filters-row::-webkit-scrollbar \{[^}]*height: 4px/);
+    expect(narrow).toMatch(/\.theme-light \.pass-filters-row \{[^}]*scrollbar-color/);
+
+    // Desktop keeps the wrapping layout.
+    expect(css).toMatch(/\.pass-filters-row \{ display: flex; flex-wrap: wrap; gap: 8px; \}/);
+  });
+
   it('frames event artwork instead of cropping it', () => {
     const css = readCss('pages/events.css');
     expect(css).toMatch(/\.pass-ticket-media img \{[^}]*object-fit: contain/);

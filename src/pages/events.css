@@ -318,6 +318,38 @@
 .pass-filters-count { margin: 0; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .pass-filters-count b { color: var(--paper); }
 
+/* Once the viewport is narrow the two chip rows wrapped onto four or five lines
+   each, and because the bar is sticky that swallowed most of the screen. Each
+   row scrolls sideways instead, so the bar keeps the same two-chip height no
+   matter how narrow the phone gets. */
+@media (max-width: 850px) {
+  .pass-filters-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /* Momentum on touch, and it stops a sideways swipe over the chips from
+       triggering the browser's own back gesture. */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* A grid item defaults to min-width:auto, which lets the chips stretch the
+       row past the bar instead of scrolling inside it. */
+    min-width: 0;
+    /* Room for the slim scrollbar so it is not clipped by the bar's own edge. */
+    padding-bottom: 3px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .26) transparent;
+  }
+
+  /* Chips keep their natural width, so a long label is never cut mid-word. */
+  .pass-filters-row > * { flex: 0 0 auto; }
+
+  .pass-filters-row::-webkit-scrollbar { height: 4px; }
+  .pass-filters-row::-webkit-scrollbar-track { background: transparent; }
+  .pass-filters-row::-webkit-scrollbar-thumb { border-radius: 2px; background: rgba(255, 255, 255, .26); }
+
+  .theme-light .pass-filters-row { scrollbar-color: rgba(20, 22, 29, .26) transparent; }
+  .theme-light .pass-filters-row::-webkit-scrollbar-thumb { background: rgba(20, 22, 29, .26); }
+}
+
 /* ---------- ticket grid ---------- */
 
 .pass-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1240px; margin: 40px auto 0; padding: 0 24px; }
