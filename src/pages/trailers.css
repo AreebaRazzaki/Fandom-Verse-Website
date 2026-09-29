@@ -5,6 +5,12 @@
    text stays readable in both. Magenta / cyan are the only two accents.
    ========================================================================== */
 
+/* Same rule as the other fandom pages: an overflow on <body> would make the body
+   the nearest scrollport for the sticky nav, and a body whose height is its own
+   content never scrolls, so the bar would ride up off the screen. `clip` keeps
+   the sideways overflow cut without turning the body into one. */
+body:has(.trailers-page) { overflow-x: clip; overflow-y: visible; }
+
 .trailers-page {
   /* One blade silhouette shared by a card and its inner skin, so the border
      gradient lands exactly on the cut edges. Never rounded, never a plain box. */
@@ -31,7 +37,14 @@
   --accent-2: var(--cyan);
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  /* The nav is `position: sticky`, but `overflow: hidden` on the page turned this
+     element into the scrollport it sticks to — one the reader can never scroll,
+     so the bar rode up off the screen. It also clipped the collection grid and
+     everything below it off the bottom, leaving them unreachable. `clip` on the
+     inline axis keeps the sideways crop without making the block a scroll
+     container, which is the same treatment gaming.css and anime.css use. */
+  overflow-x: clip;
+  overflow-y: visible;
   color: var(--ink);
   background: var(--bg);
   font-family: Arial, sans-serif;

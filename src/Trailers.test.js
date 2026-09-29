@@ -548,4 +548,30 @@ describe('hero and bookmarks', () => {
     expect(container.querySelector('.universal-saved-count').textContent).toBe('1');
     expect(within(panel).getByRole('link').getAttribute('href')).toBe('#trailers');
   });
+
+  it('leaves the nav bar something to stick to', () => {
+    // A <body> that scrolls is the nearest scrollport for the sticky nav, and a
+    // body sized by its own content never scrolls, so the bar rides away with
+    // the page. `hidden` on either axis forces the other to auto and does
+    // exactly that; `clip` cuts the overflow off without becoming a scrollport.
+    const bodyRule = readCss('pages/trailers.css').match(/body:has\(\.trailers-page\)\s*\{([^}]*)\}/);
+    expect(bodyRule).not.toBeNull();
+    expect(bodyRule[1]).toMatch(/overflow-x:\s*clip/);
+    expect(bodyRule[1]).toMatch(/overflow-y:\s*visible/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*hidden/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*(auto|scroll)/);
+  });
+
+  it('does not make the page root its own scrollport', () => {
+    // `overflow: hidden` on the page root turned it into a scrollport, and a
+    // sticky nav inside a box that never scrolls simply never sticks. It also
+    // clipped the collection grid and everything below it off the bottom.
+    // The fix is commented with the value it replaced, so drop comments first.
+    const page = readCss('pages/trailers.css')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .match(/\.trailers-page\s*\{([^}]*)\}/)[1];
+    expect(page).not.toMatch(/overflow:\s*hidden/);
+    expect(page).toMatch(/overflow-x:\s*clip/);
+    expect(page).toMatch(/overflow-y:\s*visible/);
+  });
 });
