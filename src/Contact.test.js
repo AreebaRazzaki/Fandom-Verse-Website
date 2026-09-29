@@ -240,4 +240,28 @@ describe('the contact page', () => {
     expect(container.querySelector('.footer-bottom a')).toBeNull();
     expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }));
   });
+
+  it('leaves the nav bar something to stick to', () => {
+    // A <body> that scrolls is the nearest scrollport for the sticky nav, and a
+    // body sized by its own content never scrolls, so the bar rides away with
+    // the page. `hidden` on either axis forces the other to auto and does
+    // exactly that; `clip` cuts the overflow off without becoming a scrollport.
+    const bodyRule = CSS.match(/body:has\(\.ct-page\)\s*\{([^}]*)\}/);
+    expect(bodyRule).not.toBeNull();
+    expect(bodyRule[1]).toMatch(/overflow-x:\s*clip/);
+    expect(bodyRule[1]).toMatch(/overflow-y:\s*visible/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*hidden/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*(auto|scroll)/);
+  });
+
+  it('does not make the page root its own scrollport', () => {
+    // `overflow: hidden` on the page root turned it into a scrollport, and a
+    // sticky nav inside a box that never scrolls simply never sticks. It also
+    // clipped the split section, the form and the map off the bottom.
+    // The fix is commented with the value it replaced, so drop comments first.
+    const page = CSS.replace(/\/\*[\s\S]*?\*\//g, '').match(/\.ct-page\s*\{([^}]*)\}/)[1];
+    expect(page).not.toMatch(/overflow:\s*hidden/);
+    expect(page).toMatch(/overflow-x:\s*clip/);
+    expect(page).toMatch(/overflow-y:\s*visible/);
+  });
 });

@@ -1,3 +1,9 @@
+/* Same rule as the other fandom pages: an overflow on <body> would make the body
+   the nearest scrollport for the sticky nav, and a body whose height is its own
+   content never scrolls, so the bar would ride up off the screen. `clip` keeps
+   the sideways overflow cut without turning the body into one. */
+body:has(.ct-page) { overflow-x: clip; overflow-y: visible; }
+
 .ct-page {
   --ink: #f7f4fb;
   --ink-soft: #cdc3dd;
@@ -14,7 +20,14 @@
      padding rendered as a bare strip of page background underneath the footer.
      The gap between the map and the footer already lives in .ct-map's own
      padding-bottom, which is where it belongs. */
-  overflow: hidden;
+  /* The nav is `position: sticky`, but `overflow: hidden` on the page turned this
+     element into the scrollport it sticks to — one the reader can never scroll,
+     so the bar rode up off the screen. It also clipped the split section, the
+     form and the map off the bottom, leaving them unreachable. `clip` on the
+     inline axis keeps the sideways crop without making the block a scroll
+     container, which is the same treatment gaming.css and anime.css use. */
+  overflow-x: clip;
+  overflow-y: visible;
   color: var(--ink);
   background: #0a0710;
   font-family: Georgia, 'Times New Roman', serif;
