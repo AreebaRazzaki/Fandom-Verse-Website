@@ -10,11 +10,14 @@ const STUDIO = {
   phone: '+92 300 1234567',
   location: 'Studio 4, Fandomverse House, Karachi, Pakistan',
   hours: 'Monday to Saturday, 10am to 8pm PKT',
+  // The url is the only thing that has to change to point these at real
+  // accounts — swap in the profile link and nothing else moves. Same bare-host
+  // convention the footer uses, so the two never drift apart.
   socials: [
-    { label: 'Instagram', handle: '@fandomverse', href: '#contact' },
-    { label: 'X', handle: '@fandomverse', href: '#contact' },
-    { label: 'YouTube', handle: 'Fandomverse', href: '#contact' },
-    { label: 'Discord', handle: 'fandomverse', href: '#contact' },
+    { label: 'Instagram', handle: '@fandomverse', href: 'https://www.instagram.com/' },
+    { label: 'X', handle: '@fandomverse', href: 'https://x.com/' },
+    { label: 'YouTube', handle: 'Fandomverse', href: 'https://www.youtube.com/' },
+    { label: 'Discord', handle: 'fandomverse', href: 'https://discord.com/' },
   ],
 };
 
@@ -147,7 +150,7 @@ function Contact() {
           <ul className="ct-socials">
             {STUDIO.socials.map((social) => (
               <li key={social.label}>
-                <a href={social.href}>
+                <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`${social.label} (${social.handle}) — opens in a new tab`}>
                   <b>{social.label}</b>
                   <span>{social.handle}</span>
                 </a>

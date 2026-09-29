@@ -35,6 +35,39 @@ describe('the contact page', () => {
     expect(container.querySelector('.universal-nav-contact')).toBeInTheDocument();
   });
 
+  it('sends every social link to its platform in a new tab', () => {
+    const { container } = mount();
+    const links = [...container.querySelectorAll('.ct-socials a')];
+
+    expect(links).toHaveLength(4);
+
+    links.forEach((link) => {
+      const href = link.getAttribute('href');
+      // A real platform destination, not the `#contact` placeholder these used
+      // to point at, which made every card a dead link.
+      expect(href).toMatch(/^https:\/\//);
+      expect(href).not.toBe('#contact');
+      expect(link).toHaveAttribute('target', '_blank');
+      // Without noopener the opened tab keeps a handle on this page.
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+
+    // One card per platform, each pointing at its own host.
+    const hrefs = links.map((link) => link.getAttribute('href'));
+    expect(hrefs).toEqual(expect.arrayContaining([
+      expect.stringContaining('instagram.com'),
+      expect.stringContaining('x.com'),
+      expect.stringContaining('youtube.com'),
+      expect.stringContaining('discord.com'),
+    ]));
+    expect(new Set(hrefs).size).toBe(4);
+
+    // The visible handle stays, and the link names itself for screen readers.
+    const instagram = links.find((link) => link.textContent.includes('Instagram'));
+    expect(instagram.textContent).toContain('@fandomverse');
+    expect(instagram).toHaveAttribute('aria-label', expect.stringContaining('Instagram'));
+  });
+
   it('labels every field instead of relying on placeholders', () => {
     const { container } = mount();
     ['name', 'email', 'subject', 'message'].forEach((name) => {
