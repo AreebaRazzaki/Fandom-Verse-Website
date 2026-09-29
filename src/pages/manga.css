@@ -4,6 +4,12 @@
 .manga-page,
 .manga-page * { box-sizing: border-box; }
 
+/* Same rule as the other fandom pages: an overflow on <body> would make the body
+   the nearest scrollport for the sticky nav, and a body whose height is its own
+   content never scrolls, so the bar would ride up off the screen. `clip` keeps
+   the sideways overflow cut without turning the body into one. */
+body:has(.manga-page) { overflow-x: clip; overflow-y: visible; }
+
 .manga-page {
   --manga-left-ink: #fbf5f0;
   --manga-left-soft: #e9d7e5;
@@ -17,7 +23,14 @@
   --manga-pattern-ink: rgba(250, 240, 246, .15);
   --manga-pattern-light: rgba(79, 54, 86, .11);
   min-height: 100svh;
-  overflow: hidden;
+  /* The nav is `position: sticky`, but `overflow: hidden` on the page turned this
+     element into the scrollport it sticks to — one the reader can never scroll,
+     so the bar rode up off the screen. It also clipped the character codex, the
+     media wall and the doors off the bottom, leaving them unreachable. `clip` on
+     the inline axis keeps the sideways crop without making the block a scroll
+     container, which is the same treatment gaming.css and anime.css use. */
+  overflow-x: clip;
+  overflow-y: visible;
   color: var(--manga-paper);
   background: var(--manga-bg);
   font-family: 'Elgraine', Georgia, serif;
@@ -243,7 +256,11 @@
 }
 
 @media (max-width: 720px) {
-  .manga-page { overflow-x: hidden; overflow-y: auto; }
+  /* A phone re-declared the page root as `overflow-y: auto`, which made it a
+     scroll container of its own all over again — so the nav stopped sticking
+     here, and the page scrolled inside the card instead of under the bar. The
+     `clip`/`visible` pair above already covers the sideways crop. */
+  .manga-page { overflow-x: clip; overflow-y: visible; }
   .manga-hero { width: calc(100% - 36px); height: 760px; min-height: 760px; margin: 12px 18px 24px; border-radius: 16px; }
   .manga-masthead { top: 21px; right: 7%; left: 7%; gap: 9px; font-size: 7px; letter-spacing: .11em; }
   .manga-masthead-center { gap: 6px; }
