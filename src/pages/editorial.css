@@ -1,5 +1,11 @@
 /* Featured Articles: nav, one-line heading, animated marquee, nav-style filter bar, patterned card grid. */
 
+/* Same rule as the other fandom pages: an overflow on <body> would make the body
+   the nearest scrollport for the sticky nav, and a body whose height is its own
+   content never scrolls, so the bar would ride up off the screen. `clip` keeps
+   the sideways overflow cut without turning the body into one. */
+body:has(.editorial-page) { overflow-x: clip; overflow-y: visible; }
+
 .editorial-page {
   --paper: #171820;
   --ink: #eef1f4;
@@ -14,7 +20,14 @@
   --card-edge: rgba(255, 255, 255, .9);
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  /* The nav is `position: sticky`, but `overflow: hidden` on the page turned this
+     element into the scrollport it sticks to — one the reader can never scroll,
+     so the bar rode up off the screen. It also clipped the filter bar and the
+     whole card grid off the bottom, leaving them unreachable. `clip` on the
+     inline axis keeps the sideways crop without making the block a scroll
+     container, which is the same treatment gaming.css and anime.css use. */
+  overflow-x: clip;
+  overflow-y: visible;
   color: var(--paper);
   background: #c7cfd8;
   font-family: 'Elgraine', Georgia, serif;

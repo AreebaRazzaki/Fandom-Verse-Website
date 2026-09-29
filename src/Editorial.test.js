@@ -693,4 +693,33 @@ describe('centred band and contained card art', () => {
     fireEvent.keyDown(document, { key: 'Escape' });
     await waitFor(() => expect(container.querySelector('.universal-saved')).toBeNull());
   });
+
+  it('leaves the nav bar and the filter strip something to stick to', () => {
+    // A <body> that scrolls is the nearest scrollport for the sticky nav, and a
+    // body sized by its own content never scrolls, so the bar rides away with
+    // the page. `hidden` on either axis forces the other to auto and does
+    // exactly that; `clip` cuts the overflow off without becoming a scrollport.
+    const css = readCss('pages/editorial.css');
+    const bodyRule = css.match(/body:has\(\.editorial-page\)\s*\{([^}]*)\}/);
+    expect(bodyRule).not.toBeNull();
+    expect(bodyRule[1]).toMatch(/overflow-x:\s*clip/);
+    expect(bodyRule[1]).toMatch(/overflow-y:\s*visible/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*hidden/);
+    expect(bodyRule[1]).not.toMatch(/overflow(-[xy])?:\s*(auto|scroll)/);
+  });
+
+  it('does not make the page root its own scrollport', () => {
+    // `overflow: hidden` on the page root turned it into a scrollport, and a
+    // sticky element inside a box that never scrolls simply never sticks — the
+    // nav and the filter strip both ride off the top together. It also clipped
+    // the filter strip and the card grid off the bottom of the page.
+    // The page-root fix is commented with the exact value it replaced, so the
+    // comments are dropped before the declarations are asserted on.
+    const page = readCss('pages/editorial.css')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .match(/\.editorial-page\s*\{([^}]*)\}/)[1];
+    expect(page).not.toMatch(/overflow:\s*hidden/);
+    expect(page).toMatch(/overflow-x:\s*clip/);
+    expect(page).toMatch(/overflow-y:\s*visible/);
+  });
 });
